@@ -1,5 +1,12 @@
 package controllers;
 
-public class KeyboardController {
+import org.newdawn.slick.Input;
+
+public class KeyboardController extends Input {
+
+	public KeyboardController(int height) {
+		super(height);
+		// TODO Auto-generated constructor stub
+	}
 
 }
