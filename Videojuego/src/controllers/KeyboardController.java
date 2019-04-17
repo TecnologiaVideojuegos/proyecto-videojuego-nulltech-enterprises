@@ -7,6 +7,8 @@ public class KeyboardController extends Input {
 	/*
 	 * Constructors
 	 */
+	static String lastpressedp1="";
+	
 	public KeyboardController(int height) {
 		super(height);
 	}
@@ -25,5 +27,16 @@ public class KeyboardController extends Input {
 		if (isKeyDown(Input.KEY_S)) return 100;
 		return 0;
 	}
+	public String getPressedpl1()
+	{
+		if(isKeyPressed(Input.KEY_W)){return lastpressedp1="Up";}
+		if(isKeyPressed(Input.KEY_S)){return lastpressedp1="Down";}
+		if(isKeyPressed(Input.KEY_A)){return lastpressedp1="Left";}
+		if(isKeyPressed(Input.KEY_D)){return lastpressedp1="Right";}
+		return "";
+		
+	}
+
+
 
 }
