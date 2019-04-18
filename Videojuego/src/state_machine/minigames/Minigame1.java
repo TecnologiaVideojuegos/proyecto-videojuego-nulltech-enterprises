@@ -90,6 +90,8 @@ public class Minigame1 extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		
+		
+		
 		if (elapsedTime++ > spawnSpeed) {
 			arrayArrow.add(createArrow());
 			elapsedTime = 0;
@@ -99,9 +101,11 @@ public class Minigame1 extends BasicGameState {
 			arrayArrow.get(i).updateYByIncrease(-speedDificulty);
 		}
 		
+		
 		if(arrayArrow.size()>1)
 		{
-			scoreColission(arrayArrow);
+			int hit=colissionsuccessfully(arrayArrow,gc);
+			scoreColission(arrayArrow,hit);
 		
 			if(arrayArrow.get(0).getY() <= 0)
 			{
@@ -112,38 +116,41 @@ public class Minigame1 extends BasicGameState {
 		
 	
 	
-	private void scoreColission(ArrayList<GameObject> arrayarrow){
+	private void scoreColission(ArrayList<GameObject> arrayarrow,Integer hit){
 						
 		if(arrayarrow.get(0).getCollisionBox().intersects(keys.getCollisionBox())){
-			 if(colissionsuccessfully(arrayarrow)==1){  
+			 if(hit==1){  
 				 puntuacion+=20;
 				 arrayarrow.remove(0);
 			 }
-			 if(colissionsuccessfully(arrayarrow)==0){
+			 if(hit==0){
 				 puntuacion-=20;
+				 arrayarrow.remove(0);
 			 }
 
 		}
 		else
 		{
-			if(keyboard.getPressedpl1()!="")
+			if(hit!=-1)
 			{
 				puntuacion-=20;
+				arrayarrow.remove(0);
 			}
 		}
 	}
 	
-	private Integer colissionsuccessfully(ArrayList<GameObject> arrayarrow) {
+	private Integer colissionsuccessfully(ArrayList<GameObject> arrayarrow,GameContainer gc) {
 		 
 		GameObject firstelement=arrayarrow.get(0);
 		
-		if(keyboard.getPressedpl1() != "" && keyboard.getPressedpl1()!=firstelement.getdirection()) {return 0;}
-		if(keyboard.getPressedpl1() == firstelement.getdirection()) {return 1;}
-		
-		
-		return -1;
-		
+		if(keyboard.getPressedpl1(gc) != "")
+		{
+			if (keyboard.getPressedpl1(gc)!=firstelement.getdirection()) {return 0;}
+			else {return 1;}
+		}
+		return -1; 
 
+				
 	}
 	
 	
