@@ -59,7 +59,6 @@ public class GameObject {
 	 * Update X and Y
 	 */
 	public void updateXByIncrease(final int oscilation) {
-		System.out.println(oscilation + " " + x);
 		x += oscilation;
 		collisionBox.setX(x);
 	}

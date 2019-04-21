@@ -7,8 +7,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import constants.Constants;
 import resources.ResourceLoader;
 import state_machine.MenuState;
+import state_machine.minigames.MiniGameJumpRollers;
 import state_machine.minigames.MiniGameTest;
 
 public class MainManager extends StateBasedGame {
@@ -21,6 +23,7 @@ public class MainManager extends StateBasedGame {
 	private final int menuStateId = 0;
 	private final int boardStateId = 1; // TODO
 	private final int minigameTestStateId = 2;
+	private final int minigameJumpRollersStateId = 3;
 	
 	/*
 	 * Constructors
@@ -31,6 +34,7 @@ public class MainManager extends StateBasedGame {
 		
 		this.addState(new MenuState(menuStateId, resLoader));
 		this.addState(new MiniGameTest(minigameTestStateId, resLoader));
+		this.addState(new MiniGameJumpRollers(minigameJumpRollersStateId, resLoader));
 	}
 
 	/*
@@ -40,8 +44,9 @@ public class MainManager extends StateBasedGame {
 	public void initStatesList(GameContainer gc) throws SlickException {
 		this.getState(menuStateId).init(gc, this);
 		this.getState(minigameTestStateId).init(gc, this);
+		this.getState(minigameJumpRollersStateId).init(gc, this);
 		
-		this.enterState(minigameTestStateId); // DEBUG
+		this.enterState(minigameJumpRollersStateId); // DEBUG
 	}
 
 	/*
@@ -51,7 +56,7 @@ public class MainManager extends StateBasedGame {
 		try {
 			System.setProperty("org.lwjgl.librarypath", new File("native/windows").getAbsolutePath());
 			AppGameContainer app = new AppGameContainer(new MainManager("Constants.WINDOW_TITLE"));
-			app.setDisplayMode(1024, 640, false); // Set window size as constants
+			app.setDisplayMode(Constants.WINDOW_DEFAULT_WIDTH, Constants.WINDOW_DEFAULT_HEIGHT, false); // Set window size as constants
 			app.setTargetFrameRate(60);
 			app.start();
 		} catch (SlickException e) {
