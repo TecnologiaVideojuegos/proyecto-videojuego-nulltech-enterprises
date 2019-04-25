@@ -16,6 +16,7 @@ public class GameObject {
 	private final float scale;
 	private Shape collisionBox;
 	private boolean deleted;
+	private String direction;
 	
 	/*
 	 * Constructors
@@ -38,6 +39,8 @@ public class GameObject {
 		}
 	}
 
+	public String getdirection() {return direction;}
+	public void setdirection(String direction) {this.direction=direction;}
 	/*
 	 * X
 	 */
