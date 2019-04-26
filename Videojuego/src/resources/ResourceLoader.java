@@ -1,7 +1,11 @@
 package resources;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
+
+import constants.Constants;
 
 public class ResourceLoader {
 
@@ -10,8 +14,9 @@ public class ResourceLoader {
 	 * Dice
 	 */
 	public Image[] loadDiceImages() {
-		Image[] images = new Image[6];
 		try {
+			Image[] images = new Image[6];
+			
 			images[0] = new Image("res/images/dice/Dado1.png");
 			images[1] = new Image("res/images/dice/Dado2.png");
 			images[2] = new Image("res/images/dice/Dado3.png");
@@ -19,11 +24,12 @@ public class ResourceLoader {
 			images[4] = new Image("res/images/dice/Dado5.png");
 			images[5] = new Image("res/images/dice/Dado6.png");
 			
+			return images;
 		} catch (SlickException e) {
 			System.out.println("Error loading Dice images. " + e);
 			e.printStackTrace();
 		}
-		return images;
+		return null;
 	}
 	
 	/*
@@ -38,4 +44,22 @@ public class ResourceLoader {
 		}
 		return null;
 	}
+	
+	public SpriteSheet loadSpriteSheetFromUrl(final String path) {
+		try {
+			return new SpriteSheet(path, Constants.SPRITE_DEFAULT_DIMENSION, Constants.SPRITE_DEFAULT_DIMENSION);
+		} catch (SlickException e) {
+			System.out.println("Error loading SpriteSheet. " + e);
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	public Animation loadAnimationFromSpriteSheet(final SpriteSheet spriteSheet, final int duration)
+	{
+		return new Animation(spriteSheet, duration);
+	}
+	
+	
 }
