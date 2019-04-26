@@ -1,7 +1,6 @@
 package state_machine.minigames;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -63,7 +62,7 @@ public class MiniGameTest extends BasicGameState {
 		backgroundImage = new Image(Constants.PATH_MINIGAME_TEST_BACKGROUND);
 		bananaImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_BANANA);
 		monkeyImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_MONKEY);
-		player = new GameObject(monkeyImage, x, 520, 0.25f); // Set values as constants
+		//player = new GameObject(monkeyImage, x, 520, 0.25f); // Set values as constants
 	}
 
 	/*
@@ -92,9 +91,11 @@ public class MiniGameTest extends BasicGameState {
 		
 		for (GameObject go : arrayBananas) {
 			go.updateYByIncrease(speedDificulty);
+			/*
 			if (player.getCollisionBox().intersects(go.getCollisionBox())) {
 				go.setDeleted(true);
 			}
+			*/
 		}
 		
 	}
@@ -103,7 +104,10 @@ public class MiniGameTest extends BasicGameState {
 	 * Create Bananas
 	 */
 	private GameObject createBanana() {
+		/*
 		return new GameObject(bananaImage, ThreadLocalRandom.current().nextInt(0, 1024), 0, 0.1f); // Set values as constants
+		*/
+		return null;
 	}
 
 	/*

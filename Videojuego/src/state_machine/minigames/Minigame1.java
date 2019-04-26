@@ -1,8 +1,8 @@
 package state_machine.minigames;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -69,7 +69,12 @@ public class Minigame1 extends BasicGameState {
 		arrowimageup= new Image("res/images/flechaarriba.png");
 		arrowimageright= new Image("res/images/flechaderecha.png");
 		arrowimageleft= new Image("res/images/flechaizquierda.png");
-		keys=new GameObject(keyimage,64,0,1.0f);
+		//keys = new GameObject(keyimage,64,0,1.0f);
+		
+		// REVISAR
+		Animation anim = resLoader.loadAnimationFromSpriteSheet(resLoader.loadSpriteSheetFromUrl("res/images/teclas.png"), 10);
+		int[] temp = {0};
+		keys = new GameObject(anim, temp, 64, 0, 1.0f);
 		
 }
 	/*
@@ -143,6 +148,7 @@ public class Minigame1 extends BasicGameState {
 	 * Create Bananas
 	 */
 	private GameObject createArrow() {
+		/*
 		GameObject arr1; 
 		
 		int arrowcolor=ThreadLocalRandom.current().nextInt(0, 4);
@@ -178,7 +184,8 @@ public class Minigame1 extends BasicGameState {
 		arr1 = new GameObject(arrowaux, posx, 512, 1.0f); // Set values as constants
 		arr1.setdirection(direction);
 		return arr1;
-		
+		*/
+		return null;
 	}
 	
 	

@@ -14,6 +14,7 @@ public class Constants {
 	 */
 	public static final float GRAPHICS_DEFAULT_SCALE = 3;
 	public static final float GRAPHICS_MENU_SCALE = 1.25f;
+	public static final int SPRITE_DEFAULT_DIMENSION = 64;
 
 	/*
 	 * Map
