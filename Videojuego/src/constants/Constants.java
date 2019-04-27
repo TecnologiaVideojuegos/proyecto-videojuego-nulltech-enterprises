@@ -35,5 +35,11 @@ public class Constants {
 	public static final String PATH_MINIGAME_TEST_BACKGROUND = "res/images/selva2.jpg";
 	public static final String PATH_MINIGAME_TEST_BANANA = "res/images/banana.png";
 	public static final String PATH_MINIGAME_TEST_MONKEY = "res/images/monkey.png";
+			/* MINIGAME 2 */
+	public static final String PATH_MINIGAME2_BACKGROUND = "res/images/Escenariolava.png";
+	public static final String PATH_MINIGAME2_BALL = "res/images/bolacanon.png";
+	public static final String PATH_MINIGAME2_THUNDER_ZONE = "res/images/zonaelectrica.png";
+	public static final String PATH_MINIGAME2_SHOCK = "res/images/chispa.png";
+	public static final String PATH_MINIGAME2_PLAYER = "res/images/protaderecha.png";
 	
 }
