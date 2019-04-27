@@ -6,15 +6,14 @@ public class Constants {
 	 * Window
 	 */
 	public static final String WINDOW_TITLE = "Grupo F";
-	public static final int WINDOW_DEFAULT_HEIGHT = 400;
-	public static final int WINDOW_DEFAULT_WIDTH = 600;
+	public static final int WINDOW_DEFAULT_HEIGHT = 512;
+	public static final int WINDOW_DEFAULT_WIDTH = 1024;
 	
 	/*
 	 * Graphics
 	 */
 	public static final float GRAPHICS_DEFAULT_SCALE = 3;
 	public static final float GRAPHICS_MENU_SCALE = 1.25f;
-	public static final int SPRITE_DEFAULT_DIMENSION = 64;
 
 	/*
 	 * Map
