@@ -40,8 +40,8 @@ public class GameObject {
 	 * Render
 	 */
 	public void render(Graphics g) {
-		anim.getImage(currentAnimIdx);
-		// g.draw(collisionBox); // DEBUG
+		anim.getImage(currentAnimIdx).draw(x, y, scale);
+		g.draw(collisionBox); // DEBUG
 	}
 	
 	
