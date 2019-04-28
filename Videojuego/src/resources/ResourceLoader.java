@@ -5,8 +5,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-import constants.Constants;
-
 public class ResourceLoader {
 
 
@@ -45,9 +43,9 @@ public class ResourceLoader {
 		return null;
 	}
 	
-	public SpriteSheet loadSpriteSheetFromUrl(final String path) {
+	public SpriteSheet loadSpriteSheetFromUrl(final String path, final int spriteSizeX, final int spriteSizeY) {
 		try {
-			return new SpriteSheet(path, Constants.SPRITE_DEFAULT_DIMENSION, Constants.SPRITE_DEFAULT_DIMENSION);
+			return new SpriteSheet(path, spriteSizeX, spriteSizeY);
 		} catch (SlickException e) {
 			System.out.println("Error loading SpriteSheet. " + e);
 			e.printStackTrace();
