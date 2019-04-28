@@ -91,11 +91,13 @@ public class MiniGameTest extends BasicGameState {
 			arrayBananas.add(createBanana());
 			elapsedTime = 0;
 		}
-		
-		for (GameObject go : arrayBananas) {
+
+		for (GameObject go : (ArrayList<GameObject>) arrayBananas.clone()) {
 			go.updateYByIncrease(speedDificulty);
+			if (player.getCollisionBox().intersects(go.getCollisionBox()) || gc.getHeight() < go.getY()) {
+				arrayBananas.remove(go);
+			}
 		}
-		
 	}
 	
 	/*
