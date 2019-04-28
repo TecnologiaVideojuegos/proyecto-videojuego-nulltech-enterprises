@@ -2,7 +2,6 @@ package state_machine.minigames;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -72,9 +71,9 @@ public class Minigame1 extends BasicGameState {
 		//keys = new GameObject(keyimage,64,0,1.0f);
 		
 		// REVISAR
-		Animation anim = resLoader.loadAnimationFromSpriteSheet(resLoader.loadSpriteSheetFromUrl("res/images/teclas.png"), 10);
+//		Animation anim = resLoader.loadAnimationFromSpriteSheet(resLoader.loadSpriteSheetFromUrl("res/images/teclas.png"), 10);
 		int[] temp = {0};
-		keys = new GameObject(anim, temp, 64, 0, 1.0f);
+//		keys = new GameObject(anim, temp, 64, 0, 1.0f);
 		
 }
 	/*
