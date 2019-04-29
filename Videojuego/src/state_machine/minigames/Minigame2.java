@@ -186,17 +186,18 @@ public class Minigame2 extends BasicGameState{
 		//para que no se solapen los de la misma recta.
 		while( (Math.sqrt( Math.pow(pxmedio-x0 ,2) + Math.pow(pymedio-y0 ,2) ))>64 )
 		{
-			n++;
+			n++; //numero particiones
 			x1=pxmedio;
 			y1=pymedio;
 			pxmedio=Math.abs(x1+x0)/2;
 			pymedio=Math.abs(y1+y0)/2;
 		}
+		n=n*2;
 		while(n>0)
 		{
 			//Una vez calculado la cantidad de divisiones posibles debido a la distancia entre bolas
 			//se añaden n puntos de la distancia minima posible.
-			coordinates.add(new Coordinates((int)pxmedio*n, (int)pymedio*n));
+			coordinates.add(new Coordinates((int)pxmedio*(n), (int)pymedio*(n)));
 			n--;
 		}
 	}
