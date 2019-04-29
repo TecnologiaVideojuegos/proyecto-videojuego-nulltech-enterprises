@@ -1,27 +1,32 @@
 package minigames;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import resources.Coordinates;
+
+
+
 public class GameObject {
 
 	/*
 	 * Attributes
 	 */
-	private final Image image;
+	private Image image;
 	private final Animation anim;
 	private int animation_index;
-	private int[] posarray;
 	private int x;
 	private int y;
 	private final float scale;
 	private Shape collisionBox;
 	private boolean deleted;
 	private String direction;
-	
+
 	
 	/*
 	 * Constructors
@@ -44,19 +49,7 @@ public class GameObject {
 		this.x = x;
 		this.y = y;
 		this.scale = scale;
-		this.collisionBox = new Rectangle(x, y, image.getWidth() * scale, image.getHeight() * scale);
-		
-	}
-	public GameObject(final Animation anim,final int[] posarray,final int x,final int y,final float scale)
-	{
-		this.image=null;
-		this.anim = anim;
-		this.posarray= posarray;
-		this.animation_index=0;
-		this.x = x;
-		this.y = y;
-		this.scale = scale;
-		this.collisionBox = new Rectangle(x, y, image.getWidth() * scale, image.getHeight() * scale);
+		this.collisionBox = new Rectangle(x, y, this.anim.getImage(0).getWidth() * scale, this.anim.getImage(0).getHeight() * scale);
 		
 	}
 	
@@ -65,9 +58,12 @@ public class GameObject {
 	 */
 	public void render(Graphics g) {
 		if (!deleted) {
+			if (anim != null) {
+				image=anim.getImage(animation_index);
+			}
+
+
 			image.draw(x, y, scale);
-			//
-			//anim.getImage(animation_index);
 			// g.draw(collisionBox); // DEBUG
 		}
 	}
@@ -93,16 +89,14 @@ public class GameObject {
 	
 	public void update_current_animation()
 	{
-		if(animation_index++==anim.getFrameCount()) {
+		if(animation_index++==anim.getFrameCount()-1) {
 			animation_index=0;
 		}
 	}
-	public void update_current_animation(final int pos)
+	public void update_current_animation(final int inicio,final int fin)
 	{
-		int inicio=posarray[pos];
-		int fin= posarray[pos + 1];
-		if(animation_index <= inicio || animation_index>= fin ) {animation_index=inicio;}
-		else {animation_index++;}
+		if(animation_index < inicio || animation_index >= fin ) {animation_index=inicio;}
+		animation_index++;
 	}
 	
 	/*
@@ -149,3 +143,4 @@ public class GameObject {
 	}
 	
 }
+
