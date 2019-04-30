@@ -3,6 +3,7 @@ package state_machine.minigames;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -21,13 +22,12 @@ public class Minigame2 extends BasicGameState{
 	private final int stateId;
 	
 	private final KeyboardController keyboard;
-	private final ResourceLoader resLoader;
 	
 	private Image backgroundImage;
-	private Image ballImage;
-	private Image thunderZoneImage;
-	private Image shockImage;
-	private Image playerImage;
+	private Animation ballImage;
+	private Animation thunderZoneImage;
+	private Animation shockImage;
+	private Animation playerImage;
 
 	
 	private GameObject[] ballarray;
@@ -60,9 +60,8 @@ public class Minigame2 extends BasicGameState{
 	/*
 	 * Constructors
 	 */
-	public Minigame2(final int stateId, final ResourceLoader resLoader) {
+	public Minigame2(final int stateId) {
 		this.stateId = stateId;
-		this.resLoader = resLoader;
 		
 		keyboard = new KeyboardController(640);
 		numberBalls = 4;
@@ -76,18 +75,18 @@ public class Minigame2 extends BasicGameState{
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		backgroundImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME2_BACKGROUND);
-		ballImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME2_BALL);
-		thunderZoneImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME2_THUNDER_ZONE);
-		shockImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME2_SHOCK);
-		playerImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME2_PLAYER);
+		backgroundImage = ResourceLoader.loadImageFromUrl(Constants.PATH_MINIGAME2_BACKGROUND);
+		ballImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_BALL,64,64);
+		thunderZoneImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_THUNDER_ZONE,64,64);
+		shockImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_SHOCK,64,64);
+		playerImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_PLAYER,64,64);
 
 		
-		player = new GameObject(playerImage, 400, 100, 2.0f); 			// Export values to constants
+		player = new GameObject(playerImage,null, 400, 100, 2.0f); 			// Export values to constants
 
 		
 		for(int i = 0 ; i < numberBalls; i++) {
-			ballarray[i] = new GameObject(ballImage, 0, 0, 2.0f); 		// Export values to constants
+			ballarray[i] = new GameObject(ballImage,null, 0, 0, 2.0f); 		// Export values to constants
 		}
 
 
@@ -138,7 +137,7 @@ public class Minigame2 extends BasicGameState{
 							//Se crean objetos en los puntos calculados
 							for(int k=0;k<coordinates.size();k++)
 							{
-								zonethunder.add(new GameObject(thunderZoneImage, coordinates.get(k).getX(), coordinates.get(k).getY(), 1.0f));
+								zonethunder.add(new GameObject(thunderZoneImage,null, coordinates.get(k).getX(), coordinates.get(k).getY(), 1.0f));
 							}
 							coordinates.clear();
 						}

@@ -31,7 +31,7 @@ public class ResourceLoader {
 	/*
 	 * Loaders
 	 */
-	public Image loadImageFromUrl(final String path) {
+	public static Image loadImageFromUrl(final String path) {
 		try {
 			return new Image(path);
 		} catch (SlickException e) {
@@ -40,15 +40,20 @@ public class ResourceLoader {
 		}
 		return null;
 	}
-	public Animation loadAnimatioFromSpriteSheet(final SpriteSheet spriteSheet,int duration)
+	public static Animation animationfromimage(final String path,final int sizex,final int sizey)
+	{
+		return loadAnimatioFromSpriteSheet(loadSpriteSheetfromurl(path,sizex,sizey),100);
+	}
+	
+	public static Animation loadAnimatioFromSpriteSheet(final SpriteSheet spriteSheet,int duration)
 	{
 		return new Animation(spriteSheet,duration);
 	}
 	
-	public SpriteSheet loadSpriteSheetfromurl(final String path)
+	public static SpriteSheet loadSpriteSheetfromurl(final String path,final int sizex,final int sizey)
 	{
 		try {
-			return new SpriteSheet(path,64,64);
+			return new SpriteSheet(path,sizex,sizey);
 		} catch (SlickException e) {
 			System.out.println("Error loading image. " + e);
 			e.printStackTrace();

@@ -3,6 +3,7 @@ package state_machine.minigames;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,11 +24,10 @@ public class MiniGameTest extends BasicGameState {
 	private final int stateId;
 	
 	private final KeyboardController keyboard;
-	private final ResourceLoader resLoader;
-	
+
 	private Image backgroundImage;
-	private Image bananaImage;
-	private Image monkeyImage;
+	private Animation bananaImage;
+	private Animation monkeyImage;
 
 	private ArrayList<GameObject> arrayBananas;
 	private GameObject player;
@@ -41,9 +41,9 @@ public class MiniGameTest extends BasicGameState {
 	/*
 	 * Constructors
 	 */
-	public MiniGameTest(final int stateId, final ResourceLoader resLoader) {
+	public MiniGameTest(final int stateId) {
 		this.stateId = stateId;
-		this.resLoader = resLoader;
+
 		
 		keyboard = new KeyboardController(640); 
 		arrayBananas = new ArrayList<GameObject>();
@@ -60,10 +60,10 @@ public class MiniGameTest extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		backgroundImage = new Image(Constants.PATH_MINIGAME_TEST_BACKGROUND);
-		bananaImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_BANANA);
-		monkeyImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_MONKEY);
-		player = new GameObject(monkeyImage, x, 520, 0.25f); // Set values as constants
+		backgroundImage = ResourceLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_BACKGROUND);
+		bananaImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_TEST_BANANA,64,64);
+		monkeyImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_TEST_MONKEY,64,64);
+		player = new GameObject(monkeyImage,null, x, 520, 0.25f); // Set values as constants
 	}
 
 	/*
@@ -93,7 +93,7 @@ public class MiniGameTest extends BasicGameState {
 		for (GameObject go : arrayBananas) {
 			go.updateYByIncrease(speedDificulty);
 			if (player.getCollisionBox().intersects(go.getCollisionBox())) {
-				go.setDeleted(true);
+				//go.setDeleted(true);
 			}
 		}
 		
@@ -103,7 +103,7 @@ public class MiniGameTest extends BasicGameState {
 	 * Create Bananas
 	 */
 	private GameObject createBanana() {
-		return new GameObject(bananaImage, ThreadLocalRandom.current().nextInt(0, 1024), 0, 0.1f); // Set values as constants
+		return new GameObject(bananaImage,null, ThreadLocalRandom.current().nextInt(0, 1024), 0, 0.1f); // Set values as constants
 	}
 
 	/*

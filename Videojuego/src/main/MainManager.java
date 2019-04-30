@@ -18,8 +18,7 @@ public class MainManager extends StateBasedGame {
 	/*
 	 * Attributes
 	 */
-	private final ResourceLoader resLoader;
-	
+
 	private final int menuStateId = 0;
 	private final int boardStateId = 1; // TODO
 	private final int minigameTestStateId = 2;
@@ -31,12 +30,12 @@ public class MainManager extends StateBasedGame {
 	 */
 	public MainManager(String title) {
 		super(title);
-		resLoader = new ResourceLoader();
+
 		
-		this.addState(new MenuState(menuStateId, resLoader));
-		this.addState(new MiniGameTest(minigameTestStateId, resLoader));
-		this.addState(new Minigame1(minigame1Id, resLoader));
-		this.addState(new Minigame2(minigame2Id,resLoader));
+		this.addState(new MenuState(menuStateId));
+		this.addState(new MiniGameTest(minigameTestStateId));
+		this.addState(new Minigame1(minigame1Id));
+		this.addState(new Minigame2(minigame2Id));
 	}
 
 	/*
