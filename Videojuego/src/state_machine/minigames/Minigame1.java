@@ -1,11 +1,14 @@
 package state_machine.minigames;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -21,14 +24,14 @@ public class Minigame1 extends BasicGameState {
 	private final int stateId;
 	
 	private final KeyboardController keyboard;
-	private final ResourceLoader resLoader;
+
 	
 	private Image backgroundImage;
-	private Image keyimage;
-	private Image arrowimageright;
-	private Image arrowimageleft;
-	private Image arrowimageup;
-	private Image arrowimagedown;
+	private Animation keyimage;
+	private Animation arrowimageright;
+	private Animation arrowimageleft;
+	private Animation arrowimageup;
+	private Animation arrowimagedown;
 
 
 	private ArrayList<GameObject> arrayArrow;
@@ -43,9 +46,9 @@ public class Minigame1 extends BasicGameState {
 	/*
 	 * Constructors
 	 */
-	public Minigame1(final int stateId, final ResourceLoader resLoader) {
+	public Minigame1(final int stateId) {
 		this.stateId = stateId;
-		this.resLoader = resLoader;
+
 		
 		keyboard = new KeyboardController(640); 
 		arrayArrow = new ArrayList<GameObject>();
@@ -62,18 +65,14 @@ public class Minigame1 extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		backgroundImage = new Image("res/images/maxresdefault.png");
-		keyimage = new Image("res/images/teclas.png");
-		arrowimagedown = new Image("res/images/flechaabajo.png");
-		arrowimageup= new Image("res/images/flechaarriba.png");
-		arrowimageright= new Image("res/images/flechaderecha.png");
-		arrowimageleft= new Image("res/images/flechaizquierda.png");
-		//keys = new GameObject(keyimage,64,0,1.0f);
+		backgroundImage = ResourceLoader.loadImageFromUrl("res/images/maxresdefault.png");
 		
-		// REVISAR
-//		Animation anim = resLoader.loadAnimationFromSpriteSheet(resLoader.loadSpriteSheetFromUrl("res/images/teclas.png"), 10);
-		int[] temp = {0};
-//		keys = new GameObject(anim, temp, 64, 0, 1.0f);
+		keyimage = ResourceLoader.animationfromimage("res/images/teclas.png",64*4,64);
+		arrowimagedown = ResourceLoader.animationfromimage("res/images/flechaabajo.png",64,64);
+		arrowimageup= ResourceLoader.animationfromimage("res/images/flechaarriba.png",64,64);
+		arrowimageright= ResourceLoader.animationfromimage("res/images/flechaderecha.png",64,64);
+		arrowimageleft= ResourceLoader.animationfromimage("res/images/flechaizquierda.png",64,64);
+		keys=new GameObject(keyimage,null,64,0,1.0f);
 		
 }
 	/*
@@ -147,7 +146,6 @@ public class Minigame1 extends BasicGameState {
 	 * Create Bananas
 	 */
 	private GameObject createArrow() {
-		/*
 		GameObject arr1; 
 		
 		int arrowcolor=ThreadLocalRandom.current().nextInt(0, 4);
@@ -155,7 +153,7 @@ public class Minigame1 extends BasicGameState {
 		int posx=0;
 		String direction="";
 		
-		Image arrowaux = null;
+		Animation arrowaux = null;
 		switch(arrowcolor) {
 		
 		case 0:
@@ -180,11 +178,10 @@ public class Minigame1 extends BasicGameState {
 			break;
 		}
 		
-		arr1 = new GameObject(arrowaux, posx, 512, 1.0f); // Set values as constants
+		arr1 = new GameObject(arrowaux,null, posx, 512, 1.0f); // Set values as constants
 		arr1.setdirection(direction);
 		return arr1;
-		*/
-		return null;
+		
 	}
 	
 	
