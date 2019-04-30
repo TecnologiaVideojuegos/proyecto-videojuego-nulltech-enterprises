@@ -2,6 +2,7 @@ package minigames;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -10,77 +11,65 @@ public class GameObject {
 	/*
 	 * Attributes
 	 */
+	private Image image;
 	private final Animation anim;
-	private Shape collisionBox;
-	
-	private int currentAnimIdx;
-	private int[] startAnimIdxPtr;
-	
+	private int animation_index;
 	private int x;
 	private int y;
 	private final float scale;
+	private Shape collisionBox;
+	private boolean deleted;
+	private String direction;
 	
 	
 	/*
 	 * Constructors
 	 */
-	public GameObject(final Animation anim, final int[] startAnimIdxPtr, final int x, final int y, final float scale) {
-		this.anim = anim;
-		this.startAnimIdxPtr = startAnimIdxPtr;
-		this.currentAnimIdx = 0;
+	public GameObject(final Image image, final int x, final int y, final float scale) {
+		this.image = image;
+		this.anim=null;
+		this.animation_index=0;
 		this.x = x;
 		this.y = y;
 		this.scale = scale;
-		this.collisionBox = new Rectangle(x, y, anim.getWidth() * scale, anim.getHeight() * scale);
+		this.collisionBox = new Rectangle(x, y, image.getWidth() * scale, image.getHeight() * scale);
+		
+	}
+	public GameObject(final Animation anim,final int x,final int y,final float scale)
+	{
+		this.image=null;
+		this.anim = anim;
+		this.animation_index=0;
+		this.x = x;
+		this.y = y;
+		this.scale = scale;
+		this.collisionBox = new Rectangle(x, y, this.anim.getImage(0).getWidth() * scale, this.anim.getImage(0).getHeight() * scale);
+		
 	}
 	
-	
 	/*
-	 * Render
+	 * Rener
 	 */
 	public void render(Graphics g) {
-		anim.getImage(currentAnimIdx).draw(x, y, scale);
-		g.draw(collisionBox); // DEBUG
-	}
-	
-	
-	/*
-	 * Animation
-	 */
-	public Animation getAnimation() { return anim; }
-	
-	public void updateCurrentAnimation() {
-		if (++currentAnimIdx == anim.getFrameCount()) {
-			currentAnimIdx = 0;
-		}
-	}
-	
-	public void updateCurrentAnimation(final int pos) {
-		if (pos < startAnimIdxPtr.length) {
-			if (currentAnimIdx <= startAnimIdxPtr[pos] || currentAnimIdx <= startAnimIdxPtr[pos - 1]) {
-				currentAnimIdx = startAnimIdxPtr[pos];
-			} else {
-				currentAnimIdx++;
+		if (!deleted) {
+			if (anim != null) {
+				image=anim.getImage(animation_index);
 			}
+				
+			image.draw(x, y, scale);
+			//
+			
+			// g.draw(collisionBox); // DEBUG
 		}
 	}
 
-	
+	public String getdirection() {return direction;}
+	public void setdirection(String direction) {this.direction=direction;}
 	/*
 	 * X
 	 */
 	public int getX() { return x; }
 	public void setX(int x) { this.x = x; }
-	
-	public void updateX(final int newX) {
-		x = newX;
-		collisionBox.setX(x);
-	}
-	
-	public void updateXByIncrease(final int increase) {
-		x += increase;
-		collisionBox.setX(x);
-	}
 
 	/*
 	 * Y
@@ -88,16 +77,46 @@ public class GameObject {
 	public int getY() { return y; }
 	public void setY(int y) { this.y = y; }
 
+	/*
+	 * Image
+	 */
+	public Image getImage() { return image; }
+	
+	public void update_current_animation()
+	{
+		if(animation_index++==anim.getFrameCount()-1) {
+			animation_index=0;
+		}
+	}
+	public void update_current_animation(final int inicio,final int fin)
+	{
+		if(animation_index < inicio || animation_index >= fin ) {animation_index=inicio;}
+		animation_index++;
+	}
+	
+	/*
+	 * Update X and Y
+	 */
+	public void updateXByIncrease(final int oscilation) {
+		System.out.println(oscilation + " " + x);
+		x += oscilation;
+		collisionBox.setX(x);
+	}
+	
+	public void updateYByIncrease(final int oscilation) {
+		y += oscilation;
+		collisionBox.setY(y);
+	}
+	
+	public void updateX(final int newX) {
+		x = newX;
+		collisionBox.setX(x);
+	}
+	
 	public void updateY(final int newY) {
 		y = newY;
 		collisionBox.setY(y);
 	}
-	
-	public void updateYByIncrease(final int increase) {
-		y += increase;
-		collisionBox.setY(y);
-	}
-	
 
 	/*
 	 * CollisionBox
@@ -105,10 +124,17 @@ public class GameObject {
 	public Shape getCollisionBox() { return collisionBox; }
 	public void setCollisionBox(Shape collisionBox) { this.collisionBox = collisionBox; }
 
-	
 	/*
 	 * Scale
 	 */
 	public float getScale() { return scale; }
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+	
 }
