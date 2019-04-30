@@ -19,6 +19,7 @@ public class GameObject {
 	private int x;
 	private int y;
 	private final float scale;
+	private String direction;
 	
 	
 	/*
@@ -65,6 +66,8 @@ public class GameObject {
 		}
 	}
 
+	public String getdirection() {return direction;}
+	public void setdirection(String direction) {this.direction=direction;}
 	
 	/*
 	 * X
