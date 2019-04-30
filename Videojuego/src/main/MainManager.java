@@ -7,7 +7,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import resources.ResourceLoader;
 import state_machine.MenuState;
 import state_machine.minigames.MiniGameTest;
 
@@ -16,8 +15,6 @@ public class MainManager extends StateBasedGame {
 	/*
 	 * Attributes
 	 */
-	private final ResourceLoader resLoader;
-	
 	private final int menuStateId = 0;
 	private final int boardStateId = 1; // TODO
 	private final int minigameTestStateId = 2;
@@ -27,10 +24,9 @@ public class MainManager extends StateBasedGame {
 	 */
 	public MainManager(String title) {
 		super(title);
-		resLoader = new ResourceLoader();
 		
-		this.addState(new MenuState(menuStateId, resLoader));
-		this.addState(new MiniGameTest(minigameTestStateId, resLoader));
+		this.addState(new MenuState(menuStateId));
+		this.addState(new MiniGameTest(minigameTestStateId));
 	}
 
 	/*

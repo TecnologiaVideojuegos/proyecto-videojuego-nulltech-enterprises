@@ -33,31 +33,32 @@ public class ResourceLoader {
 	/*
 	 * Loaders
 	 */
-	public Image loadImageFromUrl(final String path) {
+	public static Image loadImageFromUrl(final String path) {
 		try {
 			return new Image(path);
 		} catch (SlickException e) {
-			System.out.println("Error loading image. " + e);
+			System.out.println("Error loading Image: " + path);
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public SpriteSheet loadSpriteSheetFromUrl(final String path, final int spriteSizeX, final int spriteSizeY) {
+	public static SpriteSheet loadSpriteSheetFromUrl(final String path, final int spriteSizeX, final int spriteSizeY) {
 		try {
 			return new SpriteSheet(path, spriteSizeX, spriteSizeY);
 		} catch (SlickException e) {
-			System.out.println("Error loading SpriteSheet. " + e);
+			System.out.println("Error loading SpriteSheet: " + path);
 			e.printStackTrace();
 		}
 		return null;
 		
 	}
 	
-	public Animation loadAnimationFromSpriteSheet(final SpriteSheet spriteSheet, final int duration)
-	{
+	public static Animation loadAnimationFromSpriteSheet(final SpriteSheet spriteSheet, final int duration) {
 		return new Animation(spriteSheet, duration);
 	}
 	
-	
+	public static Animation loadAnimationFromSpriteSheetUrl(final String path, final int spriteSizeX, final int spriteSizeY, final int duration) {
+		return new Animation(loadSpriteSheetFromUrl(path, spriteSizeX, spriteSizeY), duration);
+	}	
 }

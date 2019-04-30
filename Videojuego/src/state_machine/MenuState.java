@@ -16,7 +16,6 @@ public class MenuState extends BasicGameState {
 	 * Attributes
 	 */
 	private final int stateId;
-	private final ResourceLoader resLoader;
 	
 	private Image backgroundImage;
 	private Image playButton;
@@ -25,9 +24,8 @@ public class MenuState extends BasicGameState {
 	/*
 	 * Constructos
 	 */
-	public MenuState(final int stateId, final ResourceLoader resLoader) {
+	public MenuState(final int stateId) {
 		this.stateId = stateId;
-		this.resLoader = resLoader;
 		
 		this.scale = Constants.GRAPHICS_MENU_SCALE;
 	}
@@ -37,8 +35,8 @@ public class MenuState extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		backgroundImage = resLoader.loadImageFromUrl(Constants.PATH_MENU_BACKGROUND);
-		playButton = resLoader.loadImageFromUrl(Constants.PATH_MENU_PLAYBUTTON);
+		backgroundImage = ResourceLoader.loadImageFromUrl(Constants.PATH_MENU_BACKGROUND);
+		playButton = ResourceLoader.loadImageFromUrl(Constants.PATH_MENU_PLAYBUTTON);
 	}
 
 	/*
