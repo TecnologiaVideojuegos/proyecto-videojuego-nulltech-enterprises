@@ -10,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import state_machine.MenuState;
 import state_machine.minigames.MiniGameTest;
 import state_machine.minigames.Minigame1;
+import state_machine.minigames.Minigame5;
 
 public class MainManager extends StateBasedGame {
 	
@@ -20,6 +21,7 @@ public class MainManager extends StateBasedGame {
 	private final int boardStateId = 1; // TODO
 	private final int minigameTestStateId = 2;
 	private final int minigame1Id= 3;
+	private final int minigame5Id= 7;
 	
 	/*
 	 * Constructors
@@ -29,6 +31,7 @@ public class MainManager extends StateBasedGame {
 		this.addState(new MenuState(menuStateId));
 		this.addState(new MiniGameTest(minigameTestStateId));
 		this.addState(new Minigame1(minigame1Id));
+		this.addState(new Minigame5(minigame5Id));
 	}
 
 	/*
@@ -39,7 +42,8 @@ public class MainManager extends StateBasedGame {
 		this.getState(menuStateId).init(gc, this);
 		this.getState(minigameTestStateId).init(gc, this);
 		this.getState(minigame1Id).init(gc, this);
-		this.enterState(menuStateId); // DEBUG
+		this.getState(minigame5Id).init(gc,this);
+		this.enterState(minigame5Id); // DEBUG
 	}
 
 	/*

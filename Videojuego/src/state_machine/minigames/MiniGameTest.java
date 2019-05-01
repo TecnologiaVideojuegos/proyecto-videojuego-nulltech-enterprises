@@ -27,7 +27,7 @@ public class MiniGameTest extends BasicGameState {
 	
 	private Image backgroundImage;
 	private Animation bananaImage;
-	private Animation monkeyImage;
+	private Animation playerImage;
 
 	private ArrayList<GameObject> arrayBananas;
 	private GameObject player;
@@ -61,8 +61,8 @@ public class MiniGameTest extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		backgroundImage = new Image(Constants.PATH_MINIGAME_TEST_BACKGROUND);
 		bananaImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_BANANA, 400, 380, 5);
-		monkeyImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280, 5);
-		player = new GameObject(monkeyImage, null, x, 520, 0.25f); // Set values as constants
+		playerImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280, 5);
+		player = new GameObject(playerImage, null, x, 520, 0.25f); // Set values as constants
 	}
 
 	/*
@@ -82,7 +82,7 @@ public class MiniGameTest extends BasicGameState {
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		player.updateX(x += keyboard.getXMovement() * delta / 200f); // Set values as constants
+		player.updateX(x += keyboard.getXMovementPl1() * delta / 200f); // Set values as constants
 		
 		if (elapsedTime++ > spawnSpeed) {
 			arrayBananas.add(createBanana());
