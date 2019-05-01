@@ -61,8 +61,8 @@ public class MiniGameTest extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		backgroundImage = ResourceLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_BACKGROUND);
-		bananaImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_TEST_BANANA,64,64);
-		monkeyImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_TEST_MONKEY,64,64);
+		bananaImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_BANANA,64,64,100);
+		monkeyImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_MONKEY,64,64,100);
 		player = new GameObject(monkeyImage,null, x, 520, 0.25f); // Set values as constants
 	}
 

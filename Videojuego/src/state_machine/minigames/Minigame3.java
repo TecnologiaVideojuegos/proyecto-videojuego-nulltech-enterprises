@@ -52,12 +52,12 @@ public class Minigame3 extends BasicGameState{
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		backgroundImage=new Image("res/images/minijuegonieve.png");
-		playerImage=ResourceLoader.animationfromimage("res/images/protaderecha.png",64,64);
-		penguinImage=ResourceLoader.animationfromimage("res/images/penguin.png",64,64);
-		yetiImage=ResourceLoader.animationfromimage("res/images/yeti_nieve1.png",64,64);
-		tecla1Image=ResourceLoader.animationfromimage("res/images/teclaa1.png",64,64);
+		playerImage=ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/protaderecha.png",64,64,100);
+		penguinImage=ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/penguin.png",64,64,100);
+		yetiImage=ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/yeti_nieve1.png",64,64,100);
+		tecla1Image=ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/teclaa1.png",64,64,100);
 		
-		block_anim=ResourceLoader.animationfromimage("res/images/bloqueselecc1-sheet.png",64,64);
+		block_anim=ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/bloqueselecc1-sheet.png",64,64,100);
 		player=new GameObject(playerImage,null,70,90,2.0f);
 		iceblock=new GameObject(block_anim,null,400,100,2.0f);
 		penguin = new GameObject(penguinImage,null,50,100,0.7f);

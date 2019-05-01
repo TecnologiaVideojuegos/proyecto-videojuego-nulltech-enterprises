@@ -64,11 +64,11 @@ public class Minigame1 extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		backgroundImage = ResourceLoader.loadImageFromUrl("res/images/maxresdefault.png");
-		keyimage = ResourceLoader.animationfromimage("res/images/teclas.png",64,64);
-		arrowimagedown = ResourceLoader.animationfromimage("res/images/flechaabajo.png",64,64);
-		arrowimageup= ResourceLoader.animationfromimage("res/images/flechaarriba.png",64,64);
-		arrowimageright= ResourceLoader.animationfromimage("res/images/flechaderecha.png",64,64);
-		arrowimageleft= ResourceLoader.animationfromimage("res/images/flechaizquierda.png",64,64);
+		keyimage = ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/teclas.png",64,64,100);
+		arrowimagedown = ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/flechaabajo.png",64,64,100);
+		arrowimageup= ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/flechaarriba.png",64,64,100);
+		arrowimageright= ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/flechaderecha.png",64,64,100);
+		arrowimageleft= ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/flechaizquierda.png",64,64,100);
 		keys=new GameObject(keyimage,null,64,0,1.0f);
 		
 }
