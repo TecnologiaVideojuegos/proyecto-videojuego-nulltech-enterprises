@@ -14,17 +14,15 @@ public class Player {
 	private int puntuation;
 	private Coordinates coordinates;
 	
-	private final Animation character;
-	private final int scale;
+	private Animation character;
+	private int scale;
 	
 
 	/*
 	 * Constructors
 	 */
-	public Player(final String name, final Animation character, final int scale) {
+	public Player(final String name) {
 		this.name = name;
-		this.character = character;
-		this.scale = scale;
 	}
 	
 	
