@@ -82,7 +82,7 @@ public class MiniGameTest extends BasicGameState {
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		player.updateX(x += keyboard.getXMovement() * delta / 200f); // Set values as constants
+		player.updateX(x += keyboard.getXMovementPl1() * delta / 200f); // Set values as constants
 		
 		if (elapsedTime++ > spawnSpeed) {
 			arrayBananas.add(createBanana());
@@ -91,6 +91,7 @@ public class MiniGameTest extends BasicGameState {
 
 		for (GameObject go : (ArrayList<GameObject>) arrayBananas.clone()) {
 			go.updateYByIncrease(speedDificulty);
+			
 			if (player.getCollisionBox().intersects(go.getCollisionBox()) || gc.getHeight() < go.getY()) {
 				arrayBananas.remove(go);
 			}
