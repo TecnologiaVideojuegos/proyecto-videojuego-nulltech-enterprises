@@ -31,7 +31,7 @@ public class Minigame5 extends BasicGameState {
 	private Animation monkeyImage;
 	private Animation llamaImage;
 	
-	private ball bola1;
+	private ArrayList<ball> bolalist;
 	private GameObject player;
 	private GameObject disparo;
 	
@@ -41,7 +41,9 @@ public class Minigame5 extends BasicGameState {
 	private int xball;
 	private int elapsedTime;
 	private double sy,sx;
-	private boolean inicio,vueltax,vueltay;
+	private boolean inicio;
+	private boolean vueltax;
+	private boolean vueltay;
 	
 	/*
 	 * Constructors
@@ -57,12 +59,9 @@ public class Minigame5 extends BasicGameState {
 		elapsedTime = 0;
 		spawnSpeed = 50;
 		speedDificulty = 1;
-		sy=0;
-		sx=0;
+		inicio=true;
 		vueltax=false;
 		vueltay=false;
-		inicio=true;
-
 	}
 	
 
@@ -77,8 +76,8 @@ public class Minigame5 extends BasicGameState {
 		llamaImage = ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/llama.png", 64, 64, 5);
 		
 		player = new GameObject(monkeyImage, null, x, 480, 2f); // Set values as constants
-		bola1 = new ball(bola1Image, null, 150, 0, 2f,0.3,0);
-
+		bolalist = new ArrayList<ball>();
+		bolalist.add(createball(100,50));
 	}
 
 	/*
@@ -87,7 +86,9 @@ public class Minigame5 extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		backgroundImage.draw();
-		bola1.render(g);
+		for (ball go : bolalist){
+			go.render(g);
+		}
 		
 		player.render(g);
 	}
@@ -98,6 +99,31 @@ public class Minigame5 extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		
+		
+		
+		
+		for (ball go : bolalist){
+			movimiento_ball(go,delta);
+		}
+		
+		player.updateX(x += keyboard.getXMovementPl1() * delta / 200f); // Set values as constants
+		
+		if (elapsedTime++ > spawnSpeed) {
+
+			elapsedTime = 0;
+		}
+
+		
+			
+			/*if (player.getCollisionBox().intersects(bola1.getCollisionBox()) || gc.getHeight() < bola1.getY()) {
+				
+			}*/
+	}
+	
+	private void movimiento_ball(ball bola1 ,int delta)
+	{
+
+
 		if(vueltay == false && inicio == true) {
 			bola1.updateYByIncrease((int)(bola1.getVy()*(delta/200.0f)));
 			bola1.updateVy(bola1.getA()*delta/200.0f);
@@ -110,7 +136,7 @@ public class Minigame5 extends BasicGameState {
 		if(vueltay == true) {
 			bola1.updateYByIncrease((int)(-bola1.getVy()*(delta/200.0f)));
 			bola1.updateVy(-bola1.getA()*delta/200.0f);
-			if(bola1.getY() < 0)
+			if(bola1.getY() < 50)
 			{
 				vueltay=false;
 				bola1.setVy(0);
@@ -122,7 +148,7 @@ public class Minigame5 extends BasicGameState {
 			bola1.updateXByIncrease((int)(bola1.getVx()*(2*delta)));
 			if(bola1.getX() >960)
 			{
-				bola1.updateXByIncrease((int)(-2*sx));
+
 				vueltax=true;
 			}
 		}
@@ -132,32 +158,18 @@ public class Minigame5 extends BasicGameState {
 			if(bola1.getX()< 0)
 			{
 				vueltax=false;
-				bola1.updateXByIncrease((int)(-2*sx));
+
 			}
 		}
-		
-		
-		
-		player.updateX(x += keyboard.getXMovementPl1() * delta / 200f); // Set values as constants
-		
-		if (elapsedTime++ > spawnSpeed) {
-
-			elapsedTime = 0;
-		}
-
-		
-			
-			if (player.getCollisionBox().intersects(bola1.getCollisionBox()) || gc.getHeight() < bola1.getY()) {
-				
-			}
-	}
 	
+		
+	}
 	
 	/*
 	 * Create Bananas
 	 */
-	private GameObject createball() {
-		return new ball(bola1Image, null, bola1.getX(), bola1.getY(), 2f,0.2,0); // Set values as constants
+	private ball createball(int x0,int y0) {
+		return new ball(bola1Image, null, x0, y0, 2f,0.2,0); // Set values as constants
 		
 	}
 	private GameObject createshot() {
