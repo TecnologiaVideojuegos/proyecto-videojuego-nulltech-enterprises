@@ -82,7 +82,7 @@ public class MiniGameTest extends BasicGameState {
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		player.updateX(x += keyboard.getXMovement() * delta / 200f); // Set values as constants
+		player.updateX(x += keyboard.getXMovementPl1() * delta / 200f); // Set values as constants
 		
 		if (elapsedTime++ > spawnSpeed) {
 			arrayBananas.add(createBanana());

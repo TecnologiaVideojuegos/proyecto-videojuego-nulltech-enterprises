@@ -11,6 +11,7 @@ import entities.Player;
 import game.GameMode;
 import game.GameState;
 import state_machine.EndGameState;
+import state_machine.MapState;
 import state_machine.MenuState;
 import state_machine.minigames.MiniGameTest;
 import state_machine.minigames.Minigame1;
@@ -31,6 +32,7 @@ public class MainManager extends StateBasedGame {
 	private final int minigame1Id= 4;
 	
 	
+	
 	/*
 	 * Constructors
 	 */
@@ -38,6 +40,7 @@ public class MainManager extends StateBasedGame {
 		super(title);
 		
 		this.addState(new MenuState(menuStateId, this));
+		this.addState(new MapState(mapStateId, this));
 		this.addState(new EndGameState(endGameStateId, this));
 		this.addState(new MiniGameTest(minigameTestStateId));
 		this.addState(new Minigame1(minigame1Id));
@@ -49,11 +52,12 @@ public class MainManager extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		this.getState(menuStateId).init(gc, this);
+		this.getState(mapStateId).init(gc, this);
 		this.getState(endGameStateId).init(gc, this);
 		this.getState(minigameTestStateId).init(gc, this);
 		this.getState(minigame1Id).init(gc, this);
 		
-		this.enterState(menuStateId); // DEBUG
+		this.enterState(mapStateId); // DEBUG
 	}
 
 	/*
