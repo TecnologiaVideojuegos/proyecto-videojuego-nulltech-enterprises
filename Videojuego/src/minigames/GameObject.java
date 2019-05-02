@@ -18,7 +18,7 @@ public class GameObject {
 	
 	private int x;
 	private int y;
-	private final float scale;
+	private float scale;
 	private String direction;
 	
 	
@@ -113,5 +113,5 @@ public class GameObject {
 	 * Scale
 	 */
 	public float getScale() { return scale; }
-
+	public void setScale(float scale) {this.scale = scale;}
 }

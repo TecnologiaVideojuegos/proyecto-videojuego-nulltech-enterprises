@@ -34,6 +34,8 @@ public class Minigame5 extends BasicGameState {
 	private ArrayList<ball> bolalist;
 	private GameObject player;
 	private GameObject disparo;
+	private ball bola_choque;
+	
 	
 	private int spawnSpeed;
 	private int speedDificulty;
@@ -44,6 +46,8 @@ public class Minigame5 extends BasicGameState {
 	private boolean inicio;
 	private boolean vueltax;
 	private boolean vueltay;
+	private boolean nueva_bola;
+	
 	
 	/*
 	 * Constructors
@@ -62,6 +66,7 @@ public class Minigame5 extends BasicGameState {
 		inicio=true;
 		vueltax=false;
 		vueltay=false;
+		nueva_bola=false;
 	}
 	
 
@@ -76,8 +81,10 @@ public class Minigame5 extends BasicGameState {
 		llamaImage = ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/llama.png", 64, 64, 5);
 		
 		player = new GameObject(monkeyImage, null, x, 480, 2f); // Set values as constants
+		disparo = new GameObject(llamaImage, null, -10, -10, 1.2f);;
+		
 		bolalist = new ArrayList<ball>();
-		bolalist.add(createball(100,50));
+		bolalist.add(createball(100,50,1.8f,0.25,false,false));
 	}
 
 	/*
@@ -91,6 +98,9 @@ public class Minigame5 extends BasicGameState {
 		}
 		
 		player.render(g);
+		if (disparo != null) {
+			disparo.render(g);
+		}
 	}
 
 	/*
@@ -100,11 +110,34 @@ public class Minigame5 extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		
 		
+		if(keyboard.getPressedpl1(gc) == "Space")
+		{
+			disparo=createshot();
+			
+				
+			}
+			
+		
 		
 		
 		for (ball go : bolalist){
 			movimiento_ball(go,delta);
+			if (disparo.getCollisionBox().intersects(go.getCollisionBox())) {
+				go.setScale(go.getScale()/2);
+				nueva_bola=true;
+				bola_choque=go;
+				disparo.setY(-10);
+				disparo.setX(-10);
+
+			}
 		}
+			if(nueva_bola == true){
+				bolalist.add(createball(bola_choque.getX(),bola_choque.getY(),bola_choque.getScale(),-bola_choque.getVx(),bola_choque.getvueltax(),bola_choque.getvueltay() ));
+				nueva_bola=false;
+			}
+
+		
+		
 		
 		player.updateX(x += keyboard.getXMovementPl1() * delta / 200f); // Set values as constants
 		
@@ -112,52 +145,51 @@ public class Minigame5 extends BasicGameState {
 
 			elapsedTime = 0;
 		}
-
+		if (disparo != null) {
+			disparo.updateYByIncrease(-25);
+		}
 		
-			
-			/*if (player.getCollisionBox().intersects(bola1.getCollisionBox()) || gc.getHeight() < bola1.getY()) {
-				
-			}*/
+
 	}
 	
 	private void movimiento_ball(ball bola1 ,int delta)
 	{
 
 
-		if(vueltay == false && inicio == true) {
+		if(bola1.getvueltay() == false && inicio == true) {
 			bola1.updateYByIncrease((int)(bola1.getVy()*(delta/200.0f)));
 			bola1.updateVy(bola1.getA()*delta/200.0f);
 			if(bola1.getY() > 500)
 			{
-				vueltay=true;
+				bola1.setvueltay(true);
 			}
 		}
 		
-		if(vueltay == true) {
+		if(bola1.getvueltay() == true) {
 			bola1.updateYByIncrease((int)(-bola1.getVy()*(delta/200.0f)));
 			bola1.updateVy(-bola1.getA()*delta/200.0f);
 			if(bola1.getY() < 50)
 			{
-				vueltay=false;
+				bola1.setvueltay(false);
 				bola1.setVy(0);
 			}	
 		}
 		
-		if(vueltax== false && inicio ==true)
+		if(bola1.getvueltax()== false && inicio ==true)
 		{
 			bola1.updateXByIncrease((int)(bola1.getVx()*(2*delta)));
 			if(bola1.getX() >960)
 			{
 
-				vueltax=true;
+				bola1.setvueltaX(true);
 			}
 		}
-		if(vueltax==true)
+		if(bola1.getvueltax()==true)
 		{
 			bola1.updateXByIncrease((int)(-bola1.getVx()*(2*delta)));
 			if(bola1.getX()< 0)
 			{
-				vueltax=false;
+				bola1.setvueltaX(false);
 
 			}
 		}
@@ -168,12 +200,12 @@ public class Minigame5 extends BasicGameState {
 	/*
 	 * Create Bananas
 	 */
-	private ball createball(int x0,int y0) {
-		return new ball(bola1Image, null, x0, y0, 2f,0.2,0); // Set values as constants
+	private ball createball(int x0,int y0,float scale,double vx,boolean vueltax,boolean vueltay) {
+		return new ball(bola1Image, null, x0, y0, scale,vx,0,vueltax,vueltay); // Set values as constants
 		
 	}
 	private GameObject createshot() {
-		return new GameObject(llamaImage, null, player.getX(), player.getY(), 2f);
+		return new GameObject(llamaImage, null, player.getX()+32, player.getY()-32, 1.2f);
 	}
 
 	/*
@@ -191,12 +223,15 @@ class ball extends GameObject{
 
 	private double vx,vy;
 	private double a;
+	private boolean vueltay,vueltax;
 	
-	public ball(Animation anim, int[] startAnimIdxPtr, int x, int y, float scale,double vx,double vy) {
+	public ball(Animation anim, int[] startAnimIdxPtr, int x, int y, float scale,double vx,double vy,boolean vueltax,boolean vueltay) {
 		super(anim, startAnimIdxPtr, x, y, scale);
 		a=10;
 		this.vx=vx;
 		this.vy=vy;
+		this.vueltax=vueltax;
+		this.vueltay=vueltay;
 		// TODO Auto-generated constructor stub
 		
 		
@@ -212,5 +247,10 @@ class ball extends GameObject{
 	
 	public void setA(double a) {this.a=a;}
 	public double getA() {return a;}
-
+	
+	public void setvueltay(boolean vueltay) {this.vueltay=vueltay;}
+	public boolean getvueltay() {return vueltay;}
+	
+	public void setvueltaX(boolean vueltax) {this.vueltax=vueltax;}
+	public boolean getvueltax() {return vueltax;}
 }
