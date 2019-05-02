@@ -10,7 +10,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import entities.Player;
 import game.GameMode;
 import game.GameState;
-import resources.ResourceLoader;
 import state_machine.EndGameState;
 import state_machine.MenuState;
 import state_machine.minigames.MiniGameTest;
@@ -20,7 +19,6 @@ public class MainManager extends StateBasedGame {
 	/*
 	 * Attributes
 	 */
-	private final ResourceLoader resLoader;
 	private GameMode gameMode;
 	private GameState gameState;
 	private Player[] players;
@@ -35,11 +33,10 @@ public class MainManager extends StateBasedGame {
 	 */
 	public MainManager(String title) {
 		super(title);
-		resLoader = new ResourceLoader();
 		
 		this.addState(new MenuState(menuStateId, this));
 		this.addState(new EndGameState(endGameStateId, this));
-		this.addState(new MiniGameTest(minigameTestStateId, resLoader));
+		this.addState(new MiniGameTest(minigameTestStateId));
 	}
 
 	/*
@@ -51,7 +48,7 @@ public class MainManager extends StateBasedGame {
 		this.getState(endGameStateId).init(gc, this);
 		this.getState(minigameTestStateId).init(gc, this);
 		
-		this.enterState(endGameStateId); // DEBUG
+		this.enterState(menuStateId); // DEBUG
 	}
 
 	/*
