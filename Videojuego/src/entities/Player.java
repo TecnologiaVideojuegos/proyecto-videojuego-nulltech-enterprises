@@ -4,6 +4,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
 import util.Coordinates;
+import util.MapLocation;
 
 public class Player {
 	
@@ -13,6 +14,7 @@ public class Player {
 	private final String name;
 	private int puntuation;
 	private Coordinates coordinates;
+	private MapLocation mapLocation;
 	
 	private Animation character;
 	private int scale;
@@ -23,14 +25,23 @@ public class Player {
 	 */
 	public Player(final String name) {
 		this.name = name;
+		mapLocation = new MapLocation();
+	}
+	
+	public Player(final String name, final Animation character) {
+		this.name = name;
+		this.character = character;
+		mapLocation = new MapLocation();
 	}
 	
 	
 	/*
 	 * Render
 	 */
-	public void render(Graphics g) {
-		character.getCurrentFrame().draw(coordinates.getX(), coordinates.getY(), scale);
+	public void render(Graphics g, final int x, final int y) {
+		if(character != null) {
+			character.getCurrentFrame().draw(x, y, 0.25f);
+		}
 	}
 	
 	public void update() {
@@ -52,5 +63,13 @@ public class Player {
 	 * Name
 	 */
 	public String getName() { return name; }
+	
+	/*
+	 * Location
+	 */
+	public MapLocation getMapLocation() { return mapLocation; }
+	public void setMapLocation(final MapLocation mapLocation) { this.mapLocation = mapLocation; } 
 
 }
+
+

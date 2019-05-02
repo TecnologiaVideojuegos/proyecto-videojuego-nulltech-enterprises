@@ -30,4 +30,7 @@ public class GameState {
 	private void playerWins(final int playerIdx) {
 		System.out.println("Player " + playerIdx + " wins!");
 	}
+	
+	public int getPlayerTurn() { return playerTurn; }
+	public Player getPlayerByTurn() { return players[playerTurn]; }
 }
