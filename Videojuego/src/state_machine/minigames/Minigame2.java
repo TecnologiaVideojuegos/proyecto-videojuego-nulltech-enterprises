@@ -99,11 +99,12 @@ public class Minigame2 extends BasicGameState{
 	
 		shockImage.draw();
 
-		for(GameObject go : ballarray) {
-			go.render(g);
-		}
+
 		for(GameObject go: zonethunder)
 		{
+			go.render(g);
+		}
+		for(GameObject go : ballarray) {
 			go.render(g);
 		}
 	}
@@ -126,14 +127,13 @@ public class Minigame2 extends BasicGameState{
 			if (estado_juego==estados.Calculo){
 				for(int i=1;i<numberBalls;i++)
 				{
-					//Tomo la posicion de una bola arbitraria
-					int posx0=ballarray[i].getX();
-					int posy0=ballarray[i].getY();
-					for(int j=0;j<numberBalls-1;j++)
+					
+					for(int j=0;j<(numberBalls-i);j++)
 					{
-						//Se calculan los puntos entre bolas
-						if(posx0 != ballarray[j].getX() && posy0 != ballarray[j].getY()) {
-							coordenadas_recta_disparo(posx0,posy0,ballarray[j].getX(),ballarray[j].getY());
+							if(j!=1)
+							{
+								coordenadas_recta_disparo(ballarray[j].getX(),ballarray[j].getY(),ballarray[i].getX(),ballarray[i].getY());
+							}
 							//Se crean objetos en los puntos calculados
 							for(int k=0;k<coordinates.size();k++)
 							{
@@ -143,9 +143,10 @@ public class Minigame2 extends BasicGameState{
 						}
 						
 					}
+				estado_juego=estados.Espera;
 				
 				}
-				estado_juego=estados.Espera;
+				
 			}
 			if(stopTime++ > stopTimeDelay){
 				speedBall = 0;
@@ -155,7 +156,7 @@ public class Minigame2 extends BasicGameState{
 			}
 			
 		}
-	}
+	
 	private void updateMove() {
 		double posX, posY;
 		double theta=0;
@@ -177,29 +178,74 @@ public class Minigame2 extends BasicGameState{
 	}
 	private void coordenadas_recta_disparo(int x0, int y0 , int x1 , int y1)
 	{
-		int pxmedio=(x1+x0)/2;
-		int pymedio=(y1+y0)/2;
-		int n=0;
+			int x2,y2;
+			int stepX, stepY, p;
+			int dx = x1 - x0;
+			int dy = y1 - y0;
+
+			if (dx < 0) {
+				dx *= -1;
+				stepX = -1;
+			} else {
+				stepX = 1;
+				dx = x1 - x0;
+			}
+			
+			if (dy < 0) {
+				dy *= -1;
+				stepY = -1;
+			} else {
+				stepY = 1;
+			}
+
+			x2=x0;
+			y2=y0;
+			if (dx > dy) {
+				p = 2 * dy - dx;
+				
+				while (x2 != x1) {
+					x2 += stepX;
+					
+					if (p < 0) {
+						p += 2 * dy;
+					} else {
+						p +=  2 * (dy - dx);
+						y2 += stepY;
+					}
+					if( ( Math.sqrt( Math.pow(x2-x0 ,2) + Math.pow(y2-y0 ,2)) )>64)
+					{
+						coordinates.add(new Coordinates(x2, y2));
+						x0=x2;
+						y0=y2;
+					}
+					
+				}	
+			} 
+			else {
+				p = 2 * dx - dy;
+				
+				while (y2 != y1) {
+					y2 += stepY;
+					
+					if (p < 0) {
+						p += 2 * dx;
+					} else {
+						p +=  2 * (dx - dy);
+						x2 += stepX;
+					}
+					if( ( Math.sqrt( Math.pow(x2-x0 ,2) + Math.pow(y2-y0 ,2)) )>64)
+					{
+						coordinates.add(new Coordinates(x2, y2));
+						x0=x2;
+						y0=y2;
+					}
+				}
+			}
+			
+		}
+	
 		
-		//Va calculando el punto medio entre los puntos medios hasta que la distancia es menor que el tamaño del sprite
-		//para que no se solapen los de la misma recta.
-		while( (Math.sqrt( Math.pow(pxmedio-x0 ,2) + Math.pow(pymedio-y0 ,2) ))>64 )
-		{
-			n++; //numero particiones
-			x1=pxmedio;
-			y1=pymedio;
-			pxmedio=Math.abs(x1+x0)/2;
-			pymedio=Math.abs(y1+y0)/2;
-		}
-		n=n*2;
-		while(n>0)
-		{
-			//Una vez calculado la cantidad de divisiones posibles debido a la distancia entre bolas
-			//se añaden n puntos de la distancia minima posible.
-			coordinates.add(new Coordinates((int)pxmedio*(n), (int)pymedio*(n)));
-			n--;
-		}
-	}
+
 
 	
 	@Override
