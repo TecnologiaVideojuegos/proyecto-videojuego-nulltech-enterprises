@@ -40,6 +40,11 @@ public class ResourceLoader {
 		}
 		return null;
 	}
+	public static Animation animationfromimage(final String path,final int sizex,final int sizey,final int ms)
+	{
+		return loadAnimatioFromSpriteSheet(loadSpriteSheetfromurl(path,sizex,sizey),ms);
+	}	
+	
 	public static Animation animationfromimage(final String path,final int sizex,final int sizey)
 	{
 		return loadAnimatioFromSpriteSheet(loadSpriteSheetfromurl(path,sizex,sizey),100);

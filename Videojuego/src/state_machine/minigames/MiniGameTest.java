@@ -63,7 +63,7 @@ public class MiniGameTest extends BasicGameState {
 		backgroundImage = ResourceLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_BACKGROUND);
 		bananaImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_TEST_BANANA,64,64);
 		monkeyImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_TEST_MONKEY,64,64);
-		player = new GameObject(monkeyImage,null, x, 520, 0.25f); // Set values as constants
+		player = new GameObject(monkeyImage, x, 520, 0.25f); // Set values as constants
 	}
 
 	/*
@@ -103,7 +103,7 @@ public class MiniGameTest extends BasicGameState {
 	 * Create Bananas
 	 */
 	private GameObject createBanana() {
-		return new GameObject(bananaImage,null, ThreadLocalRandom.current().nextInt(0, 1024), 0, 0.1f); // Set values as constants
+		return new GameObject(bananaImage, ThreadLocalRandom.current().nextInt(0, 1024), 0, 0.1f); // Set values as constants
 	}
 
 	/*

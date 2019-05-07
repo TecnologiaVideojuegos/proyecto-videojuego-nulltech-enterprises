@@ -8,6 +8,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Ellipse;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -43,6 +46,7 @@ public class Minigame2 extends BasicGameState{
 	private int stopTimeDelay;
 	private int puntuacion;
 	private int espera;
+	private Ellipse circulo;
 
 	
 	private ArrayList<Coordinates> coordinates = new ArrayList<>();
@@ -55,7 +59,7 @@ public class Minigame2 extends BasicGameState{
 	private estados estado_juego=estados.Movimiento;
 	private int x;
 	private int y;
-
+	private int derecha;
 	
 	/*
 	 * Constructors
@@ -69,8 +73,10 @@ public class Minigame2 extends BasicGameState{
 		zonethunder=new ArrayList<GameObject>();
 		speedTimeDelay = 100;
 		stopTimeDelay = 350;
+		circulo=new Ellipse(520,270,285f,220f);
 		x=400;
 		y=100;
+
 		
 	}
 	
@@ -79,14 +85,14 @@ public class Minigame2 extends BasicGameState{
 		ballImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_BALL,64,64);
 		thunderZoneImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_THUNDER_ZONE,64,64);
 		shockImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_SHOCK,64,64);
-		playerImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_PLAYER,64,64);
+		playerImage = ResourceLoader.animationfromimage("res/images/prota_movimiento.png",64,64,10000);
 
 		
-		player = new GameObject(playerImage,null, 400, 100, 2.0f); 			// Export values to constants
+		player = new GameObject(playerImage,400, 100, 2.0f); 			// Export values to constants
 
 		
 		for(int i = 0 ; i < numberBalls; i++) {
-			ballarray[i] = new GameObject(ballImage,null, 0, 0, 2.0f); 		// Export values to constants
+			ballarray[i] = new GameObject(ballImage,0,0, 2.0f); 		// Export values to constants
 		}
 
 
@@ -95,11 +101,11 @@ public class Minigame2 extends BasicGameState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 		backgroundImage.draw();
+		
+
+		
+		g.draw(circulo);
 		player.render(g);
-	
-		shockImage.draw();
-
-
 		for(GameObject go: zonethunder)
 		{
 			go.render(g);
@@ -107,12 +113,40 @@ public class Minigame2 extends BasicGameState{
 		for(GameObject go : ballarray) {
 			go.render(g);
 		}
+		
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {	
-		player.updateX(x += keyboard.getXMovement() * delta / 200f);
-		player.updateY(y += keyboard.getYMovement() * delta / 200f);
+		
+		if(circulo.contains(player.getCollisionBox())){
+			player.updateX(x += keyboard.getXMovement() * delta / 400f);
+			player.updateY(y += keyboard.getYMovement() * delta / 400f);
+		}
+
+		
+		if(keyboard.getXMovement() == 100)
+		{
+			player.updateCurrentAnimation(15,18,2f);
+		}
+		if(keyboard.getXMovement() == -100)
+		{
+			player.updateCurrentAnimation(25,28,2f);
+		}
+		if(keyboard.getYMovement() ==100)
+		{
+			player.updateCurrentAnimation(20,24,2f);
+		}
+		if(keyboard.getYMovement() ==-100)
+		{
+			player.updateCurrentAnimation(0,3,2f);
+		}
+		if(keyboard.getXMovement()  == 0 && keyboard.getYMovement() == 0)
+		{
+			player.updateCurrentAnimation(20,20,2f);
+		}
+		
+		
 		if(speedBall++ < speedTimeDelay){
 			updateMove();
 
@@ -137,22 +171,55 @@ public class Minigame2 extends BasicGameState{
 							//Se crean objetos en los puntos calculados
 							for(int k=0;k<coordinates.size();k++)
 							{
-								zonethunder.add(new GameObject(thunderZoneImage,null, coordinates.get(k).getX(), coordinates.get(k).getY(), 1.0f));
+								GameObject aux=new GameObject(thunderZoneImage,coordinates.get(k).getX(), coordinates.get(k).getY(), 1.0f);
+								aux.updateCurrentAnimation(0, 1, 1.25f);
+								zonethunder.add(aux);
+								
 							}
 							coordinates.clear();
 						}
-						
+					
 					}
 				estado_juego=estados.Espera;
 				
 				}
 				
 			}
+			if(estado_juego == estados.Espera)
+			{
+				if(stopTime>stopTimeDelay*0.4)
+				{
+					for(int i=0;i<numberBalls;i++)
+					{
+						ballarray[i].updateCurrentAnimation(0,8,2f);
+					}
+				}
+				if(stopTime>stopTimeDelay/2)
+				{
+					for(GameObject go: zonethunder)
+					{
+						int colision=0;
+						go.changeAnimation(shockImage);
+						go.updateCurrentAnimation(0, 2, 1.25f);
+						if(go.getCollisionBox().intersects(player.getCollisionBox()))
+						{
+							player.updateCurrentAnimation(34,34,2f);
+						}
+
+					}
+					
+				}
+
+			}
+			
 			if(stopTime++ > stopTimeDelay){
 				speedBall = 0;
 				stopTime = 0;
 				estado_juego=estados.Movimiento;
 				zonethunder.clear();
+				for(int i=0;i<numberBalls;i++){
+					ballarray[i].updateCurrentAnimation(0,0,2f);
+				}
 			}
 			
 		}

@@ -72,7 +72,7 @@ public class Minigame1 extends BasicGameState {
 		arrowimageup= ResourceLoader.animationfromimage("res/images/flechaarriba.png",64,64);
 		arrowimageright= ResourceLoader.animationfromimage("res/images/flechaderecha.png",64,64);
 		arrowimageleft= ResourceLoader.animationfromimage("res/images/flechaizquierda.png",64,64);
-		keys=new GameObject(keyimage,null,64,0,1.0f);
+		keys=new GameObject(keyimage,64,0,1.0f);
 		
 }
 	/*
@@ -178,7 +178,7 @@ public class Minigame1 extends BasicGameState {
 			break;
 		}
 		
-		arr1 = new GameObject(arrowaux,null, posx, 512, 1.0f); // Set values as constants
+		arr1 = new GameObject(arrowaux, posx, 512, 1.0f); // Set values as constants
 		arr1.setdirection(direction);
 		return arr1;
 		

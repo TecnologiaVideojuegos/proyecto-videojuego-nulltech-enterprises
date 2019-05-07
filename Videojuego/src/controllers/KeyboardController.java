@@ -22,12 +22,14 @@ public class KeyboardController extends Input {
 		if (isKeyDown(Input.KEY_D)) return 100;
 		return 0;
 	}
-	
 	public int getYMovement() {
 		if (isKeyDown(Input.KEY_W)) return -100;
 		if (isKeyDown(Input.KEY_S)) return 100;
 		return 0;
 	}
+	
+
+
 	public String getPressedpl1(GameContainer gc)
 	{
 
