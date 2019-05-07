@@ -14,7 +14,6 @@ public class Constants {
 	 */
 	public static final float GRAPHICS_DEFAULT_SCALE = 3;
 	public static final float GRAPHICS_MENU_SCALE = 1.25f;
-	public static final int SPRITE_DEFAULT_DIMENSION = 64;
 
 	/*
 	 * Map
@@ -31,7 +30,10 @@ public class Constants {
 			/* MENU */
 	public static final String PATH_MENU_BACKGROUND = "res/images/T_Background.TGA";
 	public static final String PATH_MENU_SUNRAY = "res/images/T_Sunray1.TGA";
-	public static final String PATH_MENU_PLAYBUTTON = "res/images/T_PlayButton.TGA";
+	public static final String PATH_MENU_PLAYBUTTON_AM = "sugar_amarillo.png";
+	public static final String PATH_MENU_PLAYBUTTON = "sugar.png";
+	public static final String PATH_MENU_EXITBUTTON = "salir.png";
+	public static final String PATH_MENU_EXITBUTTON_AM = "salir_amarillo.png";
 			/* MINIGAME TEST */
 	public static final String PATH_MINIGAME_TEST_BACKGROUND = "res/images/selva2.jpg";
 	public static final String PATH_MINIGAME_TEST_BANANA = "res/images/banana.png";
