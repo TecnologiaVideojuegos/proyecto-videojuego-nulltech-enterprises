@@ -57,7 +57,7 @@ public class MainManager extends StateBasedGame {
 		this.getState(minigameTestStateId).init(gc, this);
 		this.getState(minigame1Id).init(gc, this);
 		
-		this.enterState(mapStateId); // DEBUG
+		this.enterState(menuStateId); // DEBUG
 	}
 
 	/*

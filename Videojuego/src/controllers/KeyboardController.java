@@ -62,6 +62,9 @@ public class KeyboardController extends Input {
 		if(gc.getInput().isKeyPressed(Input.KEY_NUMPAD1)) {
 			return lastpressedp1="One";
 		}
+		if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+			return lastpressedp1="Enter";
+			}
 		return "";
 		
 	}
