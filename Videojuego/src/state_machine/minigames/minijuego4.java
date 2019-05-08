@@ -52,7 +52,7 @@ public class minijuego4 extends BasicGameState {
 	private int saltopl2=0;
 	private int portador_bombapl1,portador_bombapl2;
 	private int caidapl1,caidapl2;
-	private int cambio;
+
 	
 	/*
 	 * Constructors
@@ -72,7 +72,7 @@ public class minijuego4 extends BasicGameState {
 		portador_bombapl2=0;
 		caidapl1=0;
 		caidapl2=0;
-		cambio=-1;
+
 	}
 	
 
@@ -129,7 +129,7 @@ public class minijuego4 extends BasicGameState {
 			{
 				portador_bombapl1=0;
 				portador_bombapl2=1;
-				cambio=0;
+				caidapl2=1;
 				
 			}
 			
@@ -145,7 +145,6 @@ public class minijuego4 extends BasicGameState {
 			{
 				portador_bombapl1=1;
 				portador_bombapl2=0;
-				cambio=1;
 				caidapl1=1;
 			}
 			
@@ -160,18 +159,26 @@ public class minijuego4 extends BasicGameState {
 			bomb.setX(player1.getX()+32);
 			bomb.setY(player1.getY()+60);
 		}
+		
         if(caidapl1==1)
         {
         	player1.updateCurrentAnimation(30,34,2f);
-        	
-        	//caidapl1=0;
+        	if (elapsedTime++ > spawnSpeed) {
+        		caidapl1=0;
+        		elapsedTime = 0;
+        	}
+        	//
         }
         if(caidapl2==1)
-        {
-       	 	player2.updateCurrentAnimation(30,34,2f);
-       	 	
-       	 	//caidapl2=0;
-        }
+        {        
+        	player2.updateCurrentAnimation(30,34,2f);
+        	if (elapsedTime++ > spawnSpeed) {
+        		caidapl2=0;
+        		elapsedTime = 0;
+        	}
+        	//
+		} 	 	
+		
 	}
 	
 
