@@ -29,9 +29,12 @@ public class Constants {
 			/* MAPAS */
 	public static final String PATH_MAP_TEST = "res/maps/map1.tmx";
 			/* MENU */
-	public static final String PATH_MENU_BACKGROUND = "res/images/T_Background.TGA";
+	public static final String PATH_MENU_BACKGROUND = "res/images/menu.png";
 	public static final String PATH_MENU_SUNRAY = "res/images/T_Sunray1.TGA";
-	public static final String PATH_MENU_PLAYBUTTON = "res/images/T_PlayButton.TGA";
+	public static final String PATH_MENU_PLAYBUTTON = "res/images/jugar.png";
+	public static final String PATH_MENU_OPTIONS = "res/images/opciones.png";
+	public static final String PATH_MENU_EXITBUTTON = "res/images/salir.png";
+	public static final String PATH_MENU_CREDITS = "res/images/creditos.png";
 			/* MINIGAME TEST */
 	public static final String PATH_MINIGAME_TEST_BACKGROUND = "res/images/selva2.jpg";
 	public static final String PATH_MINIGAME_TEST_BANANA = "res/images/banana.png";
