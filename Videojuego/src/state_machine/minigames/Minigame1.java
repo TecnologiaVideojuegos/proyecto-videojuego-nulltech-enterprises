@@ -66,7 +66,7 @@ public class Minigame1 extends BasicGameState {
 		arrowimageup= ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/flechaarriba.png",64,64, 100);
 		arrowimageright= ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/flechaderecha.png",64,64, 100);
 		arrowimageleft= ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/flechaizquierda.png",64,64, 100);
-		keys=new GameObject(keyimage,null,64,0,1.0f);
+		keys=new GameObject(keyimage,64,0,1.0f);
 	}
 	
 	
@@ -163,7 +163,7 @@ public class Minigame1 extends BasicGameState {
 			break;
 		}
 
-		GameObject go = new GameObject(arrowaux, null, posx, 512, 1.0f); // Set values as constants
+		GameObject go = new GameObject(arrowaux,posx, 512, 1.0f); // Set values as constants
 		go.setdirection(direction);
 		return go;
 	}

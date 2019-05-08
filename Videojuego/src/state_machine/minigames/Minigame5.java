@@ -80,11 +80,11 @@ public class Minigame5 extends BasicGameState {
 		monkeyImage = ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/protaderecha.png", 64, 64, 5);
 		llamaImage = ResourceLoader.loadAnimationFromSpriteSheetUrl("res/images/llama.png", 64, 64, 5);
 		
-		player = new GameObject(monkeyImage, null, x, 480, 2f); // Set values as constants
-		disparo = new GameObject(llamaImage, null, -10, -10, 1.2f);;
+		player = new GameObject(monkeyImage, x, 480, 2f); // Set values as constants
+		disparo = new GameObject(llamaImage, -10, -10, 1.2f);;
 		
 		bolalist = new ArrayList<ball>();
-		bolalist.add(createball(100,50,1.8f,0.25,false,false));
+		bolalist.add(createball(100,50,1.8f,0.25,false,false,500));
 	}
 
 	/*
@@ -129,10 +129,11 @@ public class Minigame5 extends BasicGameState {
 				disparo.setY(-10);
 				disparo.setX(-10);
 
+
 			}
 		}
 			if(nueva_bola == true){
-				bolalist.add(createball(bola_choque.getX(),bola_choque.getY(),bola_choque.getScale(),-bola_choque.getVx(),bola_choque.getvueltax(),bola_choque.getvueltay() ));
+				bolalist.add(createball(bola_choque.getX(),bola_choque.getY(),bola_choque.getScale(),bola_choque.getVx(),bola_choque.getvueltax(),bola_choque.getvueltay(),bola_choque.getymax() ));
 				nueva_bola=false;
 			}
 
@@ -159,7 +160,7 @@ public class Minigame5 extends BasicGameState {
 		if(bola1.getvueltay() == false && inicio == true) {
 			bola1.updateYByIncrease((int)(bola1.getVy()*(delta/200.0f)));
 			bola1.updateVy(bola1.getA()*delta/200.0f);
-			if(bola1.getY() > 500)
+			if(bola1.getY() > bola1.getymax()) //ymax=500
 			{
 				bola1.setvueltay(true);
 			}
@@ -168,7 +169,7 @@ public class Minigame5 extends BasicGameState {
 		if(bola1.getvueltay() == true) {
 			bola1.updateYByIncrease((int)(-bola1.getVy()*(delta/200.0f)));
 			bola1.updateVy(-bola1.getA()*delta/200.0f);
-			if(bola1.getY() < 50)
+			if(bola1.getY() < 50) //ymin=50
 			{
 				bola1.setvueltay(false);
 				bola1.setVy(0);
@@ -200,12 +201,12 @@ public class Minigame5 extends BasicGameState {
 	/*
 	 * Create Bananas
 	 */
-	private ball createball(int x0,int y0,float scale,double vx,boolean vueltax,boolean vueltay) {
-		return new ball(bola1Image, null, x0, y0, scale,vx,0,vueltax,vueltay); // Set values as constants
+	private ball createball(int x0,int y0,float scale,double vx,boolean vueltax,boolean vueltay,int ymax) {
+		return new ball(bola1Image, null, x0, y0, scale,vx,0,vueltax,vueltay,ymax); // Set values as constants
 		
 	}
 	private GameObject createshot() {
-		return new GameObject(llamaImage, null, player.getX()+32, player.getY()-32, 1.2f);
+		return new GameObject(llamaImage, player.getX()+32, player.getY()-32, 1.2f);
 	}
 
 	/*
@@ -224,14 +225,16 @@ class ball extends GameObject{
 	private double vx,vy;
 	private double a;
 	private boolean vueltay,vueltax;
+	private int ymax,xmax;
 	
-	public ball(Animation anim, int[] startAnimIdxPtr, int x, int y, float scale,double vx,double vy,boolean vueltax,boolean vueltay) {
-		super(anim, startAnimIdxPtr, x, y, scale);
+	public ball(Animation anim, int[] startAnimIdxPtr, int x, int y, float scale,double vx,double vy,boolean vueltax,boolean vueltay,int ymax) {
+		super(anim, x, y, scale);
 		a=10;
 		this.vx=vx;
 		this.vy=vy;
 		this.vueltax=vueltax;
 		this.vueltay=vueltay;
+		this.ymax=ymax;
 		// TODO Auto-generated constructor stub
 		
 		
@@ -253,4 +256,10 @@ class ball extends GameObject{
 	
 	public void setvueltaX(boolean vueltax) {this.vueltax=vueltax;}
 	public boolean getvueltax() {return vueltax;}
+	
+	public int getymax() {return ymax;}
+	public void setymax(int ymax) {this.ymax=ymax;}
+	
+	public int getxmax() {return xmax;}
+	public void setyxmax(int xmax) {this.xmax=xmax;}
 }
