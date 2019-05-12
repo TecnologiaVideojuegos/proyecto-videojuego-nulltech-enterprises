@@ -7,6 +7,7 @@ public class GameState {
 	private final GameMode gameMode;
 	private final Player[] players;
 	private int playerTurn;
+	private boolean finishingTurn;
 	
 	
 	/*
@@ -15,6 +16,14 @@ public class GameState {
 	public GameState(final GameMode gameMode, final Player[] players) {
 		this.gameMode = gameMode;
 		this.players = players;
+		
+		setReferenceInPlayers();
+	}
+	
+	private void setReferenceInPlayers() {
+		for(Player player : players) {
+			player.setGameState(this);
+		}
 	}
 	
 	
@@ -33,4 +42,7 @@ public class GameState {
 	
 	public int getPlayerTurn() { return playerTurn; }
 	public Player getPlayerByTurn() { return players[playerTurn]; }
+	public int nextTurn() { return playerTurn = ++playerTurn < players.length ? playerTurn : 0; }
+	public boolean getFinishingTurn() { return finishingTurn; }
+	public void setFinishingTurn(final boolean finishingTurn) { this.finishingTurn = finishingTurn; }
 }
