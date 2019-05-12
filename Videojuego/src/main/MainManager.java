@@ -7,36 +7,39 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import resources.ResourceLoader;
+import entities.Player;
+import game.GameMode;
+import game.GameState;
+import state_machine.EndGameState;
+import state_machine.MapState;
 import state_machine.MenuState;
 import state_machine.minigames.MiniGameTest;
-import state_machine.minigames.Minigame1;
 
 public class MainManager extends StateBasedGame {
 	
 	/*
 	 * Attributes
 	 */
-	private final ResourceLoader resLoader;
+	private GameMode gameMode;
+	private GameState gameState;
+	private Player[] players;
 	
-	/**
-	 * 
-	 */
 	private final int menuStateId = 0;
-	private final int boardStateId = 1; // TODO
-	private final int minigameTestStateId = 2;
-	private final int minigame1Id= 3;
+	private final int mapStateId = 1; // TODO
+	private final int endGameStateId = 2;
+	private final int minigameTestStateId = 3;
+	
 	
 	/*
 	 * Constructors
 	 */
 	public MainManager(String title) {
 		super(title);
-		resLoader = new ResourceLoader();
 		
-		this.addState(new MenuState(menuStateId, resLoader));
-		this.addState(new MiniGameTest(minigameTestStateId, resLoader));
-		this.addState(new Minigame1(minigame1Id, resLoader));
+		this.addState(new MenuState(menuStateId, this));
+		this.addState(new MapState(mapStateId, this));
+		this.addState(new EndGameState(endGameStateId, this));
+		this.addState(new MiniGameTest(minigameTestStateId));
 	}
 
 	/*
@@ -45,8 +48,10 @@ public class MainManager extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		this.getState(menuStateId).init(gc, this);
+		this.getState(mapStateId).init(gc, this);
+		this.getState(endGameStateId).init(gc, this);
 		this.getState(minigameTestStateId).init(gc, this);
-		this.getState(minigame1Id).init(gc, this);
+		
 		this.enterState(menuStateId); // DEBUG
 	}
 
@@ -65,6 +70,33 @@ public class MainManager extends StateBasedGame {
 		}
 	}
 	
+	public void initGameMode(final int pointToWins) {
+		gameMode = new GameMode(pointToWins);
+	}
+	
+	public void initGameState(final GameMode gameMode, final Player[] players) {
+		gameState = new GameState(gameMode, players);
+	}
+	
+	public void initPlayers(final Player[] players) {
+		this.players = players;
+	}
+	
+	public GameMode getGameMode() { return gameMode; }
+	public GameState getGameState() { return gameState; }
+	public Player[] getPlayers() { return players; }
+
+	/*
+	 * Get State Ids
+	 */
+	public int getMenuStateId() { return menuStateId; }
+	public int getMapStateId() { return mapStateId; }
+	public int getEndGameStateId() { return endGameStateId; }
+	public int getMinigameTestStateId() { return minigameTestStateId; }
+	
+	
+	
+
 
 	
 }

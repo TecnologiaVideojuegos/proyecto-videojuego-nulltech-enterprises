@@ -2,8 +2,6 @@ package maps;
 
 import org.newdawn.slick.tiled.TiledMap;
 
-import constants.Constants;
-
 public class Map {
 
 	/*
@@ -21,19 +19,14 @@ public class Map {
 	/*
 	 * Getters
 	 */
-	public TiledMap getMap() {
+	public TiledMap getTiledMap() {
 		return map;
 	}
 
 	/*
 	 * Render
 	 */
-	public void renderLayersBeforePlayer(final int x, final int y) {
-		map.render(x, y, map.getLayerIndex(Constants.MAP_LAYER_BELOW_PLAYER));
-		map.render(x, y, map.getLayerIndex(Constants.MAP_LAYER_WORLD));
-	}
-
-	public void renderLayersAfterPlayer(final int x, final int y) {
-		map.render(x, y, map.getLayerIndex(Constants.MAP_LAYER_ABOVE_PLAYER));
+	public void render(final int x, final int y) {
+		map.render(x, y);
 	}
 }

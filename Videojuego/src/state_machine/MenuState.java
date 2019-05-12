@@ -11,17 +11,15 @@ import constants.Constants;
 import controllers.KeyboardController;
 import main.MainManager;
 import resources.ResourceLoader;
-import org.newdawn.slick.state.*;
 public class MenuState extends BasicGameState {
 	
 	/*
 	 * Attributes
 	 */
 	private final int stateId;
-	private final ResourceLoader resLoader;
 	private KeyboardController keyboard;
-	private MainManager Juego;
-	private int MenuState;
+	private MainManager mainManager;
+	private int menuState;
 	
 	private Image backgroundImage;
 	private Image playButton;
@@ -33,12 +31,12 @@ public class MenuState extends BasicGameState {
 	/*
 	 * Constructos
 	 */
-	public MenuState(final int stateId, final ResourceLoader resLoader) {
+	public MenuState(final int stateId, final MainManager mainManager) {
 		this.stateId = stateId;
-		this.resLoader = resLoader;
+		this.mainManager = mainManager;
+		
 		keyboard = new KeyboardController(640);
 		this.scale = Constants.GRAPHICS_MENU_SCALE;
-		this.MenuState=0;
 	}
 
 	/*
@@ -46,11 +44,11 @@ public class MenuState extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		backgroundImage = resLoader.loadImageFromUrl(Constants.PATH_MENU_BACKGROUND);
-		playButton = resLoader.loadImageFromUrl(Constants.PATH_MENU_PLAYBUTTON);
-		playButtonAM = resLoader.loadImageFromUrl(Constants.PATH_MENU_PLAYBUTTON_AM);
-		exitButton = resLoader.loadImageFromUrl(Constants.PATH_MENU_EXITBUTTON);
-		exitButtonAM = resLoader.loadImageFromUrl(Constants.PATH_MENU_EXITBUTTON_AM);
+		backgroundImage = ResourceLoader.loadImageFromUrl(Constants.PATH_MENU_BACKGROUND);
+		playButton = ResourceLoader.loadImageFromUrl(Constants.PATH_MENU_PLAYBUTTON);
+		playButtonAM = ResourceLoader.loadImageFromUrl(Constants.PATH_MENU_PLAYBUTTON_AM);
+		exitButton = ResourceLoader.loadImageFromUrl(Constants.PATH_MENU_EXITBUTTON);
+		exitButtonAM = ResourceLoader.loadImageFromUrl(Constants.PATH_MENU_EXITBUTTON_AM);
 	}
 
 	/*
@@ -59,15 +57,16 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.drawImage(backgroundImage, 0, 0);
-		if(MenuState==0)
-		{
-		playButtonAM.draw(250,100, scale);
-		exitButton.draw(250, 300, scale);
-		}
-		if(MenuState==1)
-		{
-		playButton.draw(250,100, scale);
-		exitButtonAM.draw(250, 300, scale);
+		
+		switch (menuState) {
+			case 0:
+				playButtonAM.draw(250,100, scale);
+				exitButton.draw(250, 300, scale);
+				break;
+			case 1:
+				playButton.draw(250, 100, scale);
+				exitButtonAM.draw(250, 300, scale);
+				break;
 		}
 	}
 
@@ -76,22 +75,25 @@ public class MenuState extends BasicGameState {
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		keyboard = new KeyboardController(640);
-		if(keyboard.getPressedpl1(gc)!= ""){
-		if(keyboard.lastpressedp1=="Down") 
-		{
-			MenuState++;
-		}
-		if(keyboard.lastpressedp1=="Up") 
-		{
-			MenuState--;
-		}
-		if(MenuState==2)
-		{
-			Juego.enterState(3); 
+		if(keyboard.getPressedpl1(gc) != ""){
+			if(keyboard.lastpressedp1 == "Down") {
+				menuState = ++menuState > 1 ? 1 : menuState;
+			} else if(keyboard.lastpressedp1 == "Up") {
+				menuState = --menuState < 0 ? 0 : menuState;
+			} else if (keyboard.lastpressedp1 == "Enter") {
+				switch (menuState) {
+					case 0:
+						mainManager.enterState(mainManager.getMenuStateId());
+						break;
+					case 1:
+						System.exit(0);
+						break;
+				}
+			}
 		}
 	}
-	}
+	
+	
 	/*
 	 * Getters
 	 */

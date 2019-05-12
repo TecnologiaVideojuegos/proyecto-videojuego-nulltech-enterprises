@@ -35,4 +35,18 @@ public class MapLocation {
 	
 	public void setSquareId(final int squareId) { this.squareId = squareId; }
 	
+	
+	
+	public void updateLocation(final int direction, int mapCount) {
+		squareId += direction;
+		
+		if (squareId > 2) {
+			squareId = 0;
+			mapId = ++mapId == mapCount ? 0 : mapId;
+		} else if (squareId < 0) {
+			squareId = 2;
+			mapId = --mapId < 0 ? --mapCount : mapId;
+		}
+	}
+	
 }
