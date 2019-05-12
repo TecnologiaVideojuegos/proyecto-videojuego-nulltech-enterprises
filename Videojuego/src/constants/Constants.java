@@ -36,5 +36,8 @@ public class Constants {
 	public static final String PATH_MINIGAME_TEST_BACKGROUND = "res/images/selva2.jpg";
 	public static final String PATH_MINIGAME_TEST_BANANA = "res/images/banana.png";
 	public static final String PATH_MINIGAME_TEST_MONKEY = "res/images/monkey.png";
+			/* MAP STATE */
+	public static final String PATH_MAPSTATE_PLAYER_ONE = "res/images/TurnoJugador1.png";
+	public static final String PATH_MAPSTATE_PLAYER_TWO = "res/images/TurnoJugador2.png";
 	
 }
