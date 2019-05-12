@@ -91,6 +91,17 @@ public class MainManager extends StateBasedGame {
 	public GameState getGameState() { return gameState; }
 	public Player[] getPlayers() { return players; }
 
+	/*
+	 * Get State Ids
+	 */
+	public int getMenuStateId() { return menuStateId; }
+	public int getMapStateId() { return mapStateId; }
+	public int getEndGameStateId() { return endGameStateId; }
+	public int getMinigameTestStateId() { return minigameTestStateId; }
+	
+	
+	
+
 
 	
 }

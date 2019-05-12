@@ -44,51 +44,51 @@ public class KeyboardController extends Input {
 	
 	
 	
-	public String getPressedpl1(GameContainer gc)
-	{
-
+	public String getPressedpl1(GameContainer gc) {
 		if(gc.getInput().isKeyPressed(Input.KEY_W)){
-			return lastpressedp1="Up";
-			}
+			return lastpressedp1 = "Up";
+		}
 		if(gc.getInput().isKeyPressed(Input.KEY_S)){
-			return lastpressedp1="Down";
-			}
+			return lastpressedp1 = "Down";
+		}
 		if(gc.getInput().isKeyPressed(Input.KEY_A)){
-			return lastpressedp1="Left";
-			}
+			return lastpressedp1 = "Left";
+		}
 		if(gc.getInput().isKeyPressed(Input.KEY_D)){
-			return lastpressedp1="Right";
-			}
+			return lastpressedp1 = "Right";
+		}
 		if(gc.getInput().isKeyPressed(Input.KEY_NUMPAD1)) {
-			return lastpressedp1="One";
+			return lastpressedp1 = "One";
+		}
+		if(gc.getInput().isKeyPressed(Input.KEY_ENTER)) {
+			return lastpressedp1 = "Enter";
 		}
 		if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
 			return lastpressedp1="Enter";
 			}
 		return "";
-		
 	}
 	
-	public String getPressedpl2(GameContainer gc)
-	{
-
+	public String getPressedpl2(GameContainer gc) {
 		if(gc.getInput().isKeyPressed(Input.KEY_UP)){
-			return lastpressedp1="Up";
-			}
+			return lastpressedp1 = "Up";
+		}
 		if(gc.getInput().isKeyPressed(Input.KEY_DOWN)){
-			return lastpressedp1="Down";
-			}
+			return lastpressedp1 = "Down";
+		}
 		if(gc.getInput().isKeyPressed(Input.KEY_LEFT)){
-			return lastpressedp1="Left";
-			}
+			return lastpressedp1 = "Left";
+		}
 		if(gc.getInput().isKeyPressed(Input.KEY_RIGHT)){
-			return lastpressedp1="Right";
-			}
+			return lastpressedp1 = "Right";
+		}
 		if(gc.getInput().isKeyPressed(Input.KEY_NUMPAD1)) {
-			return lastpressedp1="One";
+			return lastpressedp1 = "One";
+		}
+		if(gc.getInput().isKeyPressed(Input.KEY_ENTER)) {
+			return lastpressedp1 = "Enter";
 		}
 		return "";
-		
 	}
 
 

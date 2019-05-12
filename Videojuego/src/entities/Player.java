@@ -96,5 +96,3 @@ public class Player {
 	public int getAvailableMovements() { return availableMovements; }
 	public void setAvailableMovements(final int availableMovements) { this.availableMovements = availableMovements; }
 }
-
-
