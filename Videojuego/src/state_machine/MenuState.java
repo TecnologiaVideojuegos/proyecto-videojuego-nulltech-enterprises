@@ -8,6 +8,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import constants.Constants;
+import entities.Player;
+import main.MainManager;
 import resources.ResourceLoader;
 
 public class MenuState extends BasicGameState {
@@ -16,18 +18,19 @@ public class MenuState extends BasicGameState {
 	 * Attributes
 	 */
 	private final int stateId;
-	private final ResourceLoader resLoader;
+	private final MainManager mainManager;
 	
 	private Image backgroundImage;
 	private Image playButton;
 	private float scale;
 	
+	
 	/*
 	 * Constructos
 	 */
-	public MenuState(final int stateId, final ResourceLoader resLoader) {
+	public MenuState(final int stateId, final MainManager mainManager) {
 		this.stateId = stateId;
-		this.resLoader = resLoader;
+		this.mainManager = mainManager;
 		
 		this.scale = Constants.GRAPHICS_MENU_SCALE;
 	}
@@ -37,8 +40,8 @@ public class MenuState extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		backgroundImage = resLoader.loadImageFromUrl(Constants.PATH_MENU_BACKGROUND);
-		playButton = resLoader.loadImageFromUrl(Constants.PATH_MENU_PLAYBUTTON);
+		backgroundImage = ResourceLoader.loadImageFromUrl(Constants.PATH_MENU_BACKGROUND);
+		playButton = ResourceLoader.loadImageFromUrl(Constants.PATH_MENU_PLAYBUTTON);
 	}
 
 	/*
@@ -63,6 +66,12 @@ public class MenuState extends BasicGameState {
 	@Override
 	public int getID() {
 		return stateId;
+	}
+	
+	private void initComponents(final int pointsToWin, final Player[] players) {
+		mainManager.initGameMode(pointsToWin);
+		mainManager.initPlayers(players);
+		mainManager.initGameState(mainManager.getGameMode(), mainManager.getPlayers());
 	}
 	
 }

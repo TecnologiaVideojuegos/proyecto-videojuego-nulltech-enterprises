@@ -14,6 +14,7 @@ public class Constants {
 	 */
 	public static final float GRAPHICS_DEFAULT_SCALE = 3;
 	public static final float GRAPHICS_MENU_SCALE = 1.25f;
+	public static final int SPRITE_DEFAULT_DIMENSION = 64;
 
 	/*
 	 * Map
@@ -38,5 +39,8 @@ public class Constants {
 			/* MINIGAME JUMP ROLLERS */
 	public static final String PATH_MINIGAME_JUMP_ROLLERS_ROLLER = "res/images/roller2.png";
 	public static final String PATH_MINIGAME_JUMP_ROLLERS_OVERLAY = "res/images/PantallaDividida.png";
+			/* MAP STATE */
+	public static final String PATH_MAPSTATE_PLAYER_ONE = "res/images/TurnoJugador1.png";
+	public static final String PATH_MAPSTATE_PLAYER_TWO = "res/images/TurnoJugador2.png";
 	
 }

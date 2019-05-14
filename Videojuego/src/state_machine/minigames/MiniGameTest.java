@@ -3,6 +3,7 @@ package state_machine.minigames;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,11 +24,10 @@ public class MiniGameTest extends BasicGameState {
 	private final int stateId;
 	
 	private final KeyboardController keyboard;
-	private final ResourceLoader resLoader;
 	
 	private Image backgroundImage;
-	private Image bananaImage;
-	private Image monkeyImage;
+	private Animation bananaImage;
+	private Animation monkeyImage;
 
 	private ArrayList<GameObject> arrayBananas;
 	private GameObject player;
@@ -41,9 +41,8 @@ public class MiniGameTest extends BasicGameState {
 	/*
 	 * Constructors
 	 */
-	public MiniGameTest(final int stateId, final ResourceLoader resLoader) {
+	public MiniGameTest(final int stateId) {
 		this.stateId = stateId;
-		this.resLoader = resLoader;
 		
 		keyboard = new KeyboardController(640); 
 		arrayBananas = new ArrayList<GameObject>();
@@ -61,9 +60,9 @@ public class MiniGameTest extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		backgroundImage = new Image(Constants.PATH_MINIGAME_TEST_BACKGROUND);
-		bananaImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_BANANA);
-		monkeyImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_MONKEY);
-		player = new GameObject(monkeyImage, x, 520, 0.25f); // Set values as constants
+		bananaImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_BANANA, 400, 380, 5);
+		monkeyImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280, 5);
+		player = new GameObject(monkeyImage, null, x, 520, 0.25f); // Set values as constants
 	}
 
 	/*
@@ -83,27 +82,27 @@ public class MiniGameTest extends BasicGameState {
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		player.updateX(x += keyboard.getXMovement() * delta / 200f); // Set values as constants
+		player.updateX(x += keyboard.getXMovementPl1() * delta / 200f); // Set values as constants
 		
 		if (elapsedTime++ > spawnSpeed) {
 			arrayBananas.add(createBanana());
 			elapsedTime = 0;
 		}
-		
-		for (GameObject go : arrayBananas) {
+
+		for (GameObject go : (ArrayList<GameObject>) arrayBananas.clone()) {
 			go.updateYByIncrease(speedDificulty);
-			if (player.getCollisionBox().intersects(go.getCollisionBox())) {
-				go.setDeleted(true);
+			
+			if (player.getCollisionBox().intersects(go.getCollisionBox()) || gc.getHeight() < go.getY()) {
+				arrayBananas.remove(go);
 			}
 		}
-		
 	}
 	
 	/*
 	 * Create Bananas
 	 */
 	private GameObject createBanana() {
-		return new GameObject(bananaImage, ThreadLocalRandom.current().nextInt(0, 1024), 0, 0.1f); // Set values as constants
+		return new GameObject(bananaImage, null, ThreadLocalRandom.current().nextInt(0, 1024), 0, 0.1f); // Set values as constants
 	}
 
 	/*

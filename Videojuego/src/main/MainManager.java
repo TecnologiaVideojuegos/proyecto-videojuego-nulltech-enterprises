@@ -8,7 +8,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import constants.Constants;
-import resources.ResourceLoader;
+import entities.Player;
+import game.GameMode;
+import game.GameState;
+import state_machine.EndGameState;
+import state_machine.MapState;
 import state_machine.MenuState;
 import state_machine.minigames.MiniGameJumpRollers;
 import state_machine.minigames.MiniGameTest;
@@ -18,23 +22,29 @@ public class MainManager extends StateBasedGame {
 	/*
 	 * Attributes
 	 */
-	private final ResourceLoader resLoader;
+	private GameMode gameMode;
+	private GameState gameState;
+	private Player[] players;
 	
 	private final int menuStateId = 0;
-	private final int boardStateId = 1; // TODO
-	private final int minigameTestStateId = 2;
-	private final int minigameJumpRollersStateId = 3;
+	private final int boardStateId = 5; // TODO
+	private final int mapStateId = 1; // TODO
+	private final int endGameStateId = 2;
+	private final int minigameTestStateId = 3;
+	private final int minigameJumpRollersStateId = 4;
+
 	
 	/*
 	 * Constructors
 	 */
 	public MainManager(String title) {
 		super(title);
-		resLoader = new ResourceLoader();
 		
-		this.addState(new MenuState(menuStateId, resLoader));
-		this.addState(new MiniGameTest(minigameTestStateId, resLoader));
-		this.addState(new MiniGameJumpRollers(minigameJumpRollersStateId, resLoader));
+		this.addState(new MenuState(menuStateId, this));
+		this.addState(new MapState(mapStateId, this));
+		this.addState(new EndGameState(endGameStateId, this));
+		this.addState(new MiniGameTest(minigameTestStateId));
+		this.addState(new MiniGameJumpRollers(minigameJumpRollersStateId));
 	}
 
 	/*
@@ -43,6 +53,8 @@ public class MainManager extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		this.getState(menuStateId).init(gc, this);
+		this.getState(mapStateId).init(gc, this);
+		this.getState(endGameStateId).init(gc, this);
 		this.getState(minigameTestStateId).init(gc, this);
 		this.getState(minigameJumpRollersStateId).init(gc, this);
 		
@@ -63,6 +75,22 @@ public class MainManager extends StateBasedGame {
 			e.printStackTrace();
 		}
 	}
+	
+	public void initGameMode(final int pointToWins) {
+		gameMode = new GameMode(pointToWins);
+	}
+	
+	public void initGameState(final GameMode gameMode, final Player[] players) {
+		gameState = new GameState(gameMode, players);
+	}
+	
+	public void initPlayers(final Player[] players) {
+		this.players = players;
+	}
+	
+	public GameMode getGameMode() { return gameMode; }
+	public GameState getGameState() { return gameState; }
+	public Player[] getPlayers() { return players; }
 
 
 	

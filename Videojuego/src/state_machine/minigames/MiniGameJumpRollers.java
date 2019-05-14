@@ -3,6 +3,7 @@ package state_machine.minigames;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,13 +24,11 @@ public class MiniGameJumpRollers extends BasicGameState {
 	private final int stateId;
 	
 	private final KeyboardController keyboard;
-	private final ResourceLoader resLoader;
 	
 	// Images
 	private Image backgroundImage;
 	private Image overlayImage;
-	private Image rollerImage;
-	private Image monkeyImage;
+	private Animation rollerImage;
 
 	// Rollers
 	private ArrayList<GameObject> arrayRollers1;
@@ -45,9 +44,8 @@ public class MiniGameJumpRollers extends BasicGameState {
 	/*
 	 * Constructors
 	 */
-	public MiniGameJumpRollers(final int stateId, final ResourceLoader resLoader) {
+	public MiniGameJumpRollers(final int stateId) {
 		this.stateId = stateId;
-		this.resLoader = resLoader;
 		
 		keyboard = new KeyboardController(640); 
 		
@@ -65,10 +63,11 @@ public class MiniGameJumpRollers extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		backgroundImage = new Image(Constants.PATH_MINIGAME_TEST_BACKGROUND);
 		overlayImage = new Image(Constants.PATH_MINIGAME_JUMP_ROLLERS_OVERLAY);
-		rollerImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME_JUMP_ROLLERS_ROLLER);
-		monkeyImage = resLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_MONKEY);
-		player1 = new GameObject(monkeyImage, (int) (Constants.WINDOW_DEFAULT_WIDTH * 0.1), (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - monkeyImage.getHeight() * 0.25), 0.25f); // Set values as constants
-		player2 = new GameObject(monkeyImage, (int) (Constants.WINDOW_DEFAULT_WIDTH * 0.1), (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - monkeyImage.getHeight() * 0.25), 0.25f); // Set values as constants
+		rollerImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_JUMP_ROLLERS_ROLLER, 64, 64, 1);
+		Animation playerAnim = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280, 5);
+		
+		player1 = new GameObject(playerAnim, null, (int) (Constants.WINDOW_DEFAULT_WIDTH * 0.1), (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25), 0.25f); // Set values as constants
+		player2 = new GameObject(playerAnim, null, (int) (Constants.WINDOW_DEFAULT_WIDTH * 0.1), (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - playerAnim.getHeight() * 0.25), 0.25f); // Set values as constants
 		
 //		addRollersToArrays(20);
 	}
@@ -97,14 +96,13 @@ public class MiniGameJumpRollers extends BasicGameState {
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		player1.updateY((int) (player1.getY() + keyboard.getYMovement() * delta / 200f)); // Set values as constants
+		player1.updateY((int) (player1.getY() + keyboard.getYMovementPl1() * delta / 200f)); // Set values as constants
 		
 		for (GameObject go : (ArrayList<GameObject>) arrayRollers1.clone()) {
 			go.updateXByIncrease(-speedDificulty);
 			if (player1.getCollisionBox().intersects(go.getCollisionBox())) {
 				// END GAME
-			} else if (go.getX() < -go.getImage().getWidth() * go.getScale()) {
-				go.setDeleted(true);
+			} else if (go.getX() < -go.getAnimation().getCurrentFrame().getWidth() * go.getScale()) {
 				arrayRollers1.remove(go);
 			}
 		}
@@ -113,8 +111,7 @@ public class MiniGameJumpRollers extends BasicGameState {
 			go.updateXByIncrease(-speedDificulty);
 			if (player2.getCollisionBox().intersects(go.getCollisionBox())) {
 				// END GAME
-			} else if (go.getX() < -go.getImage().getWidth() * go.getScale()) {
-				go.setDeleted(true);
+			} else if (go.getX() < -go.getAnimation().getCurrentFrame().getWidth() * go.getScale()) {
 				arrayRollers2.remove(go);
 			}
 		}
@@ -129,8 +126,8 @@ public class MiniGameJumpRollers extends BasicGameState {
 	private void addRollersToArrays(final int numberOfRollers) {
 		for (int i = 0; i < numberOfRollers; i++) {
 			final int posX = (arrayRollers1.size() > 0 ? arrayRollers1.get(arrayRollers1.size() - 1).getX() : Constants.WINDOW_DEFAULT_WIDTH) + ThreadLocalRandom.current().nextInt(100, 500);
-			arrayRollers1.add(new GameObject(rollerImage, posX, (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - monkeyImage.getHeight() * 0.25), 0.5f));
-			arrayRollers2.add(new GameObject(rollerImage, posX, (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - monkeyImage.getHeight() * 0.25), 0.5f));			
+			arrayRollers1.add(new GameObject(rollerImage, null, posX, (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - rollerImage.getHeight() * 0.25), 0.5f));
+			arrayRollers2.add(new GameObject(rollerImage, null, posX, (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - rollerImage.getHeight() * 0.25), 0.5f));			
 		}
 	}
 	
