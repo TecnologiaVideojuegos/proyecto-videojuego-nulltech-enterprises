@@ -15,7 +15,7 @@ public class Player {
 	 */
 	private final String name;
 	private int puntuation;
-	private int availableMovements;
+	private int availableMovements = 10;
 	
 	private Coordinates coordinates;
 	private MapLocation mapLocation;
@@ -27,6 +27,8 @@ public class Player {
 	private Animation character;
 	private int scale;
 	
+	private final PlayerGameState state;
+	
 
 	/*
 	 * Constructors
@@ -35,6 +37,7 @@ public class Player {
 		this.name = name;
 		mapLocation = new MapLocation();
 		keyboard = new KeyboardController(600);
+		state = new PlayerGameState();
 	}
 	
 	public Player(final String name, final Animation character) {
@@ -42,6 +45,7 @@ public class Player {
 		this.character = character;
 		mapLocation = new MapLocation();
 		keyboard = new KeyboardController(600);
+		state = new PlayerGameState();
 	}
 	
 	
@@ -54,18 +58,25 @@ public class Player {
 		}
 	}
 	
-	public void update(final boolean inputDisabled, final int mapCount) {
-		if (!inputDisabled) {
+	public void update(final int mapCount, final int delta) {
+		if (!state.inputDisabled) {
 			/** REMAKE THIS PART **/
 			if (availableMovements > 0 && keyboard.getXMovementPl1() < 0) {
 				mapLocation.updateLocation(-1, mapCount);
 				availableMovements--;
+				state.inputDisabled = true;
 			} else if (availableMovements > 0 && keyboard.getXMovementPl1() > 0) {
 				mapLocation.updateLocation(1, mapCount);
 				availableMovements--;
-			} else if (keyboard.getYMovementPl1() < 0) {
+				state.inputDisabled = true;
+			} else if (keyboard.getActionButtonPl1() > 0) {
 				gameState.setFinishingTurn(true);
 			}
+		} else if (state.inputDisabled && state.elapsedTime < 2000) {
+			state.elapsedTime += delta;
+		} else if (state.inputDisabled) {
+			state.elapsedTime = 0;
+			state.inputDisabled = false;
 		}
 	}
 	
@@ -95,6 +106,11 @@ public class Player {
 	
 	public int getAvailableMovements() { return availableMovements; }
 	public void setAvailableMovements(final int availableMovements) { this.availableMovements = availableMovements; }
+}
+
+class PlayerGameState {
+	boolean inputDisabled;
+	int elapsedTime;
 }
 
 

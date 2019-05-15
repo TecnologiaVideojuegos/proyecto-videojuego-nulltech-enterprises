@@ -10,6 +10,11 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import constants.Constants;
 import entities.Player;
+import game.GameState;
+import hud.GameScoreHud;
+import hud.IBasicHudComponent;
+import hud.MiniMapHud;
+import hud.MovementHud;
 import main.MainManager;
 import maps.Map;
 import resources.ResourceLoader;
@@ -24,11 +29,14 @@ public class MapState extends BasicGameState {
 	private Image playerOneTurn;
 	private Image playerTwoTurn;
 	
+	private IBasicHudComponent[] hudComponents;
+	
 	public MapState(final int stateId, final MainManager mainManager) {
 		this.stateId = stateId;
 		this.mainManager = mainManager;
 		
 		state = new MapGameState();
+		
 	}
 
 	@Override
@@ -45,6 +53,9 @@ public class MapState extends BasicGameState {
 		
 		playerOneTurn = ResourceLoader.loadImageFromUrl(Constants.PATH_MAPSTATE_PLAYER_ONE);
 		playerTwoTurn = ResourceLoader.loadImageFromUrl(Constants.PATH_MAPSTATE_PLAYER_TWO);
+		
+		hudComponents = loadHudComponets(mainManager.getGameState());
+		for(IBasicHudComponent c : hudComponents) { c.init(gc); }
 	}
 
 	@Override
@@ -66,10 +77,17 @@ public class MapState extends BasicGameState {
 			
 		}
 		
+		//Interface
+		for(IBasicHudComponent c : hudComponents) { c.render(gc, g); }
+		
+		//Flechas
+		
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		// Interface
+//		for(IBasicHudComponent c : hudComponents) { c.update(); }
 		
 		if (mainManager.getGameState().getFinishingTurn()) {
 			
@@ -92,8 +110,6 @@ public class MapState extends BasicGameState {
 			
 		} else {
 			
-			mainManager.getGameState().getPlayerByTurn().update(state.switchingTurnAnimation || state.loadingMapAnimation, maps.length);
-			
 			if (state.switchingTurnAnimation && state.timeElapsed < 3000) {
 				
 				state.timeElapsed += delta;
@@ -103,10 +119,24 @@ public class MapState extends BasicGameState {
 				state.timeElapsed = 0;
 				state.switchingTurnAnimation = false;
 				
+			} else if (!state.loadingMapAnimation) {
+				
+				mainManager.getGameState().getPlayerByTurn().update(maps.length, delta);
+				
 			}
 			
 		}
 		
+	}
+	
+	private IBasicHudComponent[] loadHudComponets(final GameState gameState) {
+		IBasicHudComponent[] components = new IBasicHudComponent[3];
+		
+		components[0] = new MiniMapHud(gameState);
+		components[1] = new GameScoreHud(gameState);
+		components[2] = new MovementHud(gameState);
+		
+		return components;
 	}
 	
 

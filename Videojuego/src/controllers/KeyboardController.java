@@ -29,6 +29,11 @@ public class KeyboardController extends Input {
 		return 0;
 	}
 	
+	public int getActionButtonPl1() {
+		if (isKeyDown(Input.KEY_ENTER)) return 1;
+		return 0;
+	}
+	
 	public int getXMovementPl2() {
 		if (isKeyDown(Input.KEY_LEFT)) return -100;
 		if (isKeyDown(Input.KEY_RIGHT)) return 100;
