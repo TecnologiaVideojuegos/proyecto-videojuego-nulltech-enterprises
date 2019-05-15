@@ -1,5 +1,8 @@
 package state_machine;
 
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -94,9 +97,9 @@ public class MapState extends BasicGameState {
 			if (mainManager.getGameState().nextTurn() == 0) {
 				
 				// LAUNCH MINIGAME
-//				mainManager.enterState(3);
 				System.out.println("MINIGAME");
 				state.loadingMapAnimation = true;
+				enterMiniGame();
 				
 			} else {
 				
@@ -139,6 +142,20 @@ public class MapState extends BasicGameState {
 		return components;
 	}
 	
+	private void enterMiniGame() {
+		ArrayList<Integer> notPlayed = mainManager.getGameState().getMiniGameStateIdsNotPlayed();
+		ArrayList<Integer> played = mainManager.getGameState().getMiniGameStateIdsPlayed();
+		
+		if(notPlayed.isEmpty()) {
+			mainManager.getGameState().setMiniGameStateIdsNotPlayed(played);
+		}
+		
+		int idx = ThreadLocalRandom.current().nextInt(0, notPlayed.size());
+		notPlayed.add(played.get(idx));
+		played.remove(idx);
+		
+		mainManager.enterState(played.get(played.size() - 1));
+	}
 
 	
 	@Override
