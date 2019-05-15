@@ -19,6 +19,8 @@ public class GameObject {
 	private int x;
 	private int y;
 	private final float scale;
+	private int yMovement;
+	private int xMovement;
 	
 	
 	/*
@@ -93,6 +95,11 @@ public class GameObject {
 		collisionBox.setX(x);
 	}
 	
+	public void updateXByXMovement() {
+		x += xMovement;
+		collisionBox.setX(x);
+	}
+	
 	public void updateY(final int newY) {
 		y = newY;
 		collisionBox.setY(y);
@@ -102,6 +109,15 @@ public class GameObject {
 		y += increase;
 		collisionBox.setY(y);
 	}
+	
+	public void updateYByYMovement() {
+		y += yMovement;
+		collisionBox.setY(y);
+	}
+	
+	
+	public int getYMovement() { return yMovement; }
+	public void setYMovement(final int yMovement) { this.yMovement = yMovement;}
 	
 
 	/*
