@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import constants.Constants;
 import controllers.KeyboardController;
+import entities.Player;
 import main.MainManager;
 import resources.ResourceLoader;
 public class MenuState extends BasicGameState {
@@ -37,6 +38,8 @@ public class MenuState extends BasicGameState {
 		
 		keyboard = new KeyboardController(640);
 		this.scale = Constants.GRAPHICS_MENU_SCALE;
+		
+		TEMPinitComponents();
 	}
 
 	/*
@@ -91,6 +94,13 @@ public class MenuState extends BasicGameState {
 				}
 			}
 		}
+	}
+	
+	private void TEMPinitComponents() {
+		Player[] players = {new Player("JUGADOR 1"), new Player("JUGADOR 2")};
+		mainManager.initPlayers(players);
+		mainManager.initGameMode(5);
+		mainManager.initGameState(mainManager.getGameMode(), mainManager.getPlayers());
 	}
 	
 	

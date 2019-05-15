@@ -1,18 +1,21 @@
 package main;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import constants.Constants;
 import entities.Player;
 import game.GameMode;
 import game.GameState;
 import state_machine.EndGameState;
 import state_machine.MapState;
 import state_machine.MenuState;
+import state_machine.minigames.MiniGameJumpRollers;
 import state_machine.minigames.MiniGameTest;
 import state_machine.minigames.Minigame1;
 
@@ -26,12 +29,13 @@ public class MainManager extends StateBasedGame {
 	private Player[] players;
 	
 	private final int menuStateId = 0;
+	private final int boardStateId = 5; // TODO
 	private final int mapStateId = 1; // TODO
 	private final int endGameStateId = 2;
 	private final int minigameTestStateId = 3;
-	private final int minigame1Id= 4;
-	
-	
+	private final int minigameJumpRollersStateId = 4;
+	private final int minigame1Id= 5;
+
 	
 	/*
 	 * Constructors
@@ -42,8 +46,9 @@ public class MainManager extends StateBasedGame {
 		this.addState(new MenuState(menuStateId, this));
 		this.addState(new MapState(mapStateId, this));
 		this.addState(new EndGameState(endGameStateId, this));
-		this.addState(new MiniGameTest(minigameTestStateId));
 		this.addState(new Minigame1(minigame1Id));
+		this.addState(new MiniGameTest(minigameTestStateId, this));
+		this.addState(new MiniGameJumpRollers(minigameJumpRollersStateId, this));
 	}
 
 	/*
@@ -56,6 +61,7 @@ public class MainManager extends StateBasedGame {
 		this.getState(endGameStateId).init(gc, this);
 		this.getState(minigameTestStateId).init(gc, this);
 		this.getState(minigame1Id).init(gc, this);
+		this.getState(minigameJumpRollersStateId).init(gc, this);
 		
 		this.enterState(menuStateId); // DEBUG
 	}
@@ -67,7 +73,7 @@ public class MainManager extends StateBasedGame {
 		try {
 			System.setProperty("org.lwjgl.librarypath", new File("native/windows").getAbsolutePath());
 			AppGameContainer app = new AppGameContainer(new MainManager("Constants.WINDOW_TITLE"));
-			app.setDisplayMode(1024, 640, false); // Set window size as constants
+			app.setDisplayMode(Constants.WINDOW_DEFAULT_WIDTH, Constants.WINDOW_DEFAULT_HEIGHT, false); // Set window size as constants
 			app.setTargetFrameRate(60);
 			app.start();
 		} catch (SlickException e) {
@@ -80,7 +86,10 @@ public class MainManager extends StateBasedGame {
 	}
 	
 	public void initGameState(final GameMode gameMode, final Player[] players) {
-		gameState = new GameState(gameMode, players);
+		ArrayList<Integer> minigames = new ArrayList<Integer>();
+		minigames.add(minigameJumpRollersStateId);
+		
+		gameState = new GameState(gameMode, players, minigames);
 	}
 	
 	public void initPlayers(final Player[] players) {

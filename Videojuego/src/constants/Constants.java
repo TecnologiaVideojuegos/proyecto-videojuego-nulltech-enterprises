@@ -6,8 +6,8 @@ public class Constants {
 	 * Window
 	 */
 	public static final String WINDOW_TITLE = "Grupo F";
-	public static final int WINDOW_DEFAULT_HEIGHT = 400;
-	public static final int WINDOW_DEFAULT_WIDTH = 600;
+	public static final int WINDOW_DEFAULT_HEIGHT = 640;
+	public static final int WINDOW_DEFAULT_WIDTH = 1024;
 	
 	/*
 	 * Graphics
@@ -43,6 +43,9 @@ public class Constants {
 	public static final String PATH_MINIGAME_TEST_BACKGROUND = "res/images/selva2.jpg";
 	public static final String PATH_MINIGAME_TEST_BANANA = "res/images/banana.png";
 	public static final String PATH_MINIGAME_TEST_MONKEY = "res/images/monkey.png";
+			/* MINIGAME JUMP ROLLERS */
+	public static final String PATH_MINIGAME_JUMP_ROLLERS_ROLLER = "res/images/roller2.png";
+	public static final String PATH_MINIGAME_JUMP_ROLLERS_OVERLAY = "res/images/PantallaDividida.png";
 			/* MAP STATE */
 	public static final String PATH_MAPSTATE_PLAYER_ONE = "res/images/TurnoJugador1.png";
 	public static final String PATH_MAPSTATE_PLAYER_TWO = "res/images/TurnoJugador2.png";

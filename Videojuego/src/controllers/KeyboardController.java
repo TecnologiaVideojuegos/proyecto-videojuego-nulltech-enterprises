@@ -18,31 +18,32 @@ public class KeyboardController extends Input {
 	 * GETTERS
 	 */
 	public int getXMovementPl1() {
-		if (isKeyDown(Input.KEY_A)) return -100;
-		if (isKeyDown(Input.KEY_D)) return 100;
+		if (isKeyDown(Input.KEY_A)) return -1;
+		if (isKeyDown(Input.KEY_D)) return 1;
 		return 0;
 	}
 	
 	public int getYMovementPl1() {
-		if (isKeyDown(Input.KEY_W)) return -100;
-		if (isKeyDown(Input.KEY_S)) return 100;
+		if (isKeyDown(Input.KEY_W)) return -1;
+		if (isKeyDown(Input.KEY_S)) return 1;
 		return 0;
 	}
 	
 	public int getActionButtonPl1() {
 		if (isKeyDown(Input.KEY_ENTER)) return 1;
+		if (isKeyDown(Input.KEY_P)) return 2;
 		return 0;
 	}
 	
 	public int getXMovementPl2() {
-		if (isKeyDown(Input.KEY_LEFT)) return -100;
-		if (isKeyDown(Input.KEY_RIGHT)) return 100;
+		if (isKeyDown(Input.KEY_LEFT)) return -1;
+		if (isKeyDown(Input.KEY_RIGHT)) return 1;
 		return 0;
 	}
 	
 	public int getYMovementPl2() {
-		if (isKeyDown(Input.KEY_UP)) return -100;
-		if (isKeyDown(Input.KEY_DOWN)) return 100;
+		if (isKeyDown(Input.KEY_UP)) return -1;
+		if (isKeyDown(Input.KEY_DOWN)) return 1;
 		return 0;
 	}
 	
