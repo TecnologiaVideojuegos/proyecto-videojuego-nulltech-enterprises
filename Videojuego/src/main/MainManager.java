@@ -1,6 +1,7 @@
 package main;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -43,8 +44,8 @@ public class MainManager extends StateBasedGame {
 		this.addState(new MenuState(menuStateId, this));
 		this.addState(new MapState(mapStateId, this));
 		this.addState(new EndGameState(endGameStateId, this));
-		this.addState(new MiniGameTest(minigameTestStateId));
-		this.addState(new MiniGameJumpRollers(minigameJumpRollersStateId));
+		this.addState(new MiniGameTest(minigameTestStateId, this));
+		this.addState(new MiniGameJumpRollers(minigameJumpRollersStateId, this));
 	}
 
 	/*
@@ -58,7 +59,7 @@ public class MainManager extends StateBasedGame {
 		this.getState(minigameTestStateId).init(gc, this);
 		this.getState(minigameJumpRollersStateId).init(gc, this);
 		
-		this.enterState(minigameJumpRollersStateId); // DEBUG
+		this.enterState(mapStateId); // DEBUG
 	}
 
 	/*
@@ -81,7 +82,10 @@ public class MainManager extends StateBasedGame {
 	}
 	
 	public void initGameState(final GameMode gameMode, final Player[] players) {
-		gameState = new GameState(gameMode, players);
+		ArrayList<Integer> minigames = new ArrayList<Integer>();
+		minigames.add(minigameJumpRollersStateId);
+		
+		gameState = new GameState(gameMode, players, minigames);
 	}
 	
 	public void initPlayers(final Player[] players) {

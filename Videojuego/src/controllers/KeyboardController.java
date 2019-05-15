@@ -31,6 +31,7 @@ public class KeyboardController extends Input {
 	
 	public int getActionButtonPl1() {
 		if (isKeyDown(Input.KEY_ENTER)) return 1;
+		if (isKeyDown(Input.KEY_P)) return 2;
 		return 0;
 	}
 	

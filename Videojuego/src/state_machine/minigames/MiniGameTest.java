@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import constants.Constants;
 import controllers.KeyboardController;
+import main.MainManager;
 import minigames.GameObject;
 import resources.ResourceLoader;
 
@@ -24,6 +25,7 @@ public class MiniGameTest extends BasicGameState {
 	private final int stateId;
 	
 	private final KeyboardController keyboard;
+	private final MainManager mainManager;
 	
 	private Image backgroundImage;
 	private Animation bananaImage;
@@ -41,8 +43,9 @@ public class MiniGameTest extends BasicGameState {
 	/*
 	 * Constructors
 	 */
-	public MiniGameTest(final int stateId) {
+	public MiniGameTest(final int stateId, final MainManager mainManager) {
 		this.stateId = stateId;
+		this.mainManager = mainManager;
 		
 		keyboard = new KeyboardController(640); 
 		arrayBananas = new ArrayList<GameObject>();

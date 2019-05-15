@@ -13,6 +13,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import constants.Constants;
 import controllers.KeyboardController;
+import hud.EndMiniGameHud;
+import main.MainManager;
 import minigames.GameObject;
 import minigames.MiniGameCurrentState;
 import resources.ResourceLoader;
@@ -24,8 +26,10 @@ public class MiniGameJumpRollers extends BasicGameState {
 	 */
 	private final int stateId;
 	
+	private final MainManager mainManager;
 	private final KeyboardController keyboard;
 	private MiniGameCurrentState state;
+	private final EndMiniGameHud endMiniGame;
 	
 	// Images
 	private Image backgroundImage;
@@ -49,8 +53,9 @@ public class MiniGameJumpRollers extends BasicGameState {
 	/*
 	 * Constructors
 	 */
-	public MiniGameJumpRollers(final int stateId) {
+	public MiniGameJumpRollers(final int stateId, final MainManager mainManager) {
 		this.stateId = stateId;
+		this.mainManager = mainManager;
 		
 		keyboard = new KeyboardController(640); 
 		
@@ -59,6 +64,7 @@ public class MiniGameJumpRollers extends BasicGameState {
 
 		speedDificulty = 3;
 		state = new MiniGameCurrentState();
+		endMiniGame = new EndMiniGameHud(mainManager, keyboard);
 	}
 	
 
@@ -77,7 +83,8 @@ public class MiniGameJumpRollers extends BasicGameState {
 		
 		playerOneMinY = (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25);
 		playerOneMaxY = (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25) - 75;
-//		addRollersToArrays(20);
+		
+		endMiniGame.init(gc);
 	}
 
 	/*
@@ -99,12 +106,8 @@ public class MiniGameJumpRollers extends BasicGameState {
 		overlayImage.draw(0, 0, Constants.WINDOW_DEFAULT_WIDTH, Constants.WINDOW_DEFAULT_HEIGHT);
 		
 		// State
-		if (state.playerOneWins && state.playerTwoWins) {
-			// Empate
-		} else if (state.playerOneWins) {
-			// Jugador 1 gana
-		} else if (state.playerTwoWins) {
-			// Jugador 2 gana
+		if (state.endMiniGameScreen) {
+			endMiniGame.render(gc, g);
 		} else if (state.gamePaused) {
 			// Pausa
 		}
@@ -115,16 +118,21 @@ public class MiniGameJumpRollers extends BasicGameState {
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		if (!state.gamePaused) {
+		if (!state.gamePaused && !state.endMiniGameScreen) {
 			// Player movement
 			playerOneMovement();
 			playerTwoMovement();
+			
+			if (keyboard.getActionButtonPl1() == 2) {
+				state.gamePaused = true;
+			}
 			
 			/** REFACTOR THIS PART **/
 			for (GameObject go : (ArrayList<GameObject>) arrayRollers1.clone()) {
 				go.updateXByIncrease(-speedDificulty);
 				if (player1.getCollisionBox().intersects(go.getCollisionBox())) {
-					state.playerTwoWins = state.gamePaused = true;
+					state.endMiniGameScreen = true;
+					endMiniGame.setPlayerWinner(1);
 				} else if (go.getX() < -go.getAnimation().getCurrentFrame().getWidth() * go.getScale()) {
 					arrayRollers1.remove(go);
 				}
@@ -133,7 +141,8 @@ public class MiniGameJumpRollers extends BasicGameState {
 			for (GameObject go : (ArrayList<GameObject>) arrayRollers2.clone()) {
 				go.updateXByIncrease(-speedDificulty);
 				if (player2.getCollisionBox().intersects(go.getCollisionBox())) {
-					state.playerOneWins = state.gamePaused = true;
+					state.endMiniGameScreen = true;
+					endMiniGame.setPlayerWinner(endMiniGame.getPlayerWinner() + 2);
 				} else if (go.getX() < -go.getAnimation().getCurrentFrame().getWidth() * go.getScale()) {
 					arrayRollers2.remove(go);
 				}
@@ -142,6 +151,11 @@ public class MiniGameJumpRollers extends BasicGameState {
 	
 			// Add obstacles
 			if (arrayRollers1.size() < 10) { addRollersToArrays(20); }
+			
+		} else if (state.endMiniGameScreen) {
+			endMiniGame.update();
+		} else {
+			// PAUSE
 		}
 	}
 	
