@@ -42,6 +42,7 @@ public class GameState {
 	
 	public int getPlayerTurn() { return playerTurn; }
 	public Player getPlayerByTurn() { return players[playerTurn]; }
+	public Player getPlayerByIdx(final int idx) { return players[idx]; }
 	public int nextTurn() { return playerTurn = ++playerTurn < players.length ? playerTurn : 0; }
 	public boolean getFinishingTurn() { return finishingTurn; }
 	public void setFinishingTurn(final boolean finishingTurn) { this.finishingTurn = finishingTurn; }
