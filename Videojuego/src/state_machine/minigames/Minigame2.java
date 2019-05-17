@@ -8,9 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Ellipse;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -45,13 +43,11 @@ public class Minigame2 extends BasicGameState{
 	private int speedTimeDelay;
 	private int stopTimeDelay;
 	private int puntuacion;
-	private int espera;
 	private Ellipse circulo;
-
+	private int colision=0;
 	
 	private ArrayList<Coordinates> coordinates = new ArrayList<>();
 	
-	private ArrayList<ArrayList<Coordinates>> rectas_adecuadas;
 	public enum estados
 	{
 	    Movimiento,Espera, Calculo
@@ -59,7 +55,7 @@ public class Minigame2 extends BasicGameState{
 	private estados estado_juego=estados.Movimiento;
 	private int x;
 	private int y;
-	private int derecha;
+
 	
 	/*
 	 * Constructors
@@ -73,7 +69,7 @@ public class Minigame2 extends BasicGameState{
 		zonethunder=new ArrayList<GameObject>();
 		speedTimeDelay = 100;
 		stopTimeDelay = 350;
-		circulo=new Ellipse(520,270,285f,220f);
+		circulo=new Ellipse(520,290,295f,230f);
 		x=400;
 		y=100;
 
@@ -119,9 +115,30 @@ public class Minigame2 extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {	
 		
-		if(circulo.contains(player.getCollisionBox())){
-			player.updateX(x += keyboard.getXMovement() * delta / 400f);
-			player.updateY(y += keyboard.getYMovement() * delta / 400f);
+		System.out.println(puntuacion);
+
+		
+		if(!circulo.contains(player.getCollisionBox())){
+			player.setX(x -= keyboard.getXMovement() * delta / 50f);
+			player.setY(y -= keyboard.getYMovement() * delta / 50f);
+			player.getCollisionBox().setX(x);
+			player.getCollisionBox().setY(y);
+			if(x>800 || x< 200 || y> 512 || y<0)
+			{
+				player.setX(x=460);
+				player.setY(y=220);
+				player.getCollisionBox().setX(x);
+				player.getCollisionBox().setY(y);
+			}
+			
+		}
+		else
+		{
+			if (colision!=1)
+			{
+				player.updateX(x += keyboard.getXMovement() * delta / 400f);
+				player.updateY(y += keyboard.getYMovement() * delta / 400f);
+			}
 		}
 
 		
@@ -185,6 +202,7 @@ public class Minigame2 extends BasicGameState{
 				}
 				
 			}
+			
 			if(estado_juego == estados.Espera)
 			{
 				if(stopTime>stopTimeDelay*0.4)
@@ -194,22 +212,23 @@ public class Minigame2 extends BasicGameState{
 						ballarray[i].updateCurrentAnimation(0,8,2f);
 					}
 				}
+
 				if(stopTime>stopTimeDelay/2)
 				{
 					for(GameObject go: zonethunder)
 					{
-						int colision=0;
+						
 						go.changeAnimation(shockImage);
 						go.updateCurrentAnimation(0, 2, 1.25f);
+						
+
 						if(go.getCollisionBox().intersects(player.getCollisionBox()))
 						{
 							player.updateCurrentAnimation(34,34,2f);
+							colision=1;
 						}
-
 					}
-					
 				}
-
 			}
 			
 			if(stopTime++ > stopTimeDelay){
@@ -217,8 +236,14 @@ public class Minigame2 extends BasicGameState{
 				stopTime = 0;
 				estado_juego=estados.Movimiento;
 				zonethunder.clear();
+				if(colision == 0)
+				{
+					puntuacion+=10;
+				}
+				colision=0;
 				for(int i=0;i<numberBalls;i++){
 					ballarray[i].updateCurrentAnimation(0,0,2f);
+					
 				}
 			}
 			

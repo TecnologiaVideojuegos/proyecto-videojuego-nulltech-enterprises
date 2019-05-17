@@ -43,7 +43,7 @@ public class GameObject {
 			movimiento.draw(x,y);
 
 
-		//g.draw(collisionBox); // DEBUG
+		g.draw(collisionBox); // DEBUG
 	}
 	
 	
