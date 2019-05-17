@@ -133,7 +133,7 @@ public class Minigame5 extends BasicGameState {
 			}
 		}
 			if(nueva_bola == true){
-				bolalist.add(createball(bola_choque.getX(),bola_choque.getY(),bola_choque.getScale(),bola_choque.getVx(),bola_choque.getvueltax(),bola_choque.getvueltay(),bola_choque.getymax() ));
+				bolalist.add(createball(bola_choque.getX(),bola_choque.getY(),bola_choque.getScale(),bola_choque.getVx(),bola_choque.getvueltax(),!bola_choque.getvueltay(),bola_choque.getymax() ));
 				nueva_bola=false;
 			}
 
