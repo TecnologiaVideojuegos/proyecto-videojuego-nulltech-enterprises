@@ -295,12 +295,28 @@ public class Minigame3 extends BasicGameState{
 		//Comprobacion victoria o derrota
 		for(int i=0;i<personajesizq1.length;i++)
 		{
-			
+			if(personajesizq1[0]=="penguin" && personajesizq1[2]=="pez" && personajesizq1[3]!="human")
+			{
+				System.out.println("Derrota");
+			}
+			if(personajesizq1[1]=="yeti" && personajesizq1[0]=="penguin" && personajesizq1[3]!="human")
+			{
+				System.out.println("Derrota");
+			}
+			if(personajesder1[0]=="penguin" && personajesder1[2]=="pez" && personajesder1[3]!="human")
+			{
+				System.out.println("Derrota");
+			}
+			if(personajesder1[1]=="yeti" && personajesder1[0]=="penguin" && personajesder1[3]!="human")
+			{
+				System.out.println("Derrota");
+			}
+			if(personajesder1[0]=="penguin" && personajesder1[1]=="yeti" && personajesder1[2]=="pez" && personajesder1[3]=="human")
+			{
+				System.out.println("Victoria");
+			}
 		}
-		for(int j=0;j<personajesder1.length;j++)
-		{
-			
-		}
+
 		
 		
 		tecla1.setX(penguin.getX());
