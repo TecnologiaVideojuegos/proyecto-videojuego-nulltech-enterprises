@@ -46,6 +46,8 @@ public class minijuego4 extends BasicGameState {
 	private int xp1;
 	private int xp2;
 	private int elapsedTime;
+	private int cuentaatras;
+	private int fin_cuenta;
 	
 	private int levanta=0;
 	private int saltopl1=0;
@@ -67,6 +69,8 @@ public class minijuego4 extends BasicGameState {
 		xp2 = 200;
 		elapsedTime = 0;
 		spawnSpeed = 50;
+		cuentaatras =0;
+		fin_cuenta=3500;
 		speedDificulty = 1;
 		portador_bombapl1=1;
 		portador_bombapl2=0;
@@ -122,9 +126,18 @@ public class minijuego4 extends BasicGameState {
 		if(keyboard.getPressedpl1(gc) == "Space" && saltopl1==0)
 		{
 			saltopl1=1;
-			player1.updateCurrentAnimation(5,9,2f);
-			player1.updateX(xp1 += 450 * delta / 50f);
-			player1.getAnimation().stopAt(4);
+			if(keyboard.previouspressedpl1=="Right")
+			{
+				player1.updateCurrentAnimation(5,9,2f);
+				player1.updateX(xp1 += 450 * delta / 50f);
+				player1.getAnimation().stopAt(4);
+			}
+			if(keyboard.previouspressedpl1=="Left")
+			{
+				player1.updateCurrentAnimation(10,14,2f);
+				player1.updateX(xp1 -= 450 * delta / 50f);
+				player1.getAnimation().stopAt(4);
+			}
 			if ((Math.sqrt( Math.pow(player2.getX()-player1.getX() ,2) + Math.pow(player2.getY()- player1.getY() ,2) )<64) && portador_bombapl1 == 1)
 			{
 				portador_bombapl1=0;
@@ -138,9 +151,21 @@ public class minijuego4 extends BasicGameState {
 		if(keyboard.getPressedpl2(gc) == "Zero" && saltopl2==0)
 		{
 			saltopl2=1;
-			player2.updateCurrentAnimation(5,9,2f);
-			player2.updateX(xp2 += 450 * delta / 50f);
-			player2.getAnimation().stopAt(4);
+			if(keyboard.previouspressedpl2=="Right")
+			{
+				player2.updateCurrentAnimation(5,9,2f);
+				player2.updateX(xp2 += 450 * delta / 50f);
+				player2.getAnimation().stopAt(4);
+				
+				
+			}
+			if(keyboard.previouspressedpl2=="Left")
+			{
+				player2.updateCurrentAnimation(10,14,2f);
+				player2.updateX(xp2 -= 450 * delta / 50f);
+				player2.getAnimation().stopAt(4);
+				
+			}
 			if ((Math.sqrt( Math.pow(player2.getX()-player1.getX() ,2) + Math.pow(player2.getY()- player1.getY() ,2) )<64)&& portador_bombapl2 == 1)
 			{
 				portador_bombapl1=1;
@@ -177,8 +202,21 @@ public class minijuego4 extends BasicGameState {
         		elapsedTime = 0;
         	}
         	//
-		} 	 	
-		
+		}
+        
+        if(cuentaatras++>fin_cuenta)
+        {
+        	System.out.println("Fin");
+        	if(portador_bombapl2 ==1)
+        	{
+        		System.out.println("Pierde jugador 2");
+        	}
+        	if(portador_bombapl1 == 1)
+        	{
+        		System.out.println(" Pierde jugador 1");
+        	}
+        }
+
 	}
 	
 
