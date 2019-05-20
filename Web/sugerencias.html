@@ -1,0 +1,73 @@
+<!DOCTYPE>
+<html>
+<body style="background-color: #FFDEAD ;">
+<style type="text/css">
+.navbar { 
+			background-color: #A569BD;
+			overflow: hidden;
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+		}
+		.navbar a {
+			float: left;
+			display: block;
+			color: #f2f2f2;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			font-size: 20px;
+		}
+		.navbar a:hover {
+			background-color: #ddd;
+			color: black;
+		}
+		.navbar a.active {
+			background-color: #4CAF50;
+			color: white;
+		}
+
+		
+
+
+	</style>
+<h2>Buzón de sugerencias</h2>
+    <form name="sugerencias" action="http://www.tecnun.es/cgi-bin/ii/CGI0.exe" method="POST" target="resultado">
+      <P>Por favor, introduzca sus sugerencias:<br>
+      <textarea rows="5" cols="30" name="txtsugerencias">Sus sugerencias aquí...</textarea><br>
+      <input type="hidden" name="identificador" value="Z87X09RF"><br>
+      <input type="submit" value="Enviar">   <input type="reset" value="Borrar">
+      </P>
+    </form>
+	<form action="mailto:sistema1234@gmail.com?subject=Recomendaciones para tu p&aacute;gina" method="post" enctype="text/plain">
+			<div style='text-align:center; background-color:pink; border: 5px solid black'>
+			¿Qué tipos de minijuegos te gustaría que se añadieran? <br>
+		<br>
+		</div>
+
+		<label for="nombre">Nombre <span><em>(obligatorio)</em></span></label>
+			<input type="text" name="nombre" size="10" class="form-input" required/>   
+			<br> <br>
+		<label for="email">Email <span><em>(obligatorio)</em></span></label>
+			<input type="email" name="email" size="15" class="form-input" />
+		<br> <br>
+		
+<textarea rows="5" cols="15 name="control1">Escribe aquí la sugerencia de minijuegos</textarea>
+<br> <br>
+<input type="reset" value="Volver a escribir">
+<br> <br>
+<input type="submit" value="Enviar recomendaci&oacute;n">
+<div class="navbar">
+			<a href="index.html">INICIO</a>	
+			
+			<a href="ayuda.html">AYUDA</a>
+			<a href="fotos.html">FOTOS</a>
+			<a href="sobrenosotros.html">SOBRE NOSOTROS</a>
+			
+			<a href="sugerencias.html">SUGERENCIAS</a>
+			
+		</div>
+
+</form>
+</body>
+</html>
