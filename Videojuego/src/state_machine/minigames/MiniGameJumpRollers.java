@@ -45,6 +45,7 @@ public class MiniGameJumpRollers extends BasicGameState {
 	private GameObject player2;
 	
 	private int speedDificulty;
+	private int obstaclesJumped;
 	
 	private int playerOneMinY, playerOneMaxY;
 	private int playerTwoMinY, playerTwoMaxY;
@@ -63,6 +64,7 @@ public class MiniGameJumpRollers extends BasicGameState {
 		arrayRollers2 = new ArrayList<GameObject>();
 
 		speedDificulty = 3;
+		obstaclesJumped = 0;
 		state = new MiniGameCurrentState();
 		endMiniGame = new EndMiniGameHud(mainManager, keyboard);
 	}
@@ -75,7 +77,7 @@ public class MiniGameJumpRollers extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		backgroundImage = new Image(Constants.PATH_MINIGAME_TEST_BACKGROUND);
 		overlayImage = new Image(Constants.PATH_MINIGAME_JUMP_ROLLERS_OVERLAY);
-		rollerImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_JUMP_ROLLERS_ROLLER, 64, 64, 1);
+		rollerImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_JUMP_ROLLERS_ROLLER, 32, 64, 1);
 		Animation playerAnim = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280, 5);
 		
 		player1 = new GameObject(playerAnim, null, (int) (Constants.WINDOW_DEFAULT_WIDTH * 0.1), (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25), 0.25f); // Set values as constants
@@ -84,7 +86,12 @@ public class MiniGameJumpRollers extends BasicGameState {
 		playerOneMinY = (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25);
 		playerOneMaxY = (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25) - 75;
 		
+		playerTwoMinY = (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - playerAnim.getHeight() * 0.25);
+		playerTwoMaxY = (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - playerAnim.getHeight() * 0.25) - 75;
+		
 		endMiniGame.init(gc);
+		
+		addRollersToArrays(20);
 	}
 
 	/*
@@ -109,7 +116,7 @@ public class MiniGameJumpRollers extends BasicGameState {
 		if (state.endMiniGameScreen) {
 			endMiniGame.render(gc, g);
 		} else if (state.gamePaused) {
-			// Pausa
+			// TODO: Pausa
 		}
 	}
 
@@ -132,9 +139,16 @@ public class MiniGameJumpRollers extends BasicGameState {
 				go.updateXByIncrease(-speedDificulty);
 				if (player1.getCollisionBox().intersects(go.getCollisionBox())) {
 					state.endMiniGameScreen = true;
-					endMiniGame.setPlayerWinner(1);
+					endMiniGame.setPlayerWinner(2);
 				} else if (go.getX() < -go.getAnimation().getCurrentFrame().getWidth() * go.getScale()) {
 					arrayRollers1.remove(go);
+					obstaclesJumped++;
+					
+					// Increment dificulty
+					if (obstaclesJumped % 20 == 0) { speedDificulty++; }
+					
+					// Add obstacles
+					if (arrayRollers1.size() < 10) { addRollersToArrays(20); }
 				}
 			}
 			
@@ -142,22 +156,20 @@ public class MiniGameJumpRollers extends BasicGameState {
 				go.updateXByIncrease(-speedDificulty);
 				if (player2.getCollisionBox().intersects(go.getCollisionBox())) {
 					state.endMiniGameScreen = true;
-					endMiniGame.setPlayerWinner(endMiniGame.getPlayerWinner() + 2);
+					endMiniGame.setPlayerWinner(endMiniGame.getPlayerWinner() == 0 ? 2 : 3);
 				} else if (go.getX() < -go.getAnimation().getCurrentFrame().getWidth() * go.getScale()) {
 					arrayRollers2.remove(go);
 				}
 			}
 			/** REFACTOR THIS PART **/
-	
-			// Add obstacles
-			if (arrayRollers1.size() < 10) { addRollersToArrays(20); }
 			
 		} else if (state.endMiniGameScreen) {
 			endMiniGame.update();
 		} else {
-			// PAUSE
+			// TODO: PAUSE
 		}
 	}
+	
 	
 	/*
 	 * Create Rollers
@@ -171,6 +183,10 @@ public class MiniGameJumpRollers extends BasicGameState {
 		}
 	}
 	
+	
+	/*
+	 * Player movement
+	 */
 	private void playerOneMovement() {
 		if (player1.getYMovement() == 0 && keyboard.getYMovementPl1() < 0) {
 			player1.setYMovement(-3);
@@ -209,7 +225,7 @@ public class MiniGameJumpRollers extends BasicGameState {
 	
 
 	/*
-	 * Getters
+	 * State ID
 	 */
 	@Override
 	public int getID() {
