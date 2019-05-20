@@ -49,8 +49,12 @@ public class Constants {
 			/* MAP STATE */
 	public static final String PATH_MAPSTATE_PLAYER_ONE = "res/images/TurnoJugador1.png";
 	public static final String PATH_MAPSTATE_PLAYER_TWO = "res/images/TurnoJugador2.png";
-			/* INTERFACE */
+			/* HUD */
 	public static final String PATH_INTERFACE_MINIMAP = "res/images/mapa.png";
 	public static final String PATH_INTERFACE_POINTS = "res/images/puntos.png";
 	public static final String PATH_INTERFACE_MOVEMENTS = "res/images/pasos.png";
+				/* WINNERS */
+	public static final String PATH_HUD_WINNER_PLAYER_ONE = "res/hud/winners/GanadorJugador1.png";
+	public static final String PATH_HUD_WINNER_PLAYER_TWO = "res/hud/winners/GanadorJugador2.png";
+	public static final String PATH_HUD_DRAW = "res/hud/winners/Empate.png";
 }
