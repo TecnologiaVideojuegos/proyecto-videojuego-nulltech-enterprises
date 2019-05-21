@@ -56,14 +56,14 @@ public class GameObject {
 	 * Animation
 	 */
 	public Animation getAnimation() { return anim; }
-	public void changeAnimation(Animation anim) {
+	public void changeAnimation(Animation anim,float scale) {
 		this.anim=anim;
 		movimiento=new Animation();
 		movimiento.addFrame(anim.getImage(0).getScaledCopy(scale), 100);
 	}
 	
 	
-	public void updateCurrentAnimation(final int bframe,final int eframe) {
+	public void updateCurrentAnimation(final int bframe,final int eframe,final float scale) {
 		if (this.bframe!=bframe || this.eframe !=eframe)
 		{
 			this.bframe=bframe;

@@ -79,11 +79,11 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		if(keyboard.getPressedpl1(gc) != ""){
-			if(keyboard.lastpressedp1 == "Down") {
+			if(keyboard.lastpressedpl1 == "Down") {
 				menuState = ++menuState > 1 ? 1 : menuState;
-			} else if(keyboard.lastpressedp1 == "Up") {
+			} else if(keyboard.lastpressedpl1 == "Up") {
 				menuState = --menuState < 0 ? 0 : menuState;
-			} else if (keyboard.lastpressedp1 == "Enter") {
+			} else if (keyboard.lastpressedpl1 == "Enter") {
 				switch (menuState) {
 					case 0:
 						mainManager.enterState(mainManager.getMapStateId());

@@ -8,7 +8,10 @@ public class KeyboardController extends Input {
 	/*
 	 * Constructors
 	 */
-	public String lastpressedp1="";
+	public String lastpressedpl1="";
+	public String lastpressedpl2="";
+	public String previouspressedpl1="";
+	public String previouspressedpl2="";
 	
 	public KeyboardController(int height) {
 		super(height);
@@ -17,84 +20,105 @@ public class KeyboardController extends Input {
 	/*
 	 * GETTERS
 	 */
-	public int getXMovementPl1() {
-		if (isKeyDown(Input.KEY_A)) return -1;
-		if (isKeyDown(Input.KEY_D)) return 1;
-		return 0;
-	}
-	
-	public int getYMovementPl1() {
-		if (isKeyDown(Input.KEY_W)) return -1;
-		if (isKeyDown(Input.KEY_S)) return 1;
-		return 0;
-	}
 	
 	public int getActionButtonPl1() {
 		if (isKeyDown(Input.KEY_ENTER)) return 1;
 		if (isKeyDown(Input.KEY_P)) return 2;
 		return 0;
+}
+	
+	public int getXMovementPl1() {
+		if (isKeyDown(Input.KEY_A)) return -100;
+		if (isKeyDown(Input.KEY_D)) return 100;
+		return 0;
+	}
+	
+	public int getYMovementPl1() {
+		if (isKeyDown(Input.KEY_W)) return -100;
+		if (isKeyDown(Input.KEY_S)) return 100;
+		return 0;
 	}
 	
 	public int getXMovementPl2() {
-		if (isKeyDown(Input.KEY_LEFT)) return -1;
-		if (isKeyDown(Input.KEY_RIGHT)) return 1;
+		if (isKeyDown(Input.KEY_LEFT)) return -100;
+		if (isKeyDown(Input.KEY_RIGHT)) return 100;
 		return 0;
 	}
 	
 	public int getYMovementPl2() {
-		if (isKeyDown(Input.KEY_UP)) return -1;
-		if (isKeyDown(Input.KEY_DOWN)) return 1;
+		if (isKeyDown(Input.KEY_UP)) return -100;
+		if (isKeyDown(Input.KEY_DOWN)) return 100;
 		return 0;
 	}
 	
 	
 	
 	
-	public String getPressedpl1(GameContainer gc) {
+	public String getPressedpl1(GameContainer gc)
+	{
+
 		if(gc.getInput().isKeyPressed(Input.KEY_W)){
-			return lastpressedp1 = "Up";
-		}
+			previouspressedpl1=lastpressedpl1;
+			return lastpressedpl1="Up";
+			}
 		if(gc.getInput().isKeyPressed(Input.KEY_S)){
-			return lastpressedp1 = "Down";
-		}
+			previouspressedpl1=lastpressedpl1;
+			return lastpressedpl1="Down";
+			}
 		if(gc.getInput().isKeyPressed(Input.KEY_A)){
-			return lastpressedp1 = "Left";
-		}
+			previouspressedpl1=lastpressedpl1;
+			return lastpressedpl1="Left";
+			}
 		if(gc.getInput().isKeyPressed(Input.KEY_D)){
-			return lastpressedp1 = "Right";
+			previouspressedpl1=lastpressedpl1;
+			return lastpressedpl1="Right";
+			}
+		if(gc.getInput().isKeyPressed(Input.KEY_1)) {
+			previouspressedpl1=lastpressedpl1;
+			return lastpressedpl1="One";
 		}
-		if(gc.getInput().isKeyPressed(Input.KEY_NUMPAD1)) {
-			return lastpressedp1 = "One";
+		if(gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
+			previouspressedpl1=lastpressedpl1;
+			return lastpressedpl1="Space";
 		}
 		if(gc.getInput().isKeyPressed(Input.KEY_ENTER)) {
-			return lastpressedp1 = "Enter";
+			previouspressedpl1=lastpressedpl1;
+			return lastpressedpl1="Enter";
 		}
-		if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
-			return lastpressedp1="Enter";
-			}
 		return "";
+		
 	}
 	
-	public String getPressedpl2(GameContainer gc) {
+	public String getPressedpl2(GameContainer gc)
+	{
+
 		if(gc.getInput().isKeyPressed(Input.KEY_UP)){
-			return lastpressedp1 = "Up";
-		}
+			previouspressedpl2=lastpressedpl2;
+			return lastpressedpl2="Up";
+			}
 		if(gc.getInput().isKeyPressed(Input.KEY_DOWN)){
-			return lastpressedp1 = "Down";
-		}
+			previouspressedpl2=lastpressedpl2;
+			return lastpressedpl2="Down";
+			}
 		if(gc.getInput().isKeyPressed(Input.KEY_LEFT)){
-			return lastpressedp1 = "Left";
-		}
+			previouspressedpl2=lastpressedpl2;
+			return lastpressedpl2="Left";
+			}
 		if(gc.getInput().isKeyPressed(Input.KEY_RIGHT)){
-			return lastpressedp1 = "Right";
-		}
+			previouspressedpl2=lastpressedpl2;
+			return lastpressedpl2="Right";
+			}
 		if(gc.getInput().isKeyPressed(Input.KEY_NUMPAD1)) {
-			return lastpressedp1 = "One";
+			previouspressedpl2=lastpressedpl2;
+			return lastpressedpl2="One";
 		}
-		if(gc.getInput().isKeyPressed(Input.KEY_ENTER)) {
-			return lastpressedp1 = "Enter";
+		if(gc.getInput().isKeyPressed(Input.KEY_NUMPAD0)) {
+			previouspressedpl2=lastpressedpl2;
+			return lastpressedpl2="Zero";
 		}
+
 		return "";
+		
 	}
 
 

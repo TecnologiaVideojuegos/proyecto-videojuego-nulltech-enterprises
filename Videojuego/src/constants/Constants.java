@@ -57,4 +57,14 @@ public class Constants {
 	public static final String PATH_HUD_WINNER_PLAYER_ONE = "res/hud/winners/GanadorJugador1.png";
 	public static final String PATH_HUD_WINNER_PLAYER_TWO = "res/hud/winners/GanadorJugador2.png";
 	public static final String PATH_HUD_DRAW = "res/hud/winners/Empate.png";
+	
+	
+
+	/* MINIGAME 2 */
+	public static final String PATH_MINIGAME2_BACKGROUND = "res/images/Escenariolava.png";
+	public static final String PATH_MINIGAME2_BALL = "res/images/bolacanon.png";
+	public static final String PATH_MINIGAME2_THUNDER_ZONE = "res/images/zonaelectrica.png";
+	public static final String PATH_MINIGAME2_SHOCK = "res/images/chispa.png";
+	public static final String PATH_MINIGAME2_PLAYER = "res/images/protaderecha.png";
+	
 }

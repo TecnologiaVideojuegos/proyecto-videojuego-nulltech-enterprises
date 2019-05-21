@@ -122,7 +122,7 @@ public class Minigame1 extends BasicGameState {
 						
 		GameObject firstelement=arrayarrow.get(0);
 		if(keyboard.getPressedpl1(gc)!= ""){
-			if (keyboard.lastpressedp1==firstelement.getdirection()){
+			if (keyboard.lastpressedpl1==firstelement.getdirection()){
 				if(arrayarrow.get(0).getCollisionBox().intersects(keys.getCollisionBox())){
 					puntuacion+=20;
 				 	}
