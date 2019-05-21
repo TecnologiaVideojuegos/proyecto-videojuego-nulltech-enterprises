@@ -18,7 +18,7 @@ import controllers.KeyboardController;
 import minigames.GameObject;
 import resources.ResourceLoader;
 
-public class minijuego4 extends BasicGameState {
+public class Minigame4 extends BasicGameState {
 	
 	/*
 	 * Attributes
@@ -59,7 +59,7 @@ public class minijuego4 extends BasicGameState {
 	/*
 	 * Constructors
 	 */
-	public minijuego4(final int stateId) {
+	public Minigame4(final int stateId) {
 		this.stateId = stateId;
 		Timer timer = new Timer();
 		

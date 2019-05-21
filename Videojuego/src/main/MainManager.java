@@ -20,6 +20,7 @@ import state_machine.minigames.MiniGameTest;
 import state_machine.minigames.Minigame1;
 import state_machine.minigames.Minigame2;
 import state_machine.minigames.Minigame3;
+import state_machine.minigames.Minigame4;
 
 public class MainManager extends StateBasedGame {
 	
@@ -38,6 +39,7 @@ public class MainManager extends StateBasedGame {
 	private final int minigame1Id= 5;
 	private final int minigame2Id= 6;
 	private final int minigame3Id= 7;
+	private final int minigame4Id= 8;
 
 	
 	/*
@@ -54,6 +56,7 @@ public class MainManager extends StateBasedGame {
 		this.addState(new Minigame1(minigame1Id));
 		this.addState(new Minigame2(minigame2Id));
 		this.addState(new Minigame3(minigame3Id));
+		this.addState(new Minigame4(minigame4Id));
 	}
 
 	/*
@@ -69,6 +72,7 @@ public class MainManager extends StateBasedGame {
 		this.getState(minigame1Id).init(gc, this);
 		this.getState(minigame2Id).init(gc, this);
 		this.getState(minigame3Id).init(gc, this);
+		this.getState(minigame4Id).init(gc, this);
 		
 		this.enterState(menuStateId); // DEBUG
 	}
@@ -97,7 +101,8 @@ public class MainManager extends StateBasedGame {
 //		minigames.add(minigameJumpRollersStateId);
 //		minigames.add(minigame1Id);
 //		minigames.add(minigame2Id);
-		minigames.add(minigame3Id);
+//		minigames.add(minigame3Id);
+		minigames.add(minigame4Id);
 		
 		gameState = new GameState(gameMode, players, minigames);
 	}
