@@ -55,8 +55,7 @@ public class MainManager extends StateBasedGame {
 		this.addState(new MiniGameJumpRollers(minigameJumpRollersStateId, this));
 		this.addState(new Minigame1(minigame1Id));
 		this.addState(new Minigame2(minigame2Id));
-		this.addState(new Minigame3(minigame3Id, this
-				));
+		this.addState(new Minigame3(minigame3Id, this));
 		this.addState(new Minigame4(minigame4Id, this));
 	}
 
@@ -74,7 +73,6 @@ public class MainManager extends StateBasedGame {
 		this.getState(minigame2Id).init(gc, this);
 		this.getState(minigame3Id).init(gc, this);
 		this.getState(minigame4Id).init(gc, this);
-		
 		this.enterState(menuStateId); // DEBUG
 	}
 
@@ -124,9 +122,5 @@ public class MainManager extends StateBasedGame {
 	public int getEndGameStateId() { return endGameStateId; }
 	public int getMinigameTestStateId() { return minigameTestStateId; }
 	
-	
-	
-
-
 	
 }

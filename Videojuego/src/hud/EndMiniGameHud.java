@@ -89,5 +89,4 @@ public class EndMiniGameHud implements IBasicHudComponent {
 	public int getPlayerWinner() { return playerWinner; }
 	public void setPlayerWinner(final int playerWinner) { this.playerWinner = playerWinner; }
 
-
 }

@@ -95,9 +95,6 @@ public class MapState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		// Interface
-//		for(IBasicHudComponent c : hudComponents) { c.update(); }
-		
 		if (mainManager.getGameState().getFinishingTurn()) {
 			
 			if (mainManager.getGameState().nextTurn() == 0) {
@@ -107,7 +104,7 @@ public class MapState extends BasicGameState {
 				state.loadingMinigameAnimation = true;
 				state.loadingMapAnimation = true;
 				state.switchingTurnAnimation = true;
-				enterMiniGame();
+				enterMiniGame(gc, sbg);
 				
 			} else {
 				
@@ -130,7 +127,7 @@ public class MapState extends BasicGameState {
 				state.timeElapsed = 0;
 				state.switchingTurnAnimation = false;
 				
-			} else if (!state.loadingMapAnimation) {
+			} else {
 				
 				mainManager.getGameState().getPlayerByTurn().update(maps.length, delta);
 				
@@ -149,15 +146,18 @@ public class MapState extends BasicGameState {
 		return components;
 	}
 	
-	private void enterMiniGame() {
+	private void enterMiniGame(GameContainer gc, StateBasedGame sbg) {
 		try {
 			ArrayList<Integer> notPlayed = mainManager.getGameState().getMiniGameStateIdsNotPlayed();
 			ArrayList<Integer> played = mainManager.getGameState().getMiniGameStateIdsPlayed();
 
-			System.out.println("no " + notPlayed.size() + " yes " + played.size());
-			
 			if(notPlayed.isEmpty()) {
 				mainManager.getGameState().setMiniGameStateIdsNotPlayed(played);
+			} else if (notPlayed.isEmpty() && !played.isEmpty()) {
+				for(Integer i : played) {
+					notPlayed.add(i);
+				}
+				played.clear();
 			}
 			
 			if (notPlayed.size() > 1) {
@@ -165,6 +165,7 @@ public class MapState extends BasicGameState {
 				played.add(notPlayed.get(idx));
 				notPlayed.remove(idx);
 				
+				mainManager.getState(played.get(played.size() - 1)).init(gc, sbg);
 				mainManager.enterState(played.get(played.size() - 1));
 			} else {
 				mainManager.enterState(notPlayed.get(0));
