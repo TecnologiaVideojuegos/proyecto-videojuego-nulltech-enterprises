@@ -19,6 +19,8 @@ public class GameObject {
 	private int x;
 	private int y;
 	private final float scale;
+	private int yMovement;
+	private int xMovement;
 	
 	
 	/*
@@ -40,7 +42,7 @@ public class GameObject {
 	 */
 	public void render(Graphics g) {
 		anim.getImage(currentAnimIdx).draw(x, y, scale);
-		g.draw(collisionBox); // DEBUG
+//		g.draw(collisionBox); // DEBUG
 	}
 	
 	
@@ -71,23 +73,33 @@ public class GameObject {
 	 */
 	public int getX() { return x; }
 	public void setX(int x) { this.x = x; }
-	
-	public void updateX(final int newX) {
-		x = newX;
-		collisionBox.setX(x);
-	}
-	
-	public void updateXByIncrease(final int increase) {
-		x += increase;
-		collisionBox.setX(x);
-	}
 
+	
 	/*
 	 * Y
 	 */
 	public int getY() { return y; }
 	public void setY(int y) { this.y = y; }
 
+	
+	/*
+	 * Update X and Y
+	 */
+	public void updateX(final int newX) {
+		x = newX;
+		collisionBox.setX(x);
+	}
+	
+	public void updateXByIncrease(final int oscilation) {
+		x += oscilation;
+		collisionBox.setX(x);
+	}
+	
+	public void updateXByXMovement() {
+		x += xMovement;
+		collisionBox.setX(x);
+	}
+	
 	public void updateY(final int newY) {
 		y = newY;
 		collisionBox.setY(y);
@@ -97,6 +109,15 @@ public class GameObject {
 		y += increase;
 		collisionBox.setY(y);
 	}
+	
+	public void updateYByYMovement() {
+		y += yMovement;
+		collisionBox.setY(y);
+	}
+	
+	
+	public int getYMovement() { return yMovement; }
+	public void setYMovement(final int yMovement) { this.yMovement = yMovement;}
 	
 
 	/*

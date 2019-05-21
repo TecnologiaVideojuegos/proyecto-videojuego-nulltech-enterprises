@@ -1,5 +1,8 @@
 package state_machine;
 
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -10,6 +13,10 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import constants.Constants;
 import entities.Player;
+import game.GameState;
+import hud.IBasicHudComponent;
+import hud.MiniMapHud;
+import hud.MovementHud;
 import main.MainManager;
 import maps.Map;
 import resources.ResourceLoader;
@@ -24,11 +31,16 @@ public class MapState extends BasicGameState {
 	private Image playerOneTurn;
 	private Image playerTwoTurn;
 	
+	private IBasicHudComponent[] hudComponents;
+	
+	private int x, y;
+	
 	public MapState(final int stateId, final MainManager mainManager) {
 		this.stateId = stateId;
 		this.mainManager = mainManager;
 		
 		state = new MapGameState();
+		
 	}
 
 	@Override
@@ -45,6 +57,12 @@ public class MapState extends BasicGameState {
 		
 		playerOneTurn = ResourceLoader.loadImageFromUrl(Constants.PATH_MAPSTATE_PLAYER_ONE);
 		playerTwoTurn = ResourceLoader.loadImageFromUrl(Constants.PATH_MAPSTATE_PLAYER_TWO);
+		
+		hudComponents = loadHudComponets(mainManager.getGameState());
+		for(IBasicHudComponent c : hudComponents) { c.init(gc); }
+		
+		x = ((gc.getWidth() - playerOneTurn.getWidth())  / 2 - 10);
+		y = (gc.getHeight() / 2 - playerOneTurn.getHeight() - 10);
 	}
 
 	@Override
@@ -59,26 +77,34 @@ public class MapState extends BasicGameState {
 		
 		// Animations
 		if (state.switchingTurnAnimation) {
-			g.drawImage(mainManager.getGameState().getPlayerTurn() == 0 ? playerOneTurn : playerTwoTurn, 100, 100);
+			g.drawImage(mainManager.getGameState().getPlayerTurn() == 0 ? playerOneTurn : playerTwoTurn, x, y);
 		} else if (state.loadingMapAnimation) {
 			
 		} else if (state.loadingMinigameAnimation) {
 			
 		}
 		
+		//Interface
+		for(IBasicHudComponent c : hudComponents) { c.render(gc, g); }
+		
+		//Flechas
+		
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		// Interface
+//		for(IBasicHudComponent c : hudComponents) { c.update(); }
 		
 		if (mainManager.getGameState().getFinishingTurn()) {
 			
 			if (mainManager.getGameState().nextTurn() == 0) {
 				
 				// LAUNCH MINIGAME
-//				mainManager.enterState(3);
 				System.out.println("MINIGAME");
 				state.loadingMapAnimation = true;
+				state.switchingTurnAnimation = true;
+				enterMiniGame();
 				
 			} else {
 				
@@ -92,8 +118,6 @@ public class MapState extends BasicGameState {
 			
 		} else {
 			
-			mainManager.getGameState().getPlayerByTurn().update(state.switchingTurnAnimation || state.loadingMapAnimation, maps.length);
-			
 			if (state.switchingTurnAnimation && state.timeElapsed < 3000) {
 				
 				state.timeElapsed += delta;
@@ -103,12 +127,39 @@ public class MapState extends BasicGameState {
 				state.timeElapsed = 0;
 				state.switchingTurnAnimation = false;
 				
+			} else if (!state.loadingMapAnimation) {
+				
+				mainManager.getGameState().getPlayerByTurn().update(maps.length, delta);
+				
 			}
 			
 		}
 		
 	}
 	
+	private IBasicHudComponent[] loadHudComponets(final GameState gameState) {
+		IBasicHudComponent[] components = new IBasicHudComponent[2];
+		
+		components[0] = new MiniMapHud(gameState);
+		components[1] = new MovementHud(gameState);
+		
+		return components;
+	}
+	
+	private void enterMiniGame() {
+		ArrayList<Integer> notPlayed = mainManager.getGameState().getMiniGameStateIdsNotPlayed();
+		ArrayList<Integer> played = mainManager.getGameState().getMiniGameStateIdsPlayed();
+		
+		if(notPlayed.isEmpty()) {
+			mainManager.getGameState().setMiniGameStateIdsNotPlayed(played);
+		}
+		
+		int idx = ThreadLocalRandom.current().nextInt(0, notPlayed.size());
+		played.add(notPlayed.get(idx));
+		notPlayed.remove(idx);
+		
+		mainManager.enterState(played.get(played.size() - 1));
+	}
 
 	
 	@Override
@@ -119,7 +170,7 @@ public class MapState extends BasicGameState {
 }
 
 class MapGameState {
-	boolean switchingTurnAnimation;
+	boolean switchingTurnAnimation = true;
 	boolean loadingMinigameAnimation;
 	boolean loadingMapAnimation;
 	int timeElapsed;
