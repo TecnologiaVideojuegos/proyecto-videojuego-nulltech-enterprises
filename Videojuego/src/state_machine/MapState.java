@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
 import constants.Constants;
+import entities.Player;
 import game.GameState;
 import hud.IBasicHudComponent;
 import hud.MiniMapHud;
@@ -45,12 +46,12 @@ public class MapState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// TEST
-		/*
+		
 		mainManager.initGameMode(1);
-		Player[] players = {new Player("Jugador 1", ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280, 10)), new Player("Jugador 2", ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_BANANA, 220, 280, 10))};
+		Player[] players = {new Player("Jugador 1", ResourceLoader.loadAnimatioFromSpriteSheet(ResourceLoader.loadSpriteSheetfromurl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280), 10)), new Player("Jugador 2", ResourceLoader.loadAnimatioFromSpriteSheet(ResourceLoader.loadSpriteSheetfromurl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280), 10))};
 		mainManager.initPlayers(players);
 		mainManager.initGameState(mainManager.getGameMode(), mainManager.getPlayers());
-		*/
+		
 		// TEST
 		
 		maps = new Map[1];
