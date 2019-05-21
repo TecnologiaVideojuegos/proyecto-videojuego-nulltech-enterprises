@@ -33,7 +33,7 @@ public class MovementHud implements IBasicHudComponent{
 
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-		if (gameState.getPlayerTurn() == 1) {
+		if (gameState.getPlayerTurn() == 0) {
 			movementImage1.draw(x, 20,  0.2f);
 		} else {
 			movementImage2.draw(x, 20,  0.2f);
