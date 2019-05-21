@@ -14,7 +14,10 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import constants.Constants;
 import controllers.KeyboardController;
+import hud.EndMiniGameHud;
+import main.MainManager;
 import minigames.GameObject;
+import minigames.MiniGameCurrentState;
 import resources.ResourceLoader;
 import resources.Coordinates;
 
@@ -23,6 +26,9 @@ public class Minigame2 extends BasicGameState{
 	private final int stateId;
 	
 	private final KeyboardController keyboard;
+	private MiniGameCurrentState state;
+	private final EndMiniGameHud endMiniGame;
+	private final MainManager mainManager;
 	
 	private Image backgroundImage;
 	private Animation ballImage;
@@ -70,6 +76,10 @@ public class Minigame2 extends BasicGameState{
 		speedTimeDelay = 100;
 		stopTimeDelay = 350;
 		circulo=new Ellipse(520,290,295f,230f);
+		state = new MiniGameCurrentState();
+		this.mainManager = mainManager;
+		state = new MiniGameCurrentState();
+		endMiniGame = new EndMiniGameHud(mainManager, keyboard);
 		x=400;
 		y=100;
 
@@ -114,6 +124,8 @@ public class Minigame2 extends BasicGameState{
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {	
+		if (!state.gamePaused && !state.endMiniGameScreen) {
+			
 		
 		System.out.println(puntuacion);
 
@@ -226,6 +238,9 @@ public class Minigame2 extends BasicGameState{
 						{
 							player.updateCurrentAnimation(34,34,2f);
 							colision=1;
+							//habría que poner un delay
+							state.endMiniGameScreen = true;
+							endMiniGame.setPlayerWinner(1);
 						}
 					}
 				}
@@ -246,8 +261,16 @@ public class Minigame2 extends BasicGameState{
 					
 				}
 			}
+			else if (state.endMiniGameScreen) {
+				endMiniGame.update();
+			}
+			else
+			{
+				
+			}
 			
 		}
+	}
 	
 	private void updateMove() {
 		double posX, posY;
