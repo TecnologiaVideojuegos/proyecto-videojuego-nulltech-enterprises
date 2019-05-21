@@ -73,9 +73,14 @@ public class KeyboardController extends Input {
 			previouspressedpl1=lastpressedpl1;
 			return lastpressedpl1="Right";
 			}
-		if(gc.getInput().isKeyPressed(Input.KEY_1)) {
-			previouspressedpl1=lastpressedpl1;
+		if(gc.getInput().isKeyPressed(Input.KEY_NUMPAD1)) {
 			return lastpressedpl1="One";
+		}
+		if(gc.getInput().isKeyPressed(Input.KEY_NUMPAD2)) {
+			return lastpressedpl1="Two";
+		}
+		if(gc.getInput().isKeyPressed(Input.KEY_NUMPAD3)) {
+			return lastpressedpl1="Three";
 		}
 		if(gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
 			previouspressedpl1=lastpressedpl1;
