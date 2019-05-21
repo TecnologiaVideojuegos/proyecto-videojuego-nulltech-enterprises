@@ -47,6 +47,7 @@ public class MiniGameTest extends BasicGameState {
 		this.stateId = stateId;
 		this.mainManager = mainManager;
 		
+		
 		keyboard = new KeyboardController(640); 
 		arrayBananas = new ArrayList<GameObject>();
 		
@@ -62,10 +63,10 @@ public class MiniGameTest extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		backgroundImage = new Image(Constants.PATH_MINIGAME_TEST_BACKGROUND);
-		bananaImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_BANANA, 400, 380, 5);
-		monkeyImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280, 5);
-		player = new GameObject(monkeyImage, null, x, 520, 0.25f); // Set values as constants
+		backgroundImage = ResourceLoader.loadImageFromUrl(Constants.PATH_MINIGAME_TEST_BACKGROUND);
+		bananaImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_TEST_BANANA,64,64);
+		monkeyImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_TEST_MONKEY,64,64);
+		player = new GameObject(monkeyImage, x, 520, 0.25f); // Set values as constants
 	}
 
 	/*
@@ -91,21 +92,21 @@ public class MiniGameTest extends BasicGameState {
 			arrayBananas.add(createBanana());
 			elapsedTime = 0;
 		}
-
-		for (GameObject go : (ArrayList<GameObject>) arrayBananas.clone()) {
+		
+		for (GameObject go : arrayBananas) {
 			go.updateYByIncrease(speedDificulty);
-			
-			if (player.getCollisionBox().intersects(go.getCollisionBox()) || gc.getHeight() < go.getY()) {
-				arrayBananas.remove(go);
+			if (player.getCollisionBox().intersects(go.getCollisionBox())) {
+				//go.setDeleted(true);
 			}
 		}
+		
 	}
 	
 	/*
 	 * Create Bananas
 	 */
 	private GameObject createBanana() {
-		return new GameObject(bananaImage, null, ThreadLocalRandom.current().nextInt(0, 1024), 0, 0.1f); // Set values as constants
+		return new GameObject(bananaImage, ThreadLocalRandom.current().nextInt(0, 1024), 0, 0.1f); // Set values as constants
 	}
 
 	/*

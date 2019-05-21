@@ -43,22 +43,30 @@ public class ResourceLoader {
 		return null;
 	}
 	
-	public static SpriteSheet loadSpriteSheetFromUrl(final String path, final int spriteSizeX, final int spriteSizeY) {
+	public static Animation animationfromimage(final String path,final int sizex,final int sizey,final int ms)
+	{
+		return loadAnimatioFromSpriteSheet(loadSpriteSheetfromurl(path,sizex,sizey),ms);
+	}	
+	
+	public static Animation animationfromimage(final String path,final int sizex,final int sizey)
+	{
+		return loadAnimatioFromSpriteSheet(loadSpriteSheetfromurl(path,sizex,sizey),100);
+	}
+	
+	public static Animation loadAnimatioFromSpriteSheet(final SpriteSheet spriteSheet,int duration)
+	{
+		return new Animation(spriteSheet,duration);
+	}
+	
+	public static SpriteSheet loadSpriteSheetfromurl(final String path,final int sizex,final int sizey)
+	{
 		try {
-			return new SpriteSheet(path, spriteSizeX, spriteSizeY);
+			return new SpriteSheet(path,sizex,sizey);
 		} catch (SlickException e) {
-			System.out.println("Error loading SpriteSheet: " + path);
+			System.out.println("Error loading image. " + e);
 			e.printStackTrace();
 		}
 		return null;
 		
 	}
-	
-	public static Animation loadAnimationFromSpriteSheet(final SpriteSheet spriteSheet, final int duration) {
-		return new Animation(spriteSheet, duration);
-	}
-	
-	public static Animation loadAnimationFromSpriteSheetUrl(final String path, final int spriteSizeX, final int spriteSizeY, final int duration) {
-		return new Animation(loadSpriteSheetFromUrl(path, spriteSizeX, spriteSizeY), duration);
-	}	
 }

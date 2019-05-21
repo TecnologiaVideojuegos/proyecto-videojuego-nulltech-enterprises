@@ -10,31 +10,33 @@ public class GameObject {
 	/*
 	 * Attributes
 	 */
-	private final Animation anim;
+	private Animation anim;
 	private Shape collisionBox;
 	
-	private int currentAnimIdx;
-	private int[] startAnimIdxPtr;
 	
 	private int x;
 	private int y;
-	private final float scale;
+	private float scale;
 	private String direction;
+	private Animation movimiento;
+	private int bframe;
+	private int eframe;
+	public static int paso;
+	private boolean visible;
 	private int yMovement;
 	private int xMovement;
-	
-	
 	/*
 	 * Constructors
 	 */
-	public GameObject(final Animation anim, final int[] startAnimIdxPtr, final int x, final int y, final float scale) {
+	public GameObject(final Animation anim, final int x, final int y, final float scale) {
 		this.anim = anim;
-		this.startAnimIdxPtr = startAnimIdxPtr;
-		this.currentAnimIdx = 0;
 		this.x = x;
 		this.y = y;
 		this.scale = scale;
 		this.collisionBox = new Rectangle(x, y, anim.getWidth() * scale, anim.getHeight() * scale);
+		movimiento=new Animation();
+		movimiento.addFrame(anim.getImage(0).getScaledCopy(scale), 100);
+		this.visible=true;
 	}
 	
 	
@@ -42,8 +44,11 @@ public class GameObject {
 	 * Render
 	 */
 	public void render(Graphics g) {
-		anim.getImage(currentAnimIdx).draw(x, y, scale);
-		g.draw(collisionBox); // DEBUG
+		if(visible) {
+			movimiento.draw(x,y);
+		}
+
+		//g.draw(collisionBox); // DEBUG
 	}
 	
 	
@@ -51,19 +56,22 @@ public class GameObject {
 	 * Animation
 	 */
 	public Animation getAnimation() { return anim; }
-	
-	public void updateCurrentAnimation() {
-		if (++currentAnimIdx == anim.getFrameCount()) {
-			currentAnimIdx = 0;
-		}
+	public void changeAnimation(Animation anim) {
+		this.anim=anim;
+		movimiento=new Animation();
+		movimiento.addFrame(anim.getImage(0).getScaledCopy(scale), 100);
 	}
 	
-	public void updateCurrentAnimation(final int pos) {
-		if (pos < startAnimIdxPtr.length) {
-			if (currentAnimIdx <= startAnimIdxPtr[pos] || currentAnimIdx <= startAnimIdxPtr[pos - 1]) {
-				currentAnimIdx = startAnimIdxPtr[pos];
-			} else {
-				currentAnimIdx++;
+	
+	public void updateCurrentAnimation(final int bframe,final int eframe) {
+		if (this.bframe!=bframe || this.eframe !=eframe)
+		{
+			this.bframe=bframe;
+			this.eframe=eframe;
+			movimiento=new Animation();
+			for(int i=bframe;i<=eframe;i++)
+			{
+				movimiento.addFrame(anim.getImage(i).getScaledCopy(scale),100);
 			}
 		}
 	}
@@ -76,33 +84,29 @@ public class GameObject {
 	 */
 	public int getX() { return x; }
 	public void setX(int x) { this.x = x; }
-
 	
-	/*
-	 * Y
-	 */
-	public int getY() { return y; }
-	public void setY(int y) { this.y = y; }
-
-	
-	/*
-	 * Update X and Y
-	 */
-	public void updateX(final int newX) {
-		x = newX;
-		collisionBox.setX(x);
-	}
-	
-	public void updateXByIncrease(final int oscilation) {
-		x += oscilation;
-		collisionBox.setX(x);
-	}
 	
 	public void updateXByXMovement() {
 		x += xMovement;
 		collisionBox.setX(x);
 	}
 	
+	public void updateX(final int newX) {
+		x = newX;
+		collisionBox.setX(x);
+	}
+	
+	public void updateXByIncrease(final int increase) {
+		x += increase;
+		collisionBox.setX(x);
+	}
+
+	/*
+	 * Y
+	 */
+	public int getY() { return y; }
+	public void setY(int y) { this.y = y; }
+
 	public void updateY(final int newY) {
 		y = newY;
 		collisionBox.setY(y);
@@ -113,16 +117,18 @@ public class GameObject {
 		collisionBox.setY(y);
 	}
 	
+
 	public void updateYByYMovement() {
 		y += yMovement;
 		collisionBox.setY(y);
 	}
 	
-	
 	public int getYMovement() { return yMovement; }
 	public void setYMovement(final int yMovement) { this.yMovement = yMovement;}
 	
-
+	
+	
+	
 	/*
 	 * CollisionBox
 	 */
@@ -133,6 +139,15 @@ public class GameObject {
 	/*
 	 * Scale
 	 */
+	
+	
+	
+	public void setVisible(boolean visible) {this.visible=visible;}
+	public boolean getVisible() {return this.visible;}
+	public void setScale(float scale) {
+		this.scale=scale;		
+		movimiento=new Animation();
+		movimiento.addFrame(anim.getImage(0).getScaledCopy(scale), 100);
+	}
 	public float getScale() { return scale; }
-
 }

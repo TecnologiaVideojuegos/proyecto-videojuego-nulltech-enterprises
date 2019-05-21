@@ -77,11 +77,11 @@ public class MiniGameJumpRollers extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		backgroundImage = new Image(Constants.PATH_MINIGAME_TEST_BACKGROUND);
 		overlayImage = new Image(Constants.PATH_MINIGAME_JUMP_ROLLERS_OVERLAY);
-		rollerImage = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_JUMP_ROLLERS_ROLLER, 32, 64, 1);
-		Animation playerAnim = ResourceLoader.loadAnimationFromSpriteSheetUrl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280, 5);
+		rollerImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_JUMP_ROLLERS_ROLLER, 32, 64, 1);
+		Animation playerAnim = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280, 5);
 		
-		player1 = new GameObject(playerAnim, null, (int) (Constants.WINDOW_DEFAULT_WIDTH * 0.1), (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25), 0.25f); // Set values as constants
-		player2 = new GameObject(playerAnim, null, (int) (Constants.WINDOW_DEFAULT_WIDTH * 0.1), (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - playerAnim.getHeight() * 0.25), 0.25f); // Set values as constants
+		player1 = new GameObject(playerAnim, (int) (Constants.WINDOW_DEFAULT_WIDTH * 0.1), (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25), 0.25f); // Set values as constants
+		player2 = new GameObject(playerAnim, (int) (Constants.WINDOW_DEFAULT_WIDTH * 0.1), (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - playerAnim.getHeight() * 0.25), 0.25f); // Set values as constants
 		
 		playerOneMinY = (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25);
 		playerOneMaxY = (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - playerAnim.getHeight() * 0.25) - 75;
@@ -175,11 +175,11 @@ public class MiniGameJumpRollers extends BasicGameState {
 	 * Create Rollers
 	 */
 	private void addRollersToArrays(final int numberOfRollers) {
-		int posX;
+		int posX=0;
 		for (int i = 0; i < numberOfRollers; i++) {
 			posX = (arrayRollers1.size() > 0 ? arrayRollers1.get(arrayRollers1.size() - 1).getX() : Constants.WINDOW_DEFAULT_WIDTH) + ThreadLocalRandom.current().nextInt(100, 500);
-			arrayRollers1.add(new GameObject(rollerImage, null, posX, (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - rollerImage.getHeight() * 0.25), 0.5f));
-			arrayRollers2.add(new GameObject(rollerImage, null, posX, (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - rollerImage.getHeight() * 0.25), 0.5f));			
+			arrayRollers1.add(new GameObject(rollerImage, posX, (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.45 - rollerImage.getHeight() * 0.25), 0.5f));
+			arrayRollers2.add(new GameObject(rollerImage, posX, (int) (Constants.WINDOW_DEFAULT_HEIGHT * 0.95 - rollerImage.getHeight() * 0.25), 0.5f));			
 		}
 	}
 	
