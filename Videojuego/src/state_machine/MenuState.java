@@ -83,7 +83,7 @@ public class MenuState extends BasicGameState {
 			} else if (keyboard.lastpressedp1 == "Enter") {
 				switch (menuState) {
 					case 0:
-						mainManager.enterState(mainManager.getMenuStateId());
+						mainManager.enterState(mainManager.getMapStateId());
 						break;
 					case 1:
 						System.exit(0);
