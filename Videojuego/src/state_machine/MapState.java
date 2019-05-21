@@ -13,7 +13,6 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import constants.Constants;
 import game.GameState;
-import hud.GameScoreHud;
 import hud.IBasicHudComponent;
 import hud.MiniMapHud;
 import hud.MovementHud;
@@ -32,6 +31,8 @@ public class MapState extends BasicGameState {
 	private Image playerTwoTurn;
 	
 	private IBasicHudComponent[] hudComponents;
+	
+	private int x, y;
 	
 	public MapState(final int stateId, final MainManager mainManager) {
 		this.stateId = stateId;
@@ -60,6 +61,9 @@ public class MapState extends BasicGameState {
 		
 		hudComponents = loadHudComponets(mainManager.getGameState());
 		for(IBasicHudComponent c : hudComponents) { c.init(gc); }
+		
+		x = ((gc.getWidth() - playerOneTurn.getWidth())  / 2 - 10);
+		y = (gc.getHeight() / 2 - playerOneTurn.getHeight() - 10);
 	}
 
 	@Override
@@ -74,7 +78,7 @@ public class MapState extends BasicGameState {
 		
 		// Animations
 		if (state.switchingTurnAnimation) {
-			g.drawImage(mainManager.getGameState().getPlayerTurn() == 0 ? playerOneTurn : playerTwoTurn, 100, 100);
+			g.drawImage(mainManager.getGameState().getPlayerTurn() == 0 ? playerOneTurn : playerTwoTurn, x, y);
 		} else if (state.loadingMapAnimation) {
 			
 		} else if (state.loadingMinigameAnimation) {
@@ -100,6 +104,8 @@ public class MapState extends BasicGameState {
 				// LAUNCH MINIGAME
 				System.out.println("MINIGAME");
 				state.loadingMinigameAnimation = true;
+				state.loadingMapAnimation = true;
+				state.switchingTurnAnimation = true;
 				enterMiniGame();
 				
 			} else {
@@ -134,11 +140,10 @@ public class MapState extends BasicGameState {
 	}
 	
 	private IBasicHudComponent[] loadHudComponets(final GameState gameState) {
-		IBasicHudComponent[] components = new IBasicHudComponent[3];
+		IBasicHudComponent[] components = new IBasicHudComponent[2];
 		
 		components[0] = new MiniMapHud(gameState);
-		components[1] = new GameScoreHud(gameState);
-		components[2] = new MovementHud(gameState);
+		components[1] = new MovementHud(gameState);
 		
 		return components;
 	}
@@ -156,8 +161,8 @@ public class MapState extends BasicGameState {
 			
 			if (notPlayed.size() > 1) {
 				int idx = ThreadLocalRandom.current().nextInt(0, notPlayed.size());
-				notPlayed.add(played.get(idx));
-				played.remove(idx);
+				played.add(notPlayed.get(idx));
+				notPlayed.remove(idx);
 				
 				mainManager.enterState(played.get(played.size() - 1));
 			} else {
@@ -169,7 +174,6 @@ public class MapState extends BasicGameState {
 		} catch (Exception e) {
 			System.out.println("RIP");
 		}
-		
 	}
 
 	
@@ -181,7 +185,7 @@ public class MapState extends BasicGameState {
 }
 
 class MapGameState {
-	boolean switchingTurnAnimation;
+	boolean switchingTurnAnimation = true;
 	boolean loadingMinigameAnimation;
 	boolean loadingMapAnimation;
 	int timeElapsed;

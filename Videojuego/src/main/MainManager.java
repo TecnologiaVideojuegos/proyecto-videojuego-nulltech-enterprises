@@ -18,6 +18,7 @@ import state_machine.MenuState;
 import state_machine.minigames.MiniGameJumpRollers;
 import state_machine.minigames.MiniGameTest;
 import state_machine.minigames.Minigame1;
+import state_machine.minigames.Minigame2;
 
 public class MainManager extends StateBasedGame {
 	
@@ -29,12 +30,12 @@ public class MainManager extends StateBasedGame {
 	private Player[] players;
 	
 	private final int menuStateId = 0;
-	private final int boardStateId = 5; // TODO
 	private final int mapStateId = 1; // TODO
 	private final int endGameStateId = 2;
 	private final int minigameTestStateId = 3;
 	private final int minigameJumpRollersStateId = 4;
 	private final int minigame1Id= 5;
+	private final int minigame2Id= 6;
 
 	
 	/*
@@ -46,9 +47,10 @@ public class MainManager extends StateBasedGame {
 		this.addState(new MenuState(menuStateId, this));
 		this.addState(new MapState(mapStateId, this));
 		this.addState(new EndGameState(endGameStateId, this));
-		this.addState(new Minigame1(minigame1Id));
 		this.addState(new MiniGameTest(minigameTestStateId, this));
 		this.addState(new MiniGameJumpRollers(minigameJumpRollersStateId, this));
+		this.addState(new Minigame1(minigame1Id));
+		this.addState(new Minigame2(minigame2Id));
 	}
 
 	/*
@@ -60,8 +62,9 @@ public class MainManager extends StateBasedGame {
 		this.getState(mapStateId).init(gc, this);
 		this.getState(endGameStateId).init(gc, this);
 		this.getState(minigameTestStateId).init(gc, this);
-		this.getState(minigame1Id).init(gc, this);
 		this.getState(minigameJumpRollersStateId).init(gc, this);
+		this.getState(minigame1Id).init(gc, this);
+		this.getState(minigame2Id).init(gc, this);
 		
 		this.enterState(menuStateId); // DEBUG
 	}
@@ -88,6 +91,8 @@ public class MainManager extends StateBasedGame {
 	public void initGameState(final GameMode gameMode, final Player[] players) {
 		ArrayList<Integer> minigames = new ArrayList<Integer>();
 		minigames.add(minigameJumpRollersStateId);
+		minigames.add(minigame1Id);
+		minigames.add(minigame2Id);
 		
 		gameState = new GameState(gameMode, players, minigames);
 	}

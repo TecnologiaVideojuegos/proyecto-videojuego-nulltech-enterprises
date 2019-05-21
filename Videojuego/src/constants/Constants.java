@@ -57,6 +57,10 @@ public class Constants {
 	public static final String PATH_HUD_WINNER_PLAYER_ONE = "res/hud/winners/GanadorJugador1.png";
 	public static final String PATH_HUD_WINNER_PLAYER_TWO = "res/hud/winners/GanadorJugador2.png";
 	public static final String PATH_HUD_DRAW = "res/hud/winners/Empate.png";
+				/* MAP */
+	public static final String PATH_HUD_MAP_MINIMAP = "res/hud/triangulo.png";
+	public static final String PATH_HUD_MAP_PLAYER_ONE_INFO = "res/hud/jugador1.png";
+	public static final String PATH_HUD_MAP_PLAYER_TWO_INFO = "res/hud/jugador2.png";
 	
 	
 

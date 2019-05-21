@@ -22,7 +22,7 @@ public class MiniMapHud implements IBasicHudComponent {
 	
 	@Override
 	public void init(GameContainer gc) {
-		miniMapImage = ResourceLoader.loadImageFromUrl(Constants.PATH_INTERFACE_MINIMAP);
+		miniMapImage = ResourceLoader.loadImageFromUrl(Constants.PATH_HUD_MAP_MINIMAP);
 //		playerOneIcon = ResourceLoader.loadImageFromUrl(path);
 //		playerTwoIcon = ResourceLoader.loadImageFromUrl(path);
 	}
@@ -30,7 +30,7 @@ public class MiniMapHud implements IBasicHudComponent {
 	@Override
 	public void render(GameContainer gc, Graphics g) {
 		// Mini map
-		g.drawImage(miniMapImage, 10, 10);
+		miniMapImage.draw(10, 10, 0.20f);
 		
 		// Players icons
 //		g.drawImage(playerOneIcon, x, y);

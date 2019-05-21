@@ -49,6 +49,8 @@ public class GameObject {
 		}
 
 		//g.draw(collisionBox); // DEBUG
+//		anim.getImage(currentAnimIdx).draw(x, y, scale);
+//		g.draw(collisionBox); // DEBUG
 	}
 	
 	
