@@ -57,7 +57,7 @@ public class GameObject {
 	/*
 	 * Animation
 	 */
-	public Animation getAnimation() { return anim; }
+	public Animation getAnimation() { return movimiento; }
 	public void changeAnimation(Animation anim,float scale) {
 		this.anim=anim;
 		movimiento=new Animation();
