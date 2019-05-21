@@ -240,7 +240,7 @@ public class Minigame2 extends BasicGameState{
 							colision=1;
 							//habría que poner un delay
 							state.endMiniGameScreen = true;
-							endMiniGame.setPlayerWinner(1);
+							endMiniGame.setPlayerWinner(2);
 						}
 					}
 				}
@@ -261,6 +261,14 @@ public class Minigame2 extends BasicGameState{
 					
 				}
 			}
+			
+			if(puntuacion == 40)
+			{
+				state.endMiniGameScreen = true;
+				endMiniGame.setPlayerWinner(1);
+			}
+			
+			
 			else if (state.endMiniGameScreen) {
 				endMiniGame.update();
 			}
