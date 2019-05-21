@@ -55,7 +55,8 @@ public class MainManager extends StateBasedGame {
 		this.addState(new MiniGameJumpRollers(minigameJumpRollersStateId, this));
 		this.addState(new Minigame1(minigame1Id));
 		this.addState(new Minigame2(minigame2Id));
-		this.addState(new Minigame3(minigame3Id));
+		this.addState(new Minigame3(minigame3Id, this
+				));
 		this.addState(new Minigame4(minigame4Id, this));
 	}
 
