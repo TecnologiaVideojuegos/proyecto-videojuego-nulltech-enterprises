@@ -6,7 +6,7 @@ public class Constants {
 	 * Window
 	 */
 	public static final String WINDOW_TITLE = "Grupo F";
-	public static final int WINDOW_DEFAULT_HEIGHT = 640;
+	public static final int WINDOW_DEFAULT_HEIGHT = 512;
 	public static final int WINDOW_DEFAULT_WIDTH = 1024;
 	
 	/*
@@ -35,10 +35,10 @@ public class Constants {
 	public static final String PATH_MENU_OPTIONS = "res/images/opciones.png";
 //	public static final String PATH_MENU_EXITBUTTON = "res/images/salir.png";
 	public static final String PATH_MENU_CREDITS = "res/images/creditos.png";
-	public static final String PATH_MENU_PLAYBUTTON_AM = "sugar_amarillo.png";
-	public static final String PATH_MENU_PLAYBUTTON = "sugar.png";
-	public static final String PATH_MENU_EXITBUTTON = "salir.png";
-	public static final String PATH_MENU_EXITBUTTON_AM = "salir_amarillo.png";
+	public static final String PATH_MENU_PLAYBUTTON_AM = "res/images/sugar_amarillo.png";
+	public static final String PATH_MENU_PLAYBUTTON = "res/images/sugar.png";
+	public static final String PATH_MENU_EXITBUTTON = "res/images/salir.png";
+	public static final String PATH_MENU_EXITBUTTON_AM = "res/images/salir_amarillo.png";
 			/* MINIGAME TEST */
 	public static final String PATH_MINIGAME_TEST_BACKGROUND = "res/images/selva2.jpg";
 	public static final String PATH_MINIGAME_TEST_BANANA = "res/images/banana.png";

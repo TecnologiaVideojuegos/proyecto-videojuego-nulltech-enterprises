@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="5">
- <tileset firstgid="1" source="jungla2.tsx"/>
+ <tileset firstgid="1" source="junlga-montana.tsx"/>
  <layer id="1" name="Imagen" width="32" height="16">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAWjYBSMglEwCkYBvQHjANsPAK1PF8IACAAA

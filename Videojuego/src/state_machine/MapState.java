@@ -54,8 +54,19 @@ public class MapState extends BasicGameState {
 		
 		// TEST
 		
-		maps = new Map[1];
-		maps[0] = new Map(new TiledMap("res/maps/test.tmx"));
+		maps = new Map[9];
+		//Selva
+		maps[0] = new Map(new TiledMap("res/maps/test2.tmx"));
+		maps[1] = new Map(new TiledMap("res/maps/test.tmx"));
+		maps[2] = new Map(new TiledMap("res/maps/test3.tmx"));
+		//Volcan
+		maps[3] = new Map(new TiledMap("res/maps/test7.tmx"));
+		maps[4] = new Map(new TiledMap("res/maps/test8.tmx"));
+		maps[5] = new Map(new TiledMap("res/maps/test9.tmx"));
+		//Hielo
+		maps[6] = new Map(new TiledMap("res/maps/test4.tmx"));
+		maps[7] = new Map(new TiledMap("res/maps/test5.tmx"));
+		maps[8] = new Map(new TiledMap("res/maps/test6.tmx"));
 		
 		playerOneTurn = ResourceLoader.loadImageFromUrl(Constants.PATH_MAPSTATE_PLAYER_ONE);
 		playerTwoTurn = ResourceLoader.loadImageFromUrl(Constants.PATH_MAPSTATE_PLAYER_TWO);
