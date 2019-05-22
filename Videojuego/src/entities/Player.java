@@ -15,7 +15,7 @@ public class Player {
 	 */
 	private final String name;
 	private int puntuation;
-	private int availableMovements = 100;
+	private int availableMovements = 1;
 	
 	private Coordinates coordinates;
 	private MapLocation mapLocation;
