@@ -32,7 +32,6 @@ public class MapLocation {
 	 * SquareId
 	 */
 	public int getSquareId() { return squareId; }
-	
 	public void setSquareId(final int squareId) { this.squareId = squareId; }
 	
 	

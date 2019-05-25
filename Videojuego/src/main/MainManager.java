@@ -45,7 +45,7 @@ public class MainManager extends StateBasedGame {
 	/*
 	 * Constructors
 	 */
-	public MainManager(String title) {
+	public MainManager(String title) throws SlickException {
 		super(title);
 		
 		this.addState(new MenuState(menuStateId, this));

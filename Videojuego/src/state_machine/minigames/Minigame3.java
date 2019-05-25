@@ -113,10 +113,7 @@ public class Minigame3 extends BasicGameState {
 		tecla3.render(g);
 		teclad.render(g);
 		teclai.render(g);
-		for (int i = 0; i < personajesizq1.length; i++) {
-			g.drawString(personajesizq1[i], 400 + 70 * i, 80);
-			g.drawString(personajesder1[i], 400 + 70 * i, 100);
-		}
+		endMiniGame.init(gc);
 		// yeti.render(g);
 
 		// State
@@ -315,8 +312,7 @@ public class Minigame3 extends BasicGameState {
 					state.endMiniGameScreen = true;
 					endMiniGame.setPlayerWinner(2);
 				}
-				if (personajesder1[0] == "penguin" && personajesder1[1] == "yeti" && personajesder1[2] == "pez"
-						&& personajesder1[3] == "human") {
+				if (personajesder1[0] == "penguin" && personajesder1[1] == "yeti" && personajesder1[2] == "pez" && personajesder1[3] == "human") {
 					state.endMiniGameScreen = true;
 					endMiniGame.setPlayerWinner(1);
 				}

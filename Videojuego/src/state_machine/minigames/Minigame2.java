@@ -87,7 +87,7 @@ public class Minigame2 extends BasicGameState {
 		ballImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_BALL, 64, 64);
 		thunderZoneImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_THUNDER_ZONE, 64, 64);
 		shockImage = ResourceLoader.animationfromimage(Constants.PATH_MINIGAME2_SHOCK, 64, 64);
-		playerImage = ResourceLoader.animationfromimage("res/images/prota_movimiento.png", 64, 64, 10000);
+		playerImage = ResourceLoader.animationfromimage("res/images/prota_movimiento1.png", 64, 64, 10000);
 
 		player = new GameObject(playerImage, 400, 100, 2.0f); // Export values to constants
 

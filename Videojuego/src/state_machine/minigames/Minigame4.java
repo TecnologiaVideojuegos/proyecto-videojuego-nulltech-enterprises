@@ -63,7 +63,7 @@ public class Minigame4 extends BasicGameState {
 		elapsedTime = 0;
 		spawnSpeed = 50;
 		cuentaatras = 0;
-		fin_cuenta = 3500;
+		fin_cuenta = 2000;
 		portador_bombapl1 = 1;
 		portador_bombapl2 = 0;
 		caidapl1 = 0;
@@ -79,8 +79,8 @@ public class Minigame4 extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		backgroundImage = ResourceLoader.loadImageFromUrl("res/images/volcan3.png");
-		playerImage1 = ResourceLoader.animationfromimage("res/images/prota_movimiento.png", 64, 64, 100);
-		playerImage2 = ResourceLoader.animationfromimage("res/images/prota_movimiento.png", 64, 64, 100);
+		playerImage1 = ResourceLoader.animationfromimage("res/images/prota_movimiento1.png", 64, 64, 100);
+		playerImage2 = ResourceLoader.animationfromimage("res/images/prota_movimiento2.png", 64, 64, 100);
 		bombImage = ResourceLoader.animationfromimage("res/images/bomb.png", 64, 64, 100);
 		player1 = new GameObject(playerImage1, xp1, 360, 2f); // Set values as constants
 		player2 = new GameObject(playerImage2, xp2, 20, 2f);

@@ -23,7 +23,7 @@ import resources.ResourceLoader;
 
 public class MapState extends BasicGameState {
 	
-	private Map[] maps;
+	public static Map[] maps;
 	private final int stateId;
 	private final MainManager mainManager;
 	private final MapGameState state;
@@ -48,7 +48,7 @@ public class MapState extends BasicGameState {
 		// TEST
 		
 		mainManager.initGameMode(1);
-		Player[] players = {new Player("Jugador 1", ResourceLoader.loadAnimatioFromSpriteSheet(ResourceLoader.loadSpriteSheetfromurl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280), 10)), new Player("Jugador 2", ResourceLoader.loadAnimatioFromSpriteSheet(ResourceLoader.loadSpriteSheetfromurl(Constants.PATH_MINIGAME_TEST_MONKEY, 220, 280), 10))};
+		Player[] players = {new Player("Jugador 1", ResourceLoader.animationfromimage("res/images/prota_movimiento1.png", 64, 64, 10000),2.0f), new Player("Jugador 2", ResourceLoader.animationfromimage("res/images/prota_movimiento2.png", 64, 64, 10000),2.0f)};
 		mainManager.initPlayers(players);
 		mainManager.initGameState(mainManager.getGameMode(), mainManager.getPlayers());
 		
